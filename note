@@ -1,0 +1,38 @@
+layout_item_Repository.xml是"我的版本库"点击之后逐个Item的布局样式文件
+AppData.INSTANCE.getLoggedUser().getLogin()    账号
+AppData.INSTANCE.getLoggedUser().getName()    真实名字
+AppData.INSTANCE.getLoggedUser().getOilfield()  油田
+AppData.INSTANCE.getLoggedUser().getId()        userid    int 类型
+
+
+左侧菜单展示列表    -->    activity_web_drawer.xml
+根据activity_web_drawer.xml中找到对应节点的id
+Ctrl+H搜索找到,去WebActivity.java中找到updateFragmentByNavId()进行点击跳转设置
+
+
+
+
+
+====================================分页查询=======================================
+第一次示例使用全球浏览,过程中onLoadMore()一直不调用,之后发现,只有超出30条之后,onLoadMore()才会调用
+30的限制不知道从哪里设置
+控制是否可以继续下拉加载是从ActivityPresenter中网络请求success之后,根据Response返回的数组大小来控制
+
+Error:
+    1,日记本选项点击Item之后跳转不过去,提示PagerActivity报错,pagerAdapter.size()是0,没有东西
+        原因是:
+            FragmentPagerModel类中createRepoPagerList()没有给他增加ViewPager对应的页面
+
+    2,RepositoryPresenter类
+        @AutoAccess(dataName = "repository")
+        Repository repository;
+        注入之后发现使用取不到repository.getTitle()的值,但是可以取到name和description的值
+        原因是:
+            具体我也不知道,可能是涉及两个类吧,解决方法就是,参考description
+            在LocalRepo实体中增加需要的属性(title等),然后在Repository类中增加this.title = tile等等,具体看description
+====================================分页查询=======================================
+
+
+
+??????????
+新增工序表时点击措施1选择定制工序打不开第二个措施下拉框

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00201C1C"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/sggxTv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:gravity="left|center_vertical|center_horizontal|center"
+            android:text="施工工序"
+            android:textAlignment="center"
+            android:textColor="@color/amoled_dark_card_background" />
+
+        <TextView
+            android:id="@+id/sggxEt1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="3"
+            android:gravity="left|center_vertical|center_horizontal|center"
+            android:hint="施工措施"
+            android:textColor="@color/amoled_dark_card_background" />
+
+        <TextView
+            android:id="@+id/sggxEt2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="3"
+            android:gravity="left|center_vertical|center_horizontal|center"
+            android:hint="施工措施"
+            android:textColor="@color/amoled_dark_card_background" />
+
+        <TextView
+            android:id="@+id/del"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:text="删除"
+            android:textColor="#FF0000"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/sfwcTv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:gravity="left|center_vertical|center_horizontal|center"
+            android:text="是否完成:"
+            android:textAlignment="center"
+            android:textColor="@color/amoled_dark_card_background" />
+
+        <TextView
+            android:id="@+id/sfwcEt"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:gravity="left|center_vertical|center_horizontal|center"
+            android:textColor="@color/amoled_dark_card_background" />
+
+        <TextView
+            android:id="@+id/sjTv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:gravity="left|center_vertical|center_horizontal|center"
+            android:text="时间"
+            android:textColor="@color/amoled_dark_card_background" />
+
+        <TextView
+            android:id="@+id/sjItemEt1"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_margin="5dp"
+            android:layout_weight="3"
+            android:gravity="left|center_vertical|center_horizontal|center"
+            android:hint="自开始时间"
+            android:textColor="@color/amoled_dark_card_background" />
+
+        <TextView
+            android:id="@+id/sjItemEt2"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_margin="5dp"
+            android:layout_weight="3"
+            android:gravity="left|center_vertical|center_horizontal|center"
+            android:hint="至结束时间"
+            android:textColor="@color/amoled_dark_card_background" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/et_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="90dp"
+            android:gravity="top|left|center_vertical|center_horizontal|center"
+            android:hint="输入工序内容"
+            android:lines="4" />
+
+    </LinearLayout>
+
+    <!-- <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#008B8A8A"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+
+        <TextView
+            android:id="@+id/data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toLeftOf="@+id/ll"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp" />
+
+        &lt;!&ndash;  <LinearLayout
+            android:id="@+id/ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:clickable="true"
+                android:text="添加"
+                android:textColor="#000000"
+
+                android:textColorLink="#000"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/del"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:clickable="true"
+                android:text="删除"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            &lt;!&ndash; <TextView
+            android:id="@+id/up"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:text="↑"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/ripple_bg"
+            android:clickable="true"
+            android:textColor="#fff"/>
+
+        <TextView
+            android:id="@+id/down"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:text="↓"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/ripple_bg"
+            android:clickable="true"
+            android:textColor="#fff"/>&ndash;&gt;
+
+        </LinearLayout>&ndash;&gt;
+    </LinearLayout>-->
+</LinearLayout>

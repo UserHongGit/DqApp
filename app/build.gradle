@@ -1,0 +1,127 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.novoda.build-properties'
+
+
+buildProperties {
+    getPublic {
+        file rootProject.file('public.properties')
+    }
+    getLocal {
+        file rootProject.file('local.properties')
+    }
+}
+
+
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion BUILD_TOOLS_VERSION
+    defaultConfig {
+        applicationId 'com.hong'
+        minSdkVersion 21
+        targetSdkVersion TARGET_SDK_VERSION as int
+        versionCode VERSION_CODE as int
+        versionName VERSION_NAME
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled false
+
+        buildConfigField "String", "OPENHUB_CLIENT_ID", (buildProperties.getLocal['openhub_client_id'] | buildProperties.getPublic['openhub_client_id']).string
+        buildConfigField "String", "OPENHUB_CLIENT_SECRET", (buildProperties.getLocal['openhub_client_secret'] | buildProperties.getPublic['openhub_client_secret']).string
+        buildConfigField "String", "BUGLY_ID", (buildProperties.getLocal['bugly_appid'] | buildProperties.getPublic['bugly_appid']).string
+        buildConfigField "String", "DEBUG_BUGLY_ID", (buildProperties.getLocal['debug_bugly_appid'] | buildProperties.getPublic['debug_bugly_appid']).string
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+repositories {
+    maven { url "https://jitpack.io" }
+    google()
+    flatDir {
+        dirs 'libs' //aar
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
+    implementation "com.android.support:appcompat-v7:${ANDROID_SUPPORT_VERSION}"
+    implementation "com.android.support:support-v4:${ANDROID_SUPPORT_VERSION}"
+    implementation "com.android.support:design:${ANDROID_SUPPORT_VERSION}"
+    implementation "com.android.support.constraint:constraint-layout:${CONSTRAINT_VERSION}"
+    implementation "com.android.support:preference-v7:${ANDROID_SUPPORT_VERSION}"
+    implementation "com.android.support:preference-v14:${ANDROID_SUPPORT_VERSION}"
+    testImplementation 'junit:junit:4.12'
+
+    //androidTestImplementation 'com.android.support.test:runner:1.0.2'
+
+    //dagger依赖注入
+    implementation "com.google.dagger:dagger:${DAGGER_VERSION}"
+    annotationProcessor "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
+    implementation "com.tbruyelle.rxpermissions:rxpermissions:${RX_PERMISSION_VERSION}"
+    implementation "com.github.bumptech.glide:glide:${GLIDE_VERSION}"
+    annotationProcessor "com.github.bumptech.glide:compiler:${GLIDE_VERSION}"
+    implementation "com.jakewharton:butterknife:${BUTTERKNIFE_VERSION}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${BUTTERKNIFE_VERSION}"
+    implementation "com.github.GrenderG:Toasty:${TOASTY_VERSION}"
+    implementation "com.thirtydegreesray:dataautoaccess:${DATAAUTOACCESS_VERSION}"
+    annotationProcessor "com.thirtydegreesray:dataautoaccess-compiler:${DATAAUTOACCESS_VERSION}"
+
+    //数据库工具
+    implementation "org.greenrobot:greendao:${GREEN_DAO_VERSION}"
+
+    //事件总线
+    implementation "org.greenrobot:eventbus:${EVENT_BUS_VERSION}"
+
+    //RxJava
+    implementation "io.reactivex:rxjava:${RXJAVA_VERSION}"
+    implementation "io.reactivex:rxandroid:${RXJAVA_VERSION}"
+
+    //Type-safe HTTP client for Android and Java by Square, Inc.
+    implementation "com.squareup.retrofit2:retrofit:${RETROFIT_VERSION}"
+    implementation "com.squareup.retrofit2:converter-gson:${RETROFIT_VERSION}"
+    implementation "com.squareup.retrofit2:adapter-rxjava:${RETROFIT_VERSION}"
+    implementation("com.squareup.retrofit2:converter-simplexml:${RETROFIT_VERSION}") {
+        exclude group: 'xpp3', module: 'xpp3'
+        exclude group: 'stax', module: 'stax-api'
+        exclude group: 'stax', module: 'stax'
+    }
+
+    //implementation "com.google.code.gson:gson:${JSOUP_VERSION}"
+    implementation "org.jsoup:jsoup:${JSOUP_VERSION}"
+    implementation "com.unstoppable:submitbutton:${SUBMIT_BUTTON_VERSION}"
+    implementation "com.orhanobut:logger:${LOGGER_VERSION}"
+    implementation "com.github.daniel-stoneuk:material-about-library:${MATERIAL_ABOUT_VERSION}"
+    implementation "de.hdodenhof:circleimageview:${CIRCLE_IMAGEVIEW_VERSION}"
+
+    //主题颜色控件
+    implementation "com.afollestad.material-dialogs:core:${MATERIAL_DIALOG_VERSION}"
+    implementation "com.afollestad.material-dialogs:commons:${MATERIAL_DIALOG_VERSION}"
+
+    //谷歌浏览器提供的
+    implementation "com.android.support:customtabs:${ANDROID_SUPPORT_VERSION}"
+    implementation "com.android.support:customtabs:${ANDROID_SUPPORT_VERSION}"
+
+    //依赖讯飞lib  jar
+    implementation files('libs/Sunflower.jar')
+    implementation files('libs/Msc.jar')
+
+    //picker 选择器
+    implementation 'com.github.addappcn:android-pickers:1.0.3'
+    implementation 'com.yanzhenjie:recyclerview-swipe:1.0.4'
+    implementation files('libs/json-jena-1.0.jar')
+}

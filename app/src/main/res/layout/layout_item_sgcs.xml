@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+
+        <EditText
+            android:id="@+id/key"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:gravity="left|center_vertical|center_horizontal|center"
+            android:text="shijain:"
+            android:textAlignment="textStart"
+            android:background="@null"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:inputType="none"
+            android:textColor="@color/amoled_dark_card_background"
+            android:textSize="18sp"
+            tools:ignore="RtlCompat"
+            />
+
+       <!-- <TextView
+            android:id="@+id/key"
+            android:layout_width="129dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:gravity="left|center_vertical|center_horizontal|center"
+            android:text="shijain:"
+            android:textAlignment="textStart"
+            android:textColor="@color/amoled_dark_card_background"
+            android:textSize="18sp"
+            tools:ignore="RtlCompat" />-->
+
+      <!--  <TextView
+            android:id="@+id/valueTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:gravity="left|center_vertical|center_horizontal|center"
+            android:textAlignment="center"
+            android:textColor="@color/amoled_dark_card_background"
+            android:textSize="18sp"
+            tools:ignore="RtlCompat" />-->
+
+        <EditText
+            android:id="@+id/valueEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical|center_horizontal|center"
+            android:textAlignment="center"
+            android:textColor="@color/amoled_dark_card_background"
+            android:textSize="18sp"
+            android:visibility="gone"
+            tools:ignore="RtlCompat" />
+
+        <EditText
+            android:id="@+id/unit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical|center_horizontal|center"
+            android:textAlignment="center"
+            android:textColor="@color/amoled_dark_card_background"
+            android:textSize="18sp"
+            android:background="@null"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:inputType="none"
+            tools:ignore="RtlCompat"
+            />
+
+    <EditText
+        android:id="@+id/pro_param_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:gravity="left|center_vertical|center_horizontal|center"
+        android:textAlignment="center"
+        android:textColor="@color/amoled_dark_card_background"
+        android:textSize="18sp"
+        tools:ignore="RtlCompat"
+        />
+     <!--   <TextView
+            android:id="@+id/unit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical|center_horizontal|center"
+            android:textAlignment="center"
+            android:textColor="@color/amoled_dark_card_background"
+            android:textSize="18sp"
+            tools:ignore="RtlCompat" />-->
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone"
+        android:id="@+id/contentLayout"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical|center_horizontal|center"
+            android:textAlignment="textStart"
+            android:textColor="@color/amoled_dark_card_background"
+            android:textSize="18sp"
+            tools:ignore="RtlCompat" />
+
+    </LinearLayout>
+
+</LinearLayout>

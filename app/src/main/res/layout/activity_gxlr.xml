@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="641dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/addTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/headTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:gravity="center"
+                android:text="作业班报表"
+                android:textAlignment="center"
+                android:textColor="#f44336"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:text="保存" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/sgdwTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:text="施工单位:"
+                    android:textAlignment="center"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <TextView
+                    android:id="@+id/sgdwEv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/amoled_dark_card_background" />
+
+
+                <TextView
+                    android:id="@+id/zzbmTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:text="资质编码:"
+                    android:textAlignment="center"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <TextView
+                    android:id="@+id/zzbmEv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/amoled_dark_card_background" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/sbrqTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:text="上报日期:"
+                    android:textAlignment="center"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <TextView
+                    android:id="@+id/sbrqEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/amoled_dark_card_background" />
+
+
+                <TextView
+                    android:id="@+id/bcTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:text="班次:"
+                    android:textAlignment="center"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <TextView
+                    android:id="@+id/bcEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/amoled_dark_card_background" />
+            </LinearLayout>
+
+
+            <!--以上不可修改-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/zyxmTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:text="作业项目:"
+                    android:textAlignment="center"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <EditText
+                    android:id="@+id/zyxmEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="top|left|center_vertical|center_horizontal|center"
+                    android:hint="" />
+
+                <TextView
+                    android:id="@+id/kgrqTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:text="开工日期:"
+                    android:textAlignment="center"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <TextView
+                    android:id="@+id/kgrqEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/amoled_dark_card_background" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/sgjdTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:text="施工井段:"
+                    android:textAlignment="center"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <EditText
+                    android:id="@+id/sgjdEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="top|left|center_vertical|center_horizontal|center"
+                    android:hint="" />
+
+                <TextView
+                    android:id="@+id/hdTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:text="厚度/层数:"
+                    android:textAlignment="center"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <EditText
+                    android:id="@+id/hdEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="top|left|center_vertical|center_horizontal|center"
+                    android:hint="" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/cwTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:text="层位:"
+                    android:textAlignment="center"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <EditText
+                    android:id="@+id/cwEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="top|left|center_vertical|center_horizontal|center"
+                    android:hint="" />
+
+                <TextView
+                    android:id="@+id/chTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:text="层号:"
+                    android:textAlignment="center"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <EditText
+                    android:id="@+id/chEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="top|left|center_vertical|center_horizontal|center"
+                    android:hint="" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/xybgxTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:text="下一步工序:"
+                    android:textAlignment="center"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <EditText
+                    android:id="@+id/xybgxEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="top|left|center_vertical|center_horizontal|center" />
+
+
+                <TextView
+                    android:id="@+id/sfwjTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:gravity="left|center_vertical|center_horizontal|center"
+                    android:text="是否完井:"
+                    android:textAlignment="center"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <TextView
+                    android:id="@+id/sfwjEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6"
+                    android:gravity="center"
+                    android:hint="请选择"
+                    android:textColor="@color/amoled_dark_card_background" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/jlTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:text="记录:"
+                    android:textAlignment="center"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <EditText
+                    android:id="@+id/jlEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="top|left|center_vertical|center_horizontal|center"
+                    android:hint="" />
+
+                <TextView
+                    android:id="@+id/bzTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:text="班长:"
+                    android:textAlignment="center"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <EditText
+                    android:id="@+id/bzEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="top|left|center_vertical|center_horizontal|center"
+                    android:hint="" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/dbgbTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:text="当班干部:"
+                    android:textAlignment="center"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <EditText
+                    android:id="@+id/dbgbEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="top|left|center_vertical|center_horizontal|center"
+                    android:hint="" />
+
+                <TextView
+                    android:id="@+id/lryTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:text="录入员:"
+                    android:textAlignment="center"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <EditText
+                    android:id="@+id/lryEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="top|left|center_vertical|center_horizontal|center"
+                    android:hint="" />
+            </LinearLayout>
+
+
+            <!--
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/sggxTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="left|center_vertical|center_horizontal|center"
+                    android:text="施工工序"
+                    android:textAlignment="center"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <TextView
+                    android:id="@+id/sggxEt1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="left|center_vertical|center_horizontal|center"
+                    android:hint="施工措施"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <TextView
+                    android:id="@+id/sggxEt2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="3"
+                    android:gravity="left|center_vertical|center_horizontal|center"
+                    android:hint="施工措施"
+                    android:textColor="@color/amoled_dark_card_background" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/sfwcTv"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="0.2"
+                    android:layout_height="match_parent"
+                    android:gravity="left|center_vertical|center_horizontal|center"
+                    android:textAlignment="center"
+                    android:text="是否完成:"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <TextView
+                    android:id="@+id/sfwcEt"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:gravity="left|center_vertical|center_horizontal|center"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <TextView
+                    android:id="@+id/sjTv"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="0.2"
+                    android:layout_height="match_parent"
+                    android:gravity="left|center_vertical|center_horizontal|center"
+                    android:text="时间"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <TextView
+                    android:id="@+id/sjEt1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="3"
+                    android:gravity="left|center_vertical|center_horizontal|center"
+                    android:hint="自开始时间"
+                    android:textColor="@color/amoled_dark_card_background" />
+
+                <TextView
+                    android:id="@+id/sjEt2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="3"
+                    android:gravity="left|center_vertical|center_horizontal|center"
+                    android:hint="至结束时间"
+                    android:textColor="@color/amoled_dark_card_background" />
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top|left|center_vertical|center_horizontal|center"
+                android:hint="输入工序内容" />
+
+        </LinearLayout>
+    -->
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:scrollbars="none">
+
+            </android.support.v7.widget.RecyclerView>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/btn_startspeech"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="语音输入 " />
+
+                <Button
+                    android:id="@+id/btn_startspeektext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="文字阅读 " />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addTxt"
+        android:layout_width="54dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_input_add"
+        app:backgroundTint="#FFFFFF"
+        app:borderWidth="0dp"
+        app:elevation="5dp"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:pressedTranslationZ="10dp"
+        app:rippleColor="#a6a6a6" />
+
+
+</android.support.constraint.ConstraintLayout>
