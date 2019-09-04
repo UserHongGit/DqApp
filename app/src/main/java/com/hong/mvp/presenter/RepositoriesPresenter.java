@@ -113,6 +113,11 @@ public class RepositoriesPresenter extends BasePagerPresenter<View> implements P
         }
     }
 
+    @Override
+    protected void loadData(int itemId) {
+
+    }
+
     public void loadRepositories(final boolean isReLoad, final int page) {
         Log.i(TAG, "loadRepositories: ");
         filter = getFilter();

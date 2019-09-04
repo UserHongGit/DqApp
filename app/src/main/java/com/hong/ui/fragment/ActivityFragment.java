@@ -20,6 +20,7 @@ import com.hong.util.BundleHelper;
 import com.hong.util.PrefUtils;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ActivityFragment extends ListFragment<ActivityPresenter, ActivitiesAdapter> implements View {
     private static String TAG;
@@ -38,21 +39,22 @@ public class ActivityFragment extends ListFragment<ActivityPresenter, Activities
         TAG = stringBuilder.toString();
     }
 
-    public static ActivityFragment create(@NonNull ActivityType type, @NonNull String user) {
-        Log.i(TAG, "create: 2参数");
+    public static ActivityFragment create(@NonNull ActivityType type, @NonNull String user,@Nullable int itemId) {
+        Log.i(TAG, "create: 2 int参数"+user+"////"+itemId);
+        ItemId = itemId;
         return create(type, user, null);
     }
 
+    public static ActivityFragment create(@NonNull ActivityType type, @NonNull String user) {
+        Log.i(TAG, "create: 2参数"+user+"////");
+        return create(type, user, null);
+    }
+    private static int ItemId;
     public static ActivityFragment create(@NonNull ActivityType type, @NonNull String user, @Nullable String repo) {
-        String str = TAG;
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("create:3参数 +++++++++++++++++++");
-        stringBuilder.append(user);
-        stringBuilder.append("//");
-        stringBuilder.append(repo);
-        Log.i(str, stringBuilder.toString());
+        Log.i(TAG, "create 3参数++++++++++++++++++");
         ActivityFragment fragment = new ActivityFragment();
-        fragment.setArguments(BundleHelper.builder().put("type", (Serializable) type).put("user", user).put("repo", repo).build());
+
+        fragment.setArguments(BundleHelper.builder().put("type", (Serializable) type).put("itemId",ItemId).put("user", user).put("repo", repo).build());
         return fragment;
     }
 
@@ -126,12 +128,28 @@ public class ActivityFragment extends ListFragment<ActivityPresenter, Activities
             PrefUtils.set(PrefUtils.ACTIVITY_LONG_CLICK_TIP_ABLE, Boolean.valueOf(false));
         }
     }
+    public void showEvents2(ArrayList<String> rows) {
+        Log.i(TAG, "showEvents: ");
+        Event ee = new Event();
+        ee.setTitle("草1");
+        ee.setCreateTime(new Date());
+        ee.setDescription("33333333333");
+        ArrayList<Event> ar = new ArrayList<>();
+        ar.add(ee);
+        ar.add(ee);
 
+        ((ActivitiesAdapter) this.adapter).setData(ar);
+        postNotifyDataSetChanged();
+        if (getCurPage() == 2 && PrefUtils.isActivityLongClickTipAble()) {
+            showOperationTip(R.string.activity_click_tip);
+            PrefUtils.set(PrefUtils.ACTIVITY_LONG_CLICK_TIP_ABLE, Boolean.valueOf(false));
+        }
+    }
     public void onFragmentShowed() {
         Log.i(TAG, "onFragmentShowed: ");
         super.onFragmentShowed();
         if (this.mPresenter != null) {
-            ((ActivityPresenter) this.mPresenter).prepareLoadData();
+            ((ActivityPresenter) this.mPresenter).prepareLoadData(ItemId);
         }
     }
 }

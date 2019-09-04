@@ -51,6 +51,11 @@ public class NotificationsPresenter extends BasePagerPresenter<INotificationsCon
     }
 
     @Override
+    protected void loadData(int itemId) {
+
+    }
+
+    @Override
     public void loadNotifications(final int page, boolean isReload) {
         Log.i(TAG, "loadNotifications: ");
         mView.showLoading();

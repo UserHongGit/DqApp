@@ -50,6 +50,11 @@ public class IssuePresenter extends BasePagerPresenter<IIssuesContract.View>
     }
 
     @Override
+    protected void loadData(int itemId) {
+
+    }
+
+    @Override
     public void loadIssues(final int page, final boolean isReload) {
         boolean readCacheFirst = page == 1 && !isReload;
         if(issuesFilter.getType().equals(IssuesFilter.Type.Repo)){

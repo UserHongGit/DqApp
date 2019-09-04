@@ -3,6 +3,7 @@ package com.hong.ui.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,7 +20,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 
+import com.hong.AppConfig;
 import com.hong.http.model.UMenu;
+import com.hong.ui.fragment.ViewerFragment;
 import com.thirtydegreesray.dataautoaccess.annotation.AutoAccess;
 import com.hong.AppData;
 import com.hong.R;
@@ -120,12 +123,14 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
 
         removeEndDrawer();
         if (((WebPresenter) this.mPresenter).isFirstUseAndNoNewsUser()) {
+            Log.i(TAG, "initView: 干哈呢?");
             this.selectedPage = R.id.nav_public_news;
-            updateFragmentByNavId(this.selectedPage);
+            updateFragmentByNavId(this.selectedPage,null);
         } else {
+            Log.i(TAG, "initView: 搁这呢!");
             int i = this.selectedPage;
             if (i != 0) {
-                updateFragmentByNavId(i);
+                updateFragmentByNavId(i,null);
             } else {
                 int startPageIndex = Arrays.asList(getResources().getStringArray(R.array.start_pages_id)).indexOf(PrefUtils.getStartPage());
                 TypedArray typedArray = getResources().obtainTypedArray(R.array.start_pages_nav_id);
@@ -134,12 +139,12 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
                 if (this.FRAGMENT_NAV_ID_LIST.contains(Integer.valueOf(startPageNavId))) {
                     Log.i(str, "11 - web FRAGMENT_NAV_ID_LIST.contains(startPageNavId)");
                     this.selectedPage = startPageNavId;
-                    updateFragmentByNavId(this.selectedPage);
+                    updateFragmentByNavId(this.selectedPage,null);
                 } else {
                     Log.i(str, "11 - web !FRAGMENT_NAV_ID_LIST.contains(startPageNavId)");
 //                    this.selectedPage = R.id.nav_news;
-                    updateFragmentByNavId(this.selectedPage);
-                    updateFragmentByNavId(startPageNavId);
+                    updateFragmentByNavId(this.selectedPage,null);
+                    updateFragmentByNavId(startPageNavId,null);
                 }
             }
         }
@@ -200,20 +205,24 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
     /* access modifiers changed from: protected */
     public void onNavItemSelected(@NonNull MenuItem item, boolean isStartDrawer) {
         super.onNavItemSelected(item, isStartDrawer);
-        Log.i(this.TAG, "onNavItemSelected: ");
+        String url = "";
+        if(null!=item.getIntent()){
+             url = item.getIntent().getStringExtra("url");
+            Log.i(this.TAG, url+"onNavItemSelected:   这是菜单列表点击时候触发的事件,这个item.getItemId就是我实际自定义对应BaseDrawerAvctivity的menuId"+item.getItemId()+"///"+item.getTitle());
+        }
         if (isStartDrawer) {
-            updateFragmentByNavId(item.getItemId());
+            updateFragmentByNavId(item.getItemId(),"m/"+url+".jsp");
         } else {
             handlerEndDrawerClick(item);
         }
     }
 
-    private void updateFragmentByNavId(int id) {
-        Log.i(this.TAG, "updateFragmentByNavId: ");
+    private void updateFragmentByNavId(int id,String url) {
+        Log.i(this.TAG, "updateFragmentByNavId: "+id);
         if (this.FRAGMENT_NAV_ID_LIST.contains(Integer.valueOf(id))) {
-            Log.i(this.TAG, "updateFragmentByNavId: 三连杀");
+            Log.i(this.TAG, "updateFragmentByNavId: 三连杀"+id);
             updateTitle(id);
-            loadFragment(id);
+            loadFragment(id,null);
             updateFilter(id);
             return;
         }
@@ -243,8 +252,10 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
             case R.id.nav_settings /*2131296492*/:
                 SettingsActivity.show(getActivity(), 100);
                 break;
+
             default:
                 Log.i(this.TAG, "updateFragmentByNavId: default");
+                loadFragment(2131230819,url);
                 break;
         }
     }
@@ -273,40 +284,62 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
         setToolbarTitle(getString(titleId));
     }
 
-    private void loadFragment(int itemId) {
-        String str = "loadFragment: ";
-        Log.i(this.TAG, str);
+    private void loadFragment(int itemId,String url) {
+        Log.i(this.TAG,  "loadFragment: "+itemId);
         this.selectedPage = itemId;
         String fragmentTag = (String) this.TAG_MAP.get(Integer.valueOf(itemId));
-        Fragment showFragment = getSupportFragmentManager().findFragmentByTag(fragmentTag);
-        String str2 = this.TAG;
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(str);
-        stringBuilder.append(itemId);
-        str = "///";
-        stringBuilder.append(str);
-        stringBuilder.append(fragmentTag);
-        stringBuilder.append(str);
-        stringBuilder.append(showFragment);
-        Log.i(str2, stringBuilder.toString());
+        Fragment showFragment = getSupportFragmentManager().findFragmentByTag("tbswebview");
         boolean isExist = true;
         if (showFragment == null) {
             isExist = false;
-            showFragment = getFragment(itemId);
+            showFragment = getFragment(itemId,url);
         }
-        if (!showFragment.isVisible()) {
-            Fragment visibleFragment = getVisibleFragment();
-            if (isExist) {
-                showAndHideFragment(showFragment, visibleFragment);
-            } else {
-                addAndHideFragment(showFragment, visibleFragment, fragmentTag);
-            }
+
+
+
+        if (showFragment.isVisible()) {
+            return;
         }
+        Fragment visibleFragment = getVisibleFragment();
+        if (isExist) {
+            showAndHideFragment(showFragment, visibleFragment);
+        } else {
+            addAndHideFragment(showFragment, visibleFragment, fragmentTag);
+        }
+
+//        if (!showFragment.isVisible()) {
+//            Fragment visibleFragment = getVisibleFragment();
+//            if (isExist) {
+//                showAndHideFragment(showFragment, visibleFragment);
+//            } else {
+//                addAndHideFragment(showFragment, visibleFragment, fragmentTag);
+//            }
+//        }
     }
 
     @NonNull
-    private Fragment getFragment(int itemId) {
-        Log.i("=============>", "005 - web getFragment");
+    private Fragment getFragment(int itemId,String url) {
+        Log.i("=============>", "005 - web getFragment"+itemId);
+        //这里写switch区分跳转
+        if(itemId!=0){
+            switch(itemId){
+                case 2131230819:
+                    return ViewerFragment.toUrl(AppConfig.UPC_API_BASE_URL+url,AppData.INSTANCE.getLoggedUser().getLogin());
+                case 2131230100:
+                    return ViewerFragment.toUrl(AppConfig.UPC_API_BASE_URL+"m/sggl/zyfp2.jsp",AppData.INSTANCE.getLoggedUser().getLogin());
+                case 2131230101:
+                    return ViewerFragment.toUrl(AppConfig.UPC_API_BASE_URL+"m/sggl/zyfp2.jsp",AppData.INSTANCE.getLoggedUser().getLogin());
+                case 2131230102:
+                    return ViewerFragment.toUrl(AppConfig.UPC_API_BASE_URL+"m/sggl/zyfp2.jsp",AppData.INSTANCE.getLoggedUser().getLogin());
+                case 2131230103:
+                    return ViewerFragment.toUrl(AppConfig.UPC_API_BASE_URL+"m/sggl/zyfp2.jsp",AppData.INSTANCE.getLoggedUser().getLogin());
+                case 2131230104:
+                    return ViewerFragment.toUrl(AppConfig.UPC_API_BASE_URL+"m/sggl/zyfp2.jsp",AppData.INSTANCE.getLoggedUser().getLogin());
+
+
+            }
+        }
+        return null;
 //        if (itemId != R.id.nav_news) {
 //            if (itemId == R.id.nav_owned) {
 //                return RepositoriesFragment.create(RepositoriesType.OWNED, AppData.INSTANCE.getLoggedUser().getLogin());
@@ -315,7 +348,7 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
 //                return null;
 //            }
 //        }
-        return ActivityFragment.create(ActivityType.PublicNews, AppData.INSTANCE.getLoggedUser().getLogin());
+//        return ActivityFragment.create(ActivityType.PublicNews, AppData.INSTANCE.getLoggedUser().getLogin(),itemId);
     }
 
     private void showAndHideFragment(@NonNull Fragment showFragment, @Nullable Fragment hideFragment) {

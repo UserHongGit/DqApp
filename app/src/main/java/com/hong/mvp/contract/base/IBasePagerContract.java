@@ -14,6 +14,7 @@ public interface IBasePagerContract {
     interface Presenter<V extends IBasePagerContract.View>
             extends IBaseContract.Presenter<V> {
         void prepareLoadData();
+        void prepareLoadData(int itemId);
     }
 
 }

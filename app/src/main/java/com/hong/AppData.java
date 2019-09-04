@@ -13,6 +13,7 @@ import java.util.Locale;
 public enum AppData {
     INSTANCE;
 
+    public static boolean isLogin;
     public static int isUpload;
     public static ArrayList<GxrbModel> searchWells;
     @AutoAccess(dataName = "appData_authUser")

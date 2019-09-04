@@ -18,6 +18,7 @@ public interface IActivityContract {
 
     interface View extends IBaseContract.View, IBasePagerContract.View, IBaseListContract.View {
         void showEvents(ArrayList<Event> events);
+        void showEvents2(ArrayList<String> events);
     }
 
     interface Presenter extends IBasePagerContract.Presenter<IActivityContract.View>{

@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.hong.AppConfig;
+import com.hong.AppData;
 import com.hong.R;
 import com.hong.inject.component.AppComponent;
 import com.hong.inject.component.DaggerFragmentComponent;
@@ -20,6 +22,7 @@ import com.hong.mvp.presenter.ViewerPresenter;
 import com.hong.ui.fragment.base.BaseFragment;
 import com.hong.ui.widget.webview.ProgressWebView;
 import com.hong.util.BundleHelper;
+import com.hong.util.NullHelper;
 import com.hong.util.PrefUtils;
 import com.thirtydegreesray.dataautoaccess.annotation.AutoAccess;
 
@@ -30,6 +33,9 @@ import butterknife.BindView;
  */
 
 public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IViewerContract.View, ProgressWebView.ContentChangedListener {
+
+
+
     public static ViewerFragment toUrl(String url, String user) {
         Log.i("=============->", "show: ====================-toUrl");
         ViewerFragment fragment = new ViewerFragment();
@@ -119,11 +125,26 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
 
     @Override
     public void loadLuUrl(@NonNull String url) {
-        Log.i("=============->", "show: ====================-loadLuUrl" + url);
-        loader.setVisibility(View.VISIBLE);
-        loader.setIndeterminate(false);
-        webView.loadUrl(url);
-        webView.setContentChangedListener(this);
+        Log.i("=====", "loadLuUrl: ____________"+AppData.isLogin);
+        if(!AppData.isLogin){
+//            System.out.println("查询用户id+"+AppData.INSTANCE.getAuthUser().getName()+"////"+AppData.INSTANCE.getAuthUser().getLoginId());
+//            System.out.println("查询用户id+"+AppData.INSTANCE.getLoggedUser().getOilfield()+"////"+AppData.INSTANCE.getLoggedUser().getLogin());
+            webView.loadUrl(AppConfig.UPC_API_BASE_URL+"sggl/LoginActionTemp!initLogin?username="+ AppData.INSTANCE.getLoggedUser().getLogin());
+            webView.setContentChangedListener(this);
+            AppData.isLogin = true;
+            url = NullHelper.isNull(url);
+            loadLuUrl(url);
+            Log.i("====", "loadLuUrl: 载入验证完成__");
+        }else{
+            Log.i("=============->", "show: ====================-loadLuUrl" + url);
+            url = NullHelper.isNull(url);
+            loader.setVisibility(View.VISIBLE);
+            loader.setIndeterminate(false);
+            webView.loadUrl(url);
+            webView.setContentChangedListener(this);
+        }
+
+
     }
 
     public void refresh() {

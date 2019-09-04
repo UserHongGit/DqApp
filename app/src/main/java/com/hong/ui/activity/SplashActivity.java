@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.hong.AppData;
 import com.hong.inject.component.AppComponent;
 import com.hong.inject.component.DaggerActivityComponent;
 import com.hong.inject.module.ActivityModule;
@@ -84,6 +85,7 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements ISp
         Log.i("=============>","5 - sp initActivity");
         super.initActivity();
         mPresenter.getUser();//去验证用户，是否打开登录界面
+        AppData.isLogin = false;
     }
 
     /**

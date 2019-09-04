@@ -1,5 +1,7 @@
 package com.hong.ui.activity.base;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -142,7 +144,7 @@ public abstract class BaseDrawerActivity<P extends IBaseContract.Presenter> exte
     }
 
     protected void updateStartDrawerContent(int menuId) {
-        Log.i("=============>","101 - based - updateStartDrawerContent");
+        Log.i("=============>","101 - based - updateStartDrawerContent"+menuId);
         updateDrawerContent(navViewStart, menuId);
     }
 
@@ -155,16 +157,22 @@ public abstract class BaseDrawerActivity<P extends IBaseContract.Presenter> exte
     }
 
     private void updateDrawerContent(NavigationView navView, int menuId) {
-        Log.i("=============>","102 - based - updateDrawerContent");
+        Log.i("=============>","102 - based - updateDrawerContent"+menuId);
         if (drawerLayout != null && navView != null) {
             navView.getMenu().clear();
-            System.out.println(AppData.menus.size()+"------------------");
+            System.out.println(AppData.menus.size()+"updateDrawerContent()参数中menuId是:2131427366   AppData.menus这个是查询出来的菜单列表集合  ----"+menuId);
             if(AppData.menus.size() <= 0){
 
             }else{
+                int realMenuId = 2131230100;
                 for (UMenu u : AppData.menus){
                     System.out.println(AppData.menus.size()+"------------------"+u.getMname());
-                    navView.getMenu().add(R.id.repositories,R.drawable.ic_add,1,u.getMname()).setIcon(R.drawable.ic_add);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        Intent i = new Intent();
+                        i.putExtra("url",u.getMurl());
+                        navView.getMenu().add((33),(realMenuId++),1,u.getMname()).setIcon(R.drawable.ic_add).setIntent(i);
+                    }
+
                 }
             }
 
