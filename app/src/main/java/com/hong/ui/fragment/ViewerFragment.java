@@ -2,6 +2,8 @@
 
 package com.hong.ui.fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,7 +11,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.hong.AppConfig;
 import com.hong.AppData;
@@ -19,12 +23,15 @@ import com.hong.inject.component.DaggerFragmentComponent;
 import com.hong.inject.module.FragmentModule;
 import com.hong.mvp.contract.IViewerContract;
 import com.hong.mvp.presenter.ViewerPresenter;
+import com.hong.ui.activity.PicSelectActivity;
 import com.hong.ui.fragment.base.BaseFragment;
 import com.hong.ui.widget.webview.ProgressWebView;
 import com.hong.util.BundleHelper;
 import com.hong.util.NullHelper;
 import com.hong.util.PrefUtils;
 import com.thirtydegreesray.dataautoaccess.annotation.AutoAccess;
+
+import java.io.PrintStream;
 
 import butterknife.BindView;
 
@@ -48,6 +55,11 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
     @AutoAccess boolean wrap = false;
     //store scroll y percent, recover position when needed
     @AutoAccess float scrollYPercent = 0;
+
+
+
+
+
 
 
     @Override
@@ -76,6 +88,33 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
         wrap = PrefUtils.isCodeWrap();
         loader.setVisibility(View.VISIBLE);
         loader.setIndeterminate(true);
+
+        initMyWebView();
+    }
+
+    private class JsInterface_2 {
+        private Context mContext;
+
+        public JsInterface_2(Context context) {
+            this.mContext = context;
+        }
+
+        @JavascriptInterface
+        public void selectImage(String jdid, String userName, String picType) {
+            Log.i("---------", "selectImage: ____"+jdid+"///////"+userName+"///////"+picType);
+//            MainActivity2.this.jdid = str;
+//            MainActivity2.this.username = str2;
+//            MainActivity2.this.prefix = str3;
+            startActivityForResult(new Intent(getContext(), PicSelectActivity.class), 1);
+        }
+
+
+    }
+
+    private void initMyWebView(){
+
+        webView.addJavascriptInterface(new JsInterface_2(getContext()), "AndroidWebView");
+
     }
 
     @Override
@@ -143,8 +182,6 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
             webView.loadUrl(url);
             webView.setContentChangedListener(this);
         }
-
-
     }
 
     public void refresh() {

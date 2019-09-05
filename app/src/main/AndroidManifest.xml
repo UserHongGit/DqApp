@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.hong">
 
 
@@ -29,6 +30,7 @@
         android:label="井下作业管理"
         android:roundIcon="@mipmap/newicon"
         android:supportsRtl="true"
+        tools:replace="android:theme"
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/SplashTheme">
 
