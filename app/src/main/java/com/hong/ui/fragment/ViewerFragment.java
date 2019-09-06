@@ -2,6 +2,7 @@
 
 package com.hong.ui.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,7 +32,10 @@ import com.hong.util.NullHelper;
 import com.hong.util.PrefUtils;
 import com.thirtydegreesray.dataautoaccess.annotation.AutoAccess;
 
+import java.io.File;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import butterknife.BindView;
 
@@ -42,6 +46,7 @@ import butterknife.BindView;
 public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IViewerContract.View, ProgressWebView.ContentChangedListener {
 
 
+    private static String TAG = ViewerFragment.class.getSimpleName()+"_________-";
 
     public static ViewerFragment toUrl(String url, String user) {
         Log.i("=============->", "show: ====================-toUrl");
@@ -57,6 +62,11 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
     @AutoAccess float scrollYPercent = 0;
 
 
+    //自定义开始
+    private ArrayList<String> pathArr;
+    private ProgressDialog progressDialog;
+    private String jdid,  userName,  prefix;
+    //自定义结束
 
 
 
@@ -100,19 +110,54 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
         }
 
         @JavascriptInterface
-        public void selectImage(String jdid, String userName, String picType) {
-            Log.i("---------", "selectImage: ____"+jdid+"///////"+userName+"///////"+picType);
-//            MainActivity2.this.jdid = str;
-//            MainActivity2.this.username = str2;
-//            MainActivity2.this.prefix = str3;
+        public void selectImage(String jdid, String userName, String prefix) {
+            Log.i("---------", "selectImage: ____"+jdid+"///////"+userName+"///////"+prefix);
+            ViewerFragment.this.jdid = jdid;
+            ViewerFragment.this.userName = userName;
+            ViewerFragment.this.prefix = prefix;
             startActivityForResult(new Intent(getContext(), PicSelectActivity.class), 1);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (resultCode != -1) {
+            return;
+        }
+        if(requestCode == 1){
+            pathArr = intent.getStringArrayListExtra("key");
+            if(pathArr.size() <= 0){
+                Toast.makeText(getContext(),"请选择图片后上传!",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Iterator<String> iterator = pathArr.iterator();
+
+            while (iterator.hasNext()){
+                System.out.println("进来没__________-");
+                File file = new File(iterator.next());
+                try{
+                    Log.i(TAG, "onActivityResult: 文件是否存在_________"+file.exists());
+                    if(file.exists() && file.length() > 0){
+                        mPresenter.uploadImg(file,file.getName(),userName,jdid,prefix);
+                    }
+
+                }catch (Exception e){
+                    System.err.println("上传图片出错!");
+                    e.printStackTrace();
+                }
+            }
+            while (iterator.hasNext()){
+                Log.i(TAG, "图片路径: ____"+iterator.next());
+            }
+
+        }
+
 
 
     }
 
     private void initMyWebView(){
-
         webView.addJavascriptInterface(new JsInterface_2(getContext()), "AndroidWebView");
 
     }

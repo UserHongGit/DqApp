@@ -27,7 +27,7 @@
         android:name="com.hong.AppApplication"
         android:allowBackup="true"
         android:icon="@mipmap/newicon"
-        android:label="井下作业管理"
+        android:label="大庆井下作业管理"
         android:roundIcon="@mipmap/newicon"
         android:supportsRtl="true"
         tools:replace="android:theme"
@@ -37,7 +37,7 @@
         <activity
             android:name="com.hong.ui.activity.SplashActivity"
             android:screenOrientation="portrait"
-            android:label="井下作业管理"
+            android:label="大庆井下作业管理"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,7 +48,7 @@
 
         <activity
             android:name="com.hong.ui.activity.LoginActivity"
-            android:label="井下作业管理"
+            android:label="大庆井下作业管理"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -63,11 +63,11 @@
 
         <activity
             android:name="com.hong.MainActivity"
-            android:label="井下作业管理"
+            android:label="大庆井下作业管理"
             android:launchMode="singleTask"/>
         <activity
             android:name="com.hong.ui.activity.WebActivity"
-            android:label="井下作业管理"
+            android:label="大庆大庆井下作业管理"
             android:launchMode="singleTask"/>
         <activity android:name="com.hong.ui.activity.SettingsActivity" android:label="@string/settings"/>
         <activity android:name="com.hong.ui.activity.RepositoryActivity" android:label="@string/repository"/>
@@ -76,6 +76,7 @@
         <activity android:name="com.hong.ui.activity.GxlrActivity" android:label="工序显示主页"/>
         <activity android:name="com.hong.ui.activity.AddTxtActivity" android:label="添加施工参数表"/>
         <activity android:name="com.hong.ui.activity.AddSgcsActivity" android:label="施工参数详细字段查询表"/>
+        <activity android:name=".ui.activity.PicSelectActivity" android:label="打开相机"/>
     </application>
 
 </manifest>

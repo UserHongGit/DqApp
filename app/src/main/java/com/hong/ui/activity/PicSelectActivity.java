@@ -10,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -31,8 +32,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 
 public class PicSelectActivity extends AppCompatActivity implements View.OnClickListener,
         RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener {
@@ -52,11 +51,26 @@ public class PicSelectActivity extends AppCompatActivity implements View.OnClick
     private int themeId;
     private int chooseMode = PictureMimeType.ofAll();
 
+    //自定义开始
+    private Button shangchuan,quxiao;
+    public ArrayList<String> filepath = new ArrayList();
+    //自定义结束
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_picselect);
         themeId = R.style.picture_default_style;
+
+
+        shangchuan = (Button)findViewById(R.id.shangchuan);
+        quxiao = (Button)findViewById(R.id.quxiao);
+        shangchuan.setOnClickListener(this);
+        quxiao.setOnClickListener(this);
+
+
+
         minus = (ImageView) findViewById(R.id.minus);
         plus = (ImageView) findViewById(R.id.plus);
         tv_select_num = (TextView) findViewById(R.id.tv_select_num);
@@ -123,29 +137,29 @@ public class PicSelectActivity extends AppCompatActivity implements View.OnClick
 
         // 清空图片缓存，包括裁剪、压缩后的图片 注意:必须要在上传完成后调用 必须要获取权限
         RxPermissions permissions = new RxPermissions(this);
-        permissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Observer<Boolean>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-            }
-
-            @Override
-            public void onNext(Boolean aBoolean) {
-                if (aBoolean) {
-                    PictureFileUtils.deleteCacheDirFile(PicSelectActivity.this);
-                } else {
-                    Toast.makeText(PicSelectActivity.this,
-                            getString(R.string.picture_jurisdiction), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-            }
-
-            @Override
-            public void onComplete() {
-            }
-        });
+//        permissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Observer<Boolean>() {
+//            @Override
+//            public void onSubscribe(Disposable d) {
+//            }
+//
+//            @Override
+//            public void onNext(Boolean aBoolean) {
+//                if (aBoolean) {
+//                    PictureFileUtils.deleteCacheDirFile(PicSelectActivity.this);
+//                } else {
+//                    Toast.makeText(PicSelectActivity.this,
+//                            getString(R.string.picture_jurisdiction), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//            }
+//        });
 
     }
 
@@ -251,7 +265,9 @@ public class PicSelectActivity extends AppCompatActivity implements View.OnClick
                     // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
                     // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
                     // 如果裁剪并压缩了，已取压缩路径为准，因为是先裁剪后压缩的
+                    filepath.clear();
                     for (LocalMedia media : selectList) {
+                        filepath.add(media.getPath());
                         Log.i(TAG, "压缩---->" + media.getCompressPath());
                         Log.i(TAG, "原图---->" + media.getPath());
                         Log.i(TAG, "裁剪---->" + media.getCutPath());
@@ -281,9 +297,22 @@ public class PicSelectActivity extends AppCompatActivity implements View.OnClick
                 tv_select_num.setText(maxSelectNum + "");
                 adapter.setSelectMax(maxSelectNum);
                 break;
+            case R.id.quxiao:
+                finish();
+                break;
+            case R.id.shangchuan:
+                callBackPath();
+
+                break;
         }
     }
+    public void callBackPath() {
+        Intent intent = new Intent();
+        intent.putStringArrayListExtra("key", filepath);
 
+        setResult(-1, intent);
+        finish();
+    }
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
         switch (checkedId) {

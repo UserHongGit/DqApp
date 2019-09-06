@@ -2,15 +2,33 @@
 
 package com.hong.mvp.presenter;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.hong.AppData;
 import com.hong.dao.DaoSession;
+import com.hong.http.core.HttpObserver;
+import com.hong.http.core.HttpResponse;
 import com.hong.mvp.contract.IViewerContract;
 import com.hong.mvp.model.FileModel;
+import com.hong.mvp.model.sgcs.GxEntity;
+import com.hong.mvp.model.sgcs.SgcsReturn;
 import com.hong.mvp.presenter.base.BasePresenter;
 import com.thirtydegreesray.dataautoaccess.annotation.AutoAccess;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+
 import javax.inject.Inject;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Response;
+import rx.Observable;
 
 /**
  * Created by upc_jxzy on 2017/8/19 15:58:43
@@ -58,6 +76,46 @@ FileModel fileModel;
 //            mView.loadMdText(source, null);
 //        }
     }
+
+
+    @Override
+    public void uploadImg(File file,String fileName,String userName,String jdid,String prefix) {
+        mView.showLoading();
+        Log.i("--------", "uploadImg: shangcuhan____________--");
+        HttpObserver<HashMap<String,String>> httpObserver =
+                new HttpObserver<HashMap<String,String>>() {
+                    @Override
+                    public void onError(@NonNull Throwable error) {
+                        Toast.makeText(getContext(),"图片上传失败!",Toast.LENGTH_SHORT).show();
+                        error.printStackTrace();
+                        mView.hideLoading();
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull HttpResponse<HashMap<String,String>> response) {
+                        Toast.makeText(getContext(),response.body().get("msg"),Toast.LENGTH_SHORT).show();
+                        mView.hideLoading();
+                    }
+                };
+        generalRxHttpExecute(new IObservableCreator<HashMap<String,String>>() {
+            @Nullable
+            @Override
+            public Observable<Response<HashMap<String,String>>> createObservable(boolean forceNetWork) {
+                RequestBody requestFile =
+                        RequestBody.create(MediaType.parse("application/otcet-stream"), file);
+                MultipartBody.Part body =
+                        MultipartBody.Part.createFormData("file2", file.getName(), requestFile);
+                String descriptionString = fileName;
+                RequestBody description =
+                        RequestBody.create(
+                                MediaType.parse("multipart/form-data"), descriptionString);
+
+                return getViewerService("").uploadImg(description,body,fileName,userName,jdid,prefix);
+            }
+        }, httpObserver);
+
+    }
+
 
     @Override
     public void load(boolean isReload) {

@@ -31,7 +31,7 @@
             android:layout_centerVertical="true"
             android:ellipsize="end"
             android:maxEms="11"
-            android:text="@string/app_name"
+            android:text="井下作业管理"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
@@ -64,12 +64,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:orientation="vertical">
 
             <include layout="@layout/layout_number" />
 
             <RadioGroup
                 android:id="@+id/rgb_style"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -362,4 +364,25 @@
                 android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RadioGroup android:orientation="horizontal" android:id="@+id/home_tab" android:background="#f1f1f1" android:layout_width="match_parent" android:layout_height="45dp" android:layout_alignParentBottom="true">
+        <Button android:textStyle="bold"
+                android:textColor="#706f6f"
+                android:id="@+id/quxiao"
+                android:background="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="取消"/>
+            <Button android:textStyle="bold"
+                android:textColor="#706f6f"
+                android:id="@+id/shangchuan"
+                android:background="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="200dp"
+                android:text="上传"/>
+        </RadioGroup>
+    </RelativeLayout>
 </LinearLayout>

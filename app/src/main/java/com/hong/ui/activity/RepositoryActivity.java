@@ -18,7 +18,6 @@ import android.widget.TextView;
 import butterknife.BindView;
 import com.hong.AppData;
 import com.hong.R;
-import com.hong.common.GlideApp;
 import com.hong.inject.component.AppComponent;
 import com.hong.inject.component.DaggerActivityComponent;
 import com.hong.inject.module.ActivityModule;
@@ -191,10 +190,10 @@ public class RepositoryActivity extends PagerActivity<RepositoryPresenter> imple
             this.tabLayout.setupWithViewPager(this.viewPager);
             this.viewPager.setAdapter(this.pagerAdapter);
             showFirstPager();
-            GlideApp.with(getActivity())
-                    .load(repo.getAvatarurl())
-                    .onlyRetrieveFromCache(!PrefUtils.isLoadImageEnable())
-                    .into(userImageViewBg);
+//            GlideApp.with(getActivity())
+//                    .load(repo.getAvatarurl())
+//                    .onlyRetrieveFromCache(!PrefUtils.isLoadImageEnable())
+//                    .into(userImageViewBg);
         } else {
             noticeRepositoryUpdated(repo);
         }

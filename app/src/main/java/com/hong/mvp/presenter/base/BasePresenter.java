@@ -10,6 +10,7 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
+import com.hong.http.ViewerService;
 import com.orhanobut.logger.Logger;
 import com.thirtydegreesray.dataautoaccess.DataAutoAccess;
 import com.hong.AppConfig;
@@ -174,6 +175,11 @@ public abstract class BasePresenter<V extends IBaseContract.View> implements IBa
         return getServices(SearchService.class);
     }
 
+    protected ViewerService getViewerService(String token) {
+        return AppRetrofit.INSTANCE
+                .getRetrofit(AppConfig.UPC_API_BASE_URL, token)
+                .create(ViewerService.class);
+    }
 
     protected IssueService getIssueService() {
         return getServices(IssueService.class);

@@ -204,14 +204,14 @@ public abstract class BaseActivity<P extends IBaseContract.Presenter> extends Ap
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
         Log.i(TAG, "onTrimMemory: ");
-        Glide.with(this).onTrimMemory(level);
+//        Glide.with(this).onTrimMemory(level);
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
         Log.i(TAG, "onLowMemory: ");
-        Glide.with(this).onLowMemory();
+//        Glide.with(this).onLowMemory();
     }
 
     protected void setToolbarBackEnable() {

@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.hong.R;
-import com.hong.common.GlideApp;
+//import com.hong.common.GlideApp;
 import com.hong.mvp.model.Repository;
 import com.hong.ui.adapter.base.BaseAdapter;
 import com.hong.ui.adapter.base.BaseViewHolder;
@@ -81,10 +81,10 @@ public class NotificationsAdapter extends BaseAdapter<BaseViewHolder,
             RepoViewHolder holder = (RepoViewHolder) viewHolder;
             Repository model = data.get(position).getM1();
             holder.repoName.setText(model.getFullName());
-            GlideApp.with(fragment)
-                    .load(model.getOwner().getAvatarUrl())
-                    .onlyRetrieveFromCache(!PrefUtils.isLoadImageEnable())
-                    .into(holder.userAvatar);
+//            GlideApp.with(fragment)
+//                    .load(model.getOwner().getAvatarUrl())
+//                    .onlyRetrieveFromCache(!PrefUtils.isLoadImageEnable())
+//                    .into(holder.userAvatar);
         } else {
             NotificationViewHolder holder = (NotificationViewHolder) viewHolder;
             Notification model = data.get(position).getM2();

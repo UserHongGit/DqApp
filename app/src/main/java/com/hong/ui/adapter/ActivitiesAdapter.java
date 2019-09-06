@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 
 import com.hong.R;
-import com.hong.common.GlideApp;
+//import com.hong.common.GlideApp;
 import com.hong.mvp.model.Event;
 import com.hong.ui.adapter.base.BaseAdapter;
 import com.hong.ui.adapter.base.BaseViewHolder;
@@ -53,10 +53,10 @@ public class ActivitiesAdapter extends BaseAdapter<ActivitiesAdapter.ViewHolder,
         super.onBindViewHolder(holder, position);
         Event model = data.get(position);
         Log.i(TAG, "onBindViewHolder: 全球动态返回参数__"+model.getTrendid()+"///"+model.getCreateTime());
-        GlideApp.with(fragment)
-                .load("https://avatars3.githubusercontent.com/u/39000134?v=4")
-                .onlyRetrieveFromCache(!PrefUtils.isLoadImageEnable())
-                .into(holder.userAvatar);
+//        GlideApp.with(fragment)
+//                .load("https://avatars3.githubusercontent.com/u/39000134?v=4")
+//                .onlyRetrieveFromCache(!PrefUtils.isLoadImageEnable())
+//                .into(holder.userAvatar);
         holder.userName.setText(model.getCreater());
         holder.time.setText(StringUtils.getNewsTimeStr(context, model.getCreateTime()));
         int itemCount = getItemCount();

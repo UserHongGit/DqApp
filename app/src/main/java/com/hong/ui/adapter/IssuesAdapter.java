@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 
 import com.hong.R;
-import com.hong.common.GlideApp;
+//import com.hong.common.GlideApp;
 import com.hong.mvp.model.Issue;
 import com.hong.ui.adapter.base.BaseAdapter;
 import com.hong.ui.adapter.base.BaseViewHolder;
@@ -53,10 +53,10 @@ public class IssuesAdapter extends BaseAdapter<IssuesAdapter.ViewHolder, Issue> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         Issue model = data.get(position);
-        GlideApp.with(fragment)
-                .load(model.getUser().getAvatarUrl())
-                .onlyRetrieveFromCache(!PrefUtils.isLoadImageEnable())
-                .into(holder.userAvatar);
+//        GlideApp.with(fragment)
+//                .load(model.getUser().getAvatarUrl())
+//                .onlyRetrieveFromCache(!PrefUtils.isLoadImageEnable())
+//                .into(holder.userAvatar);
         holder.userName.setText(model.getUser().getLogin());
         holder.issueTitle.setText(model.getTitle());
         holder.commentNum.setText(String.valueOf(model.getCommentNum()));

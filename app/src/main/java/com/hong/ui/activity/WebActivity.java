@@ -26,7 +26,7 @@ import com.hong.ui.fragment.ViewerFragment;
 import com.thirtydegreesray.dataautoaccess.annotation.AutoAccess;
 import com.hong.AppData;
 import com.hong.R;
-import com.hong.common.GlideApp;
+//import com.hong.common.GlideApp;
 import com.hong.inject.component.AppComponent;
 import com.hong.inject.component.DaggerActivityComponent;
 import com.hong.inject.module.ActivityModule;
@@ -156,10 +156,10 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
             toggleAccountLay();
         });
         User loginUser = AppData.INSTANCE.getLoggedUser();
-        GlideApp.with(getActivity())
-                .load(loginUser.getAvatarUrl())
-                .onlyRetrieveFromCache(!PrefUtils.isLoadImageEnable())
-                .into(avatar);
+//        GlideApp.with(getActivity())
+//                .load(loginUser.getAvatarUrl())
+//                .onlyRetrieveFromCache(!PrefUtils.isLoadImageEnable())
+//                .into(avatar);
         name.setText(StringUtils.isBlank(loginUser.getName()) ? loginUser.getLogin() : loginUser.getName());
         Calendar c = Calendar.getInstance();
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");

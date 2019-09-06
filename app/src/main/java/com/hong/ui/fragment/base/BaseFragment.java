@@ -158,7 +158,7 @@ public abstract class BaseFragment<P extends IBaseContract.Presenter>
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        Glide.with(this).onLowMemory();
+//        Glide.with(this).onLowMemory();
     }
 
     public void onFragmentShowed() {
