@@ -10,9 +10,6 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
-import com.hong.http.ViewerService;
-import com.orhanobut.logger.Logger;
-import com.thirtydegreesray.dataautoaccess.DataAutoAccess;
 import com.hong.AppConfig;
 import com.hong.AppData;
 import com.hong.R;
@@ -27,6 +24,7 @@ import com.hong.http.NotificationsService;
 import com.hong.http.RepoService;
 import com.hong.http.SearchService;
 import com.hong.http.UserService;
+import com.hong.http.ViewerService;
 import com.hong.http.core.AppRetrofit;
 import com.hong.http.core.HttpObserver;
 import com.hong.http.core.HttpProgressSubscriber;
@@ -40,17 +38,23 @@ import com.hong.mvp.contract.base.IBaseContract;
 import com.hong.util.NetHelper;
 import com.hong.util.PrefUtils;
 import com.hong.util.StringUtils;
+import com.orhanobut.logger.Logger;
+import com.thirtydegreesray.dataautoaccess.DataAutoAccess;
+
+import org.apache.http.conn.ConnectTimeoutException;
+
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import okhttp3.ResponseBody;
-import org.apache.http.conn.ConnectTimeoutException;
 import retrofit2.Response;
 import rx.Observable;
+import rx.Scheduler;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -244,11 +248,11 @@ public abstract class BasePresenter<V extends IBaseContract.View> implements IBa
         if (subscriber != null) {
             subscribers.add(subscriber);
             observable.subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                   // .observeOn(Schedulers.io())
                     .subscribe(subscriber);
         } else {
             observable.subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                   // .observeOn(Schedulers.io())
                     .subscribe(new HttpSubscriber<T>());
         }
     }

@@ -30,12 +30,15 @@ import com.hong.ui.widget.webview.ProgressWebView;
 import com.hong.util.BundleHelper;
 import com.hong.util.NullHelper;
 import com.hong.util.PrefUtils;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.thirtydegreesray.dataautoaccess.annotation.AutoAccess;
 
 import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -117,6 +120,19 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
             ViewerFragment.this.prefix = prefix;
             startActivityForResult(new Intent(getContext(), PicSelectActivity.class), 1);
         }
+        @JavascriptInterface
+        public void searchImg(String jdid) {
+            Log.i("---------", "searchImg: ____"+jdid);
+
+
+
+        }
+
+
+
+
+
+
     }
 
     @Override

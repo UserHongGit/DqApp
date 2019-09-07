@@ -2,6 +2,7 @@
 
 package com.hong.mvp.presenter;
 
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -86,14 +87,12 @@ FileModel fileModel;
                 new HttpObserver<HashMap<String,String>>() {
                     @Override
                     public void onError(@NonNull Throwable error) {
-                        Toast.makeText(getContext(),"图片上传失败!",Toast.LENGTH_SHORT).show();
                         error.printStackTrace();
                         mView.hideLoading();
                     }
 
                     @Override
                     public void onSuccess(@NonNull HttpResponse<HashMap<String,String>> response) {
-                        Toast.makeText(getContext(),response.body().get("msg"),Toast.LENGTH_SHORT).show();
                         mView.hideLoading();
                     }
                 };

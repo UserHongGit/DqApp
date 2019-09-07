@@ -9,6 +9,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.os.Build;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.hong.inject.component.AppComponent;
@@ -32,7 +33,7 @@ public class AppApplication extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-       // MultiDex.install(this);
+        MultiDex.install(this);
     }
 
     @Override

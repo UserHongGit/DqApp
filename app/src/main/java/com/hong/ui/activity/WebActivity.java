@@ -255,7 +255,7 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
 
             default:
                 Log.i(this.TAG, "updateFragmentByNavId: default");
-                loadFragment(2131230819,url);
+                loadFragment(R.id.nav_search,url);
                 break;
         }
     }
@@ -323,10 +323,10 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
         //这里写switch区分跳转
         if(itemId!=0){
             switch(itemId){
-                case 2131230819:
+                case R.id.nav_search:
                     return ViewerFragment.toUrl(AppConfig.UPC_API_BASE_URL+url,AppData.INSTANCE.getLoggedUser().getLogin());
                 case 2131230100:
-                    return ViewerFragment.toUrl(AppConfig.UPC_API_BASE_URL+"m/sggl/zyfp2.jsp",AppData.INSTANCE.getLoggedUser().getLogin());
+                    return ViewerFragment.toUrl(AppConfig.UPC_API_BASE_URL+"m/sggl/zyfp1.jsp",AppData.INSTANCE.getLoggedUser().getLogin());
                 case 2131230101:
                     return ViewerFragment.toUrl(AppConfig.UPC_API_BASE_URL+"m/sggl/zyfp2.jsp",AppData.INSTANCE.getLoggedUser().getLogin());
                 case 2131230102:
@@ -335,6 +335,8 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
                     return ViewerFragment.toUrl(AppConfig.UPC_API_BASE_URL+"m/sggl/zyfp2.jsp",AppData.INSTANCE.getLoggedUser().getLogin());
                 case 2131230104:
                     return ViewerFragment.toUrl(AppConfig.UPC_API_BASE_URL+"m/sggl/zyfp2.jsp",AppData.INSTANCE.getLoggedUser().getLogin());
+               default:
+                    return ViewerFragment.toUrl(AppConfig.UPC_API_BASE_URL+url,AppData.INSTANCE.getLoggedUser().getLogin());
 
 
             }

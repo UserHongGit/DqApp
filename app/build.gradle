@@ -25,7 +25,7 @@ android {
         versionName VERSION_NAME
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-        multiDexEnabled false
+        multiDexEnabled true
 
         buildConfigField "String", "OPENHUB_CLIENT_ID", (buildProperties.getLocal['openhub_client_id'] | buildProperties.getPublic['openhub_client_id']).string
         buildConfigField "String", "OPENHUB_CLIENT_SECRET", (buildProperties.getLocal['openhub_client_secret'] | buildProperties.getPublic['openhub_client_secret']).string
@@ -40,6 +40,12 @@ android {
 
     buildTypes {
         release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            aaptOptions.cruncherEnabled = false
+            aaptOptions.useNewCruncher = false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -67,14 +73,14 @@ dependencies {
     //androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
 
 //    implementation "com.android.support:appcompat-v7:${ANDROID_SUPPORT_VERSION}"
-    implementation "com.android.support:support-v4:${ANDROID_SUPPORT_VERSION}"
+    //implementation "com.android.support:support-v4:28.0.0"
 
     //依赖冲突  j就是这个
-    implementation "com.android.support.constraint:constraint-layout:${CONSTRAINT_VERSION}"
-    //implementation "com.android.support:design:${ANDROID_SUPPORT_VERSION}"
+    implementation "com.android.support.constraint:constraint-layout:1.1.3"
+    //implementation "com.android.support:design:28.0.0"
 
-    implementation "com.android.support:preference-v7:${ANDROID_SUPPORT_VERSION}"
-    implementation "com.android.support:preference-v14:${ANDROID_SUPPORT_VERSION}"
+//    implementation "com.android.support:preference-v7:28.0.0"
+    implementation "com.android.support:preference-v14:25.3.1"
     testImplementation 'junit:junit:4.12'
 
     //androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -98,8 +104,8 @@ dependencies {
     implementation "org.greenrobot:eventbus:${EVENT_BUS_VERSION}"
 
     //RxJava
-    implementation "io.reactivex:rxjava:${RXJAVA_VERSION}"
-    implementation "io.reactivex:rxandroid:${RXJAVA_VERSION}"
+    //implementation "io.reactivex:rxjava:${RXJAVA_VERSION}"
+    //implementation "io.reactivex:rxandroid:${RXJAVA_VERSION}"
 
     //Type-safe HTTP client for Android and Java by Square, Inc.
     implementation "com.squareup.retrofit2:retrofit:${RETROFIT_VERSION}"
@@ -123,8 +129,8 @@ dependencies {
     implementation "com.afollestad.material-dialogs:commons:${MATERIAL_DIALOG_VERSION}"
 
     //谷歌浏览器提供的
-    implementation "com.android.support:customtabs:${ANDROID_SUPPORT_VERSION}"
-    implementation "com.android.support:customtabs:${ANDROID_SUPPORT_VERSION}"
+    implementation "com.android.support:customtabs:25.3.1"
+    //implementation "com.android.support:customtabs:${ANDROID_SUPPORT_VERSION}"
 
     //依赖讯飞lib  jar
     implementation files('libs/Sunflower.jar')
@@ -138,14 +144,15 @@ dependencies {
     implementation files('libs/tbs_sdk_thirdapp_v4.3.0.jar')
 
 //    implementation project(path: ':ucrop')
-    implementation project(':picture_library')
+    //implementation project(':picture_library')
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
 //    implementation project(path: ':picture_library)
 
     //    上传图片
 //    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.4'{
 //        exclude group: 'com.github.bumptech.glide',module 'glide'
 //    }
-//    implementation "io.reactivex.rxjava2:rxjava:2.1.3"
-//    implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
-    //implementation 'com.android.support:multidex:1.0.0'
+    implementation "io.reactivex.rxjava2:rxjava:2.1.3"
+    implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
+    implementation 'com.android.support:multidex:1.0.0'
 }

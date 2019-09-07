@@ -29,6 +29,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.inject.Inject;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import okhttp3.ResponseBody;
 import org.greenrobot.eventbus.Subscribe;
 import org.jsoup.Jsoup;
@@ -39,7 +41,6 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 import retrofit2.Response;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class RepositoriesPresenter extends BasePagerPresenter<View> implements Presenter {
@@ -305,8 +306,8 @@ public class RepositoriesPresenter extends BasePagerPresenter<View> implements P
 
                     return repos;
                 })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                //.subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
                 .subscribe(results -> {
                     if(mView == null) return;
                     if(results.size() != 0){
@@ -441,7 +442,7 @@ public class RepositoriesPresenter extends BasePagerPresenter<View> implements P
                     return repos;
                 })
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                //.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(results -> {
                     if(mView == null) return;
                     if(results != null){
