@@ -30,6 +30,7 @@ import com.hong.ui.widget.webview.ProgressWebView;
 import com.hong.util.BundleHelper;
 import com.hong.util.NullHelper;
 import com.hong.util.PrefUtils;
+import com.hong.util.photoBrowser.ImageBrowseIntent;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.thirtydegreesray.dataautoaccess.annotation.AutoAccess;
@@ -123,7 +124,12 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
         @JavascriptInterface
         public void searchImg(String jdid) {
             Log.i("---------", "searchImg: ____"+jdid);
-
+            //这个地方会查询出网络的图片   到时候可能是一个String的list
+            ArrayList<String> imageList = new ArrayList<>();
+            imageList.add("http://img3.duitang.com/uploads/item/201607/15/20160715171249_fmztu.gif");
+            imageList.add("http://i0.hdslb.com/bfs/archive/dfd38947e9b971e06d113425a863e4e7b5715335.jpg");
+            imageList.add("http://npic7.edushi.com/cn/zixun/zh-chs/2017-07/24/4050488-2017072415380279.jpg");
+            ImageBrowseIntent.showUrlImageBrowse(mContext,imageList,0);
 
 
         }
