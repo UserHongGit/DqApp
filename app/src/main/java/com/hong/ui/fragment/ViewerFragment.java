@@ -124,6 +124,7 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
         @JavascriptInterface
         public void searchImg(String jdid) {
             Log.i("---------", "searchImg: ____"+jdid);
+            mPresenter.searcImages(jdid);
             //这个地方会查询出网络的图片   到时候可能是一个String的list
             ArrayList<String> imageList = new ArrayList<>();
             imageList.add("http://img3.duitang.com/uploads/item/201607/15/20160715171249_fmztu.gif");
@@ -238,15 +239,18 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
             webView.loadUrl(AppConfig.UPC_API_BASE_URL+"sggl/LoginActionTemp!initLogin?username="+ AppData.INSTANCE.getLoggedUser().getLogin());
             webView.setContentChangedListener(this);
             AppData.isLogin = true;
-            url = NullHelper.isNull(url);
             loadLuUrl(url);
             Log.i("====", "loadLuUrl: 载入验证完成__");
         }else{
-            Log.i("=============->", "show: ====================-loadLuUrl" + url);
-            url = NullHelper.isNull(url);
+            String newUrl = url;
+            if(url.lastIndexOf("null")!=-1){
+                newUrl = url.replace("null", "sggl/LoginActionTemp!initLogin?username=" + AppData.INSTANCE.getLoggedUser().getLogin());
+            }
+            Log.i("=============->", "show: ====================-loadLuUrl" + newUrl+"////"+AppData.INSTANCE.getLoggedUser().getLogin()+"///"+AppData.INSTANCE.getLoggedUser().getName()+"//"+AppData.INSTANCE.getLoggedUser().getId());
+
             loader.setVisibility(View.VISIBLE);
             loader.setIndeterminate(false);
-            webView.loadUrl(url);
+            webView.loadUrl(newUrl);
             webView.setContentChangedListener(this);
         }
     }

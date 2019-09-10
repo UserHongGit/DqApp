@@ -23,13 +23,13 @@
     <string name="deep_purple" translatable="false">Deep Purple</string>
 
     <!-- onLoginClick -->
-    <string name="user_name">Username</string>
-    <string name="password">Password</string>
+    <string name="user_name">用户名</string>
+    <string name="password">密码</string>
     <string name="login">Login</string>
-    <string name="login_in_browser">LOGIN WITH BROWSER</string>
-    <string name="oauth_tip">Login using your default browser(OAuth)</string>
-    <string name="user_name_warning">Invalid username!</string>
-    <string name="password_warning">Invalid password!</string>
+    <string name="login_in_browser">浏览器登录</string>
+    <string name="oauth_tip">使用浏览器登录(默认)</string>
+    <string name="user_name_warning">账号错误!</string>
+    <string name="password_warning">密码错误!</string>
 
     <!-- menu -->
     <string name="profile">Profile</string>
@@ -46,8 +46,8 @@
     <string name="explore">Explore</string>
 
     <string name="info_and_repositories">Info &#038; Preferences</string>
-    <string name="settings">Settings</string>
-    <string name="about">About</string>
+    <string name="settings">设置</string>
+    <string name="about">关于</string>
 
     <string name="public_repositories">Public repositories</string>
     <string name="starred_repositories">Starred repositories</string>
@@ -66,17 +66,17 @@
     <!-- Strings related to Settings -->
 
     <!-- settings -->
-    <string name="choose_theme">Choose Theme</string>
-    <string name="theme_accent_color">Theme Accent Color</string>
-    <string name="start_page">Start Page</string>
-    <string name="cache_controller">Cache Controller</string>
-    <string name="cache_controller_desc">Load cache first if cache available, then load from network</string>
-    <string name="use_system_downloader">Use System Downloader</string>
-    <string name="use_custom_tabs">Use Custom Tabs</string>
-    <string name="custom_tabs_desc">Open in custom tabs instead of outer browser(support chrome, firefox…)</string>
-    <string name="use_custom_tabs_tips">If you want to open in outer browser directly, you could change in settings.</string>
-    <string name="language">Language</string>
-    <string name="logout">Logout</string>
+    <string name="choose_theme">选择主题</string>
+    <string name="theme_accent_color">主题强调色</string>
+    <string name="start_page">起始页面</string>
+    <string name="cache_controller">缓存控制</string>
+    <string name="cache_controller_desc">如果缓存可用,先加载缓存,然后从网络加载</string>
+    <string name="use_system_downloader">使用系统默认下载器</string>
+    <string name="use_custom_tabs">使用自定义标签</string>
+    <string name="custom_tabs_desc">使用自定以标签来代替在外部浏览器中打开(支持chorme、firefox)</string>
+    <string name="use_custom_tabs_tips">如果您想要在浏览器直接打开,您可以改变设置</string>
+    <string name="language">语言</string>
+    <string name="logout">退出</string>
 
     <!-- Repository -->
     <string name="repository">Repository</string>
@@ -111,13 +111,13 @@
     <string name="watchers">Watchers</string>
     <string name="readme">README</string>
     <string name="no_readme">NO README</string>
-    <string name="warning_dialog_tile">Warning</string>
-    <string name="cancel">Cancel</string>
-    <string name="close">Close</string>
-    <string name="ok">OK</string>
-    <string name="confirm">OK</string>
+    <string name="warning_dialog_tile">警告</string>
+    <string name="cancel">取消</string>
+    <string name="close">关闭</string>
+    <string name="ok">确定</string>
+    <string name="confirm">确定</string>
     <string name="select_branch">Select branch or tag</string>
-    <string name="share_to">Share to</string>
+    <string name="share_to">分享</string>
     <string name="no_share_clients">There are no share clients installed.</string>
     <string name="no_browser_clients">There are no browser clients installed.</string>
     <string name="no_download_clients">There are no download clients installed.</string>
@@ -178,10 +178,10 @@
     <string name="weekly">Weekly</string>
     <string name="monthly">Monthly</string>
 
-    <string name="logout_warning">Confirm to logout?</string>
-    <string name="unknown">Unknown</string>
+    <string name="logout_warning">您确定要退出吗?</string>
+    <string name="unknown">未知</string>
     <string name="organizations">Organizations</string>
-    <string name="no_user">No users</string>
+    <string name="no_user">没有用户</string>
     <string name="no_activity">No activities</string>
     <string name="no_repository">No repositories</string>
     <string name="no_file">No files</string>
@@ -190,8 +190,8 @@
     <string name="source_code" >Source code</string>
     <string name="source_code_wishes" >Star to support me</string>
     <string name="rate_in_market" >Rate or comment in market</string>
-    <string name="author" >Author</string>
-    <string name="author_name" translatable="false">30度的射线</string>
+    <string name="author" >作者</string>
+    <string name="author_name" translatable="false">红</string>
     <string name="author_location" translatable="false">NanJing,China</string>
     <string name="author_login_id" translatable="false">ThirtyDegreesRay</string>
     <string name="author_avatar_url" translatable="false">https://avatars1.githubusercontent.com/u/9625508?v=4</string>
@@ -461,8 +461,8 @@
     <string name="issue_assigned">assigned this to %s</string>
     <string name="issue_unassigned">removed their assignment</string>
 
-    <string name="disable_loading_image">Disable loading network image</string>
-    <string name="disable_loading_image_desc">Disable loading network image while mobile network</string>
+    <string name="disable_loading_image">禁用网络图片加载</string>
+    <string name="disable_loading_image_desc">在移动网络下禁用网络图片加载</string>
 
     <string name="toggle_issue_warning">Confirm to %s this issue?</string>
 

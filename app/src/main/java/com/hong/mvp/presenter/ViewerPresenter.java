@@ -12,14 +12,18 @@ import com.hong.AppData;
 import com.hong.dao.DaoSession;
 import com.hong.http.core.HttpObserver;
 import com.hong.http.core.HttpResponse;
+import com.hong.http.core.HttpSubscriber;
+import com.hong.http.model.ZyjdPicEntity;
 import com.hong.mvp.contract.IViewerContract;
 import com.hong.mvp.model.FileModel;
+import com.hong.mvp.model.User;
 import com.hong.mvp.model.sgcs.GxEntity;
 import com.hong.mvp.model.sgcs.SgcsReturn;
 import com.hong.mvp.presenter.base.BasePresenter;
 import com.thirtydegreesray.dataautoaccess.annotation.AutoAccess;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,7 +42,8 @@ import rx.Observable;
 public class ViewerPresenter extends BasePresenter<IViewerContract.View>
         implements IViewerContract.Presenter{
 
-//    @AutoAccess
+    private static final String TAG = ViewerPresenter.class.getSimpleName()+"_________--";
+    //    @AutoAccess
 //    ViewerActivity.ViewerType viewerType;
 //
     @AutoAccess
@@ -113,6 +118,29 @@ FileModel fileModel;
             }
         }, httpObserver);
 
+    }
+
+    @Override
+    public void searcImages(String jdid) {
+        HttpSubscriber<HashMap<String,ArrayList<ZyjdPicEntity>>> subscriber = new HttpSubscriber<>(
+                new HttpObserver<HashMap<String,ArrayList<ZyjdPicEntity>>>() {
+                    @Override
+                    public void onError(Throwable error) {
+                        Log.i(TAG, "根据监督id查询图片失败____");
+                        mView.dismissProgressDialog();
+                        mView.showErrorToast(getErrorTip(error));
+                    }
+
+                    @Override
+                    public void onSuccess(HttpResponse<HashMap<String,ArrayList<ZyjdPicEntity>>> response) {
+                        ArrayList<ZyjdPicEntity> rows = response.body().get("rows");
+                        Log.i(TAG, "onSuccess: 根据监督id查询图片成功____"+rows.size());
+
+                    }
+                }
+        );
+        Observable<Response<HashMap<String, ArrayList<ZyjdPicEntity>>>> observable = getViewerService("").searcImages(jdid);
+        generalRxHttpExecute(observable, subscriber);
     }
 
 

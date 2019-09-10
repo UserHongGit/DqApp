@@ -6,8 +6,12 @@ import android.support.annotation.NonNull;
 
 
 import com.hong.http.model.AuthRequestModel;
+import com.hong.http.model.UMenu;
 import com.hong.mvp.model.BasicToken;
 import com.hong.mvp.model.OauthToken;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import retrofit2.Response;
 import retrofit2.http.Body;
@@ -30,6 +34,15 @@ public interface LoginService {
     Observable<Response<BasicToken>> authorizations(
             @NonNull @Body AuthRequestModel authRequestModel
     );
+
+
+    @POST("sggl/LoginActionTemp!loginNew")
+//    @POST("authorizations")
+    @Headers("Accept: application/json")
+    Observable<Response<HashMap<String, String>>> authorizations2(
+            @Query("token") String token
+    );
+
 
     @POST("login/oauth/access_token")
     @Headers("Accept: application/json")

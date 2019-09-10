@@ -63,17 +63,19 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
     public void onGetTokenSuccess(BasicToken basicToken) {
         Log.i("============>", "LoginActivity onGetTokenSuccess");
         loginBn.doResult(true);
-        mPresenter.getMenu(basicToken);
+//        mPresenter.getMenu(basicToken);
         mPresenter.getUserInfo(basicToken);
 
     }
 
     @Override
     public void onGetTokenError(String errorMsg) {
+        Log.i(TAG, "onGetTokenError: ___________");
         loginBn.doResult(false);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                Log.i(TAG, "run: 重置____________");
                 loginBn.reset();
                 loginBn.setEnabled(true);
             }

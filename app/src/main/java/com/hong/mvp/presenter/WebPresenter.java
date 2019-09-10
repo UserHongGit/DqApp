@@ -78,7 +78,7 @@ public class WebPresenter extends BasePresenter<IWebContract.View>
                     @Override
                     public void onError(Throwable error) {
                         Log.i("============>", "getMenu onError: token-----------");
-                        mView.dismissProgressDialog();
+//                        mView.dismissProgressDialog();
                         mView.showErrorToast(getErrorTip(error));
                     }
 
@@ -92,7 +92,7 @@ public class WebPresenter extends BasePresenter<IWebContract.View>
                 }
         );
         Observable<Response<HashMap<String, ArrayList<UMenu>>>> observable = getUserService(token).
-                getMenu(true,1);
+                getMenu(token);
         generalRxHttpExecute(observable, subscriber);
 //        mView.showProgressDialog(getLoadTip());
 
@@ -118,6 +118,7 @@ public class WebPresenter extends BasePresenter<IWebContract.View>
 
     @Override
     public void logout() {
+
         daoSession.getAuthUserDao().delete(AppData.INSTANCE.getAuthUser());
         AppData.INSTANCE.setAuthUser(null);
         AppData.INSTANCE.setLoggedUser(null);

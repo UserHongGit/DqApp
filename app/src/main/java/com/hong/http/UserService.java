@@ -53,10 +53,12 @@ public interface UserService {
 
     @GET("sggl/LoginActionTemp!getMenu")
     @NonNull
-    Observable<Response<HashMap<String,ArrayList<UMenu>>>>  getMenu(@Header("forceNetWork") boolean z, @Query("page") int i);
+    Observable<Response<HashMap<String,ArrayList<UMenu>>>>  getMenu(
+            @Query("token") String token
+    );
 
 
-    @GET("sggl/LoginActionTemp!getMenu2")
+    @GET("sggl")
     @NonNull
     Observable<Response<HashMap<String,ArrayList<String>>>> getPublicEvent(@Header("forceNetWork") boolean z, @Query("page") int i);
 

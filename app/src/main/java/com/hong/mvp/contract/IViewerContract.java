@@ -27,6 +27,7 @@ public interface IViewerContract {
     interface Presenter extends IBaseContract.Presenter<IViewerContract.View>{
         void load(boolean isReload);
         void uploadImg(File file, String fileName, String userName, String jdid, String prefix);
+        void searcImages(String jdid);
     }
 
 }

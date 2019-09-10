@@ -21,6 +21,8 @@ import com.hong.http.model.UMenu;
 import com.hong.mvp.contract.base.IBaseContract;
 import com.hong.util.ViewUtils;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 
 /**
@@ -147,7 +149,10 @@ public abstract class BaseDrawerActivity<P extends IBaseContract.Presenter> exte
         Log.i("=============>","101 - based - updateStartDrawerContent"+menuId);
         updateDrawerContent(navViewStart, menuId);
     }
-
+    protected void updateStartDrawerContent(int menuId, ArrayList<UMenu> menus) {
+        Log.i("=============>","101 - based - updateStartDrawerContent"+menuId);
+        updateDrawerContent(navViewStart, menuId,menus);
+    }
     protected void updateEndDrawerContent(int menuId) {
         updateDrawerContent(navViewEnd, menuId);
     }
@@ -167,6 +172,33 @@ public abstract class BaseDrawerActivity<P extends IBaseContract.Presenter> exte
                 int realMenuId = 2131230100;
                 for (UMenu u : AppData.menus){
                     System.out.println(AppData.menus.size()+"------------------"+u.getMname());
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        Intent i = new Intent();
+                        i.putExtra("url",u.getMurl());
+                        navView.getMenu().add((33),(realMenuId++),1,u.getMname()).setIcon(R.drawable.ic_add).setIntent(i);
+                    }
+
+                }
+            }
+
+            navView.inflateMenu(menuId);
+
+            if (drawerLayout.indexOfChild(navView) == -1) drawerLayout.addView(navView);
+
+        }
+    }
+
+    private void updateDrawerContent(NavigationView navView, int menuId,ArrayList<UMenu> menus) {
+        Log.i("=============>","102 - based - updateDrawerContent"+menuId);
+        if (drawerLayout != null && navView != null) {
+            navView.getMenu().clear();
+            System.out.println(menus.size()+"updateDrawerContent()参数中menuId是:2131427366   menus这个是查询出来的菜单列表集合  ----"+menuId);
+            if(menus.size() <= 0){
+
+            }else{
+                int realMenuId = 2131230100;
+                for (UMenu u : menus){
+                    System.out.println(menus.size()+"------------------"+u.getMname());
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         Intent i = new Intent();
                         i.putExtra("url",u.getMurl());

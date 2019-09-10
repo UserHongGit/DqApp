@@ -94,27 +94,30 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
     public void basicLogin(String userName, String password) {
         AuthRequestModel authRequestModel = AuthRequestModel.generate();
         String token = Credentials.basic(userName, password);
-        Observable<Response<BasicToken>> observable = getLoginService(token).authorizations(authRequestModel);
+        Log.i("==========", "basicLogin: __"+token);
+        Observable<Response<HashMap<String, String>>> observable = getLoginService(token).authorizations2(token);
 
-        HttpSubscriber<BasicToken> subscriber = new HttpSubscriber<>(
-                new HttpObserver<BasicToken>() {
+        HttpSubscriber<HashMap<String, String>> subscriber = new HttpSubscriber<>(
+                new HttpObserver<HashMap<String, String>>() {
                     @Override
                     public void onError(@NonNull Throwable error) {
-                        Log.i("============>", "onError: token");
+                        Log.i("============>", "onError: token______"+error);
 //                                mView.dismissProgressDialog();
                         mView.onGetTokenError(getErrorTip(error));
                     }
 
                     @Override
-                    public void onSuccess(@NonNull HttpResponse<BasicToken> response) {
-                        BasicToken token = response.body();
-                        if (token != null) {
-                            Log.i("============>", "onSuccess: token+++++++++++" + token.getToken());
-                            mView.onGetTokenSuccess(token);
-                        } else {
-                            Log.i("============>", "onSuccess: token null");
-                            mView.onGetTokenError(response.getOriResponse().message());
-                        }
+                    public void onSuccess(@NonNull HttpResponse<HashMap<String, String>> response) {
+                        Log.i("====", "onSuccess: 44444___"+response+"////"+response.toString()+"///"+response.body());
+                        String rows = response.body().get("token");
+                        Log.i("====", "onSuccess: ___"+rows);
+//                        if (token != null) {
+//                            Log.i("============>", "onSuccess: token+++++++++++" + token.getToken());
+//                            mView.onGetTokenSuccess(token);
+//                        } else {
+//                            Log.i("============>", "onSuccess: token null");
+//                            mView.onGetTokenError(response.getOriResponse().message());
+//                        }
 
                     }
                 }
@@ -161,36 +164,35 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
 
     }
 
-    @Override
-    public void getMenu(BasicToken basicToken) {
-        Log.i("----", "getMenu: 请求______________");
-        HttpSubscriber<HashMap<String,ArrayList<UMenu>>> subscriber = new HttpSubscriber<>(
-                new HttpObserver<HashMap<String,ArrayList<UMenu>>>() {
-                    @Override
-                    public void onError(Throwable error) {
-                        Log.i("============>", "getMenu onError: token-----------");
-                        mView.dismissProgressDialog();
-                        mView.showErrorToast(getErrorTip(error));
-                    }
-
-                    @Override
-                    public void onSuccess(HttpResponse<HashMap<String,ArrayList<UMenu>>> response) {
-                        Log.i("============>", "getMenu onSuccess: token+++++++++++" + response.body().toString() );
-                        ArrayList<UMenu> rows = response.body().get("rows");
-                        AppData.menus = rows;
-
-//                        for (UMenu u : rows){
-//                            System.out.println(u.getMurl()+"///"+u.getMname());
-//                        }
-                    }
-                }
-        );
-        Observable<Response<HashMap<String, ArrayList<UMenu>>>> observable = getUserService(basicToken.getToken()).
-                getMenu(true,1);
-        generalRxHttpExecute(observable, subscriber);
-//        mView.showProgressDialog(getLoadTip());
-
-    }
+//    public void getMenu(BasicToken basicToken) {
+//        Log.i("----", "getMenu: 请求______________");
+//        HttpSubscriber<HashMap<String,ArrayList<UMenu>>> subscriber = new HttpSubscriber<>(
+//                new HttpObserver<HashMap<String,ArrayList<UMenu>>>() {
+//                    @Override
+//                    public void onError(Throwable error) {
+//                        Log.i("============>", "getMenu onError: token-__)___----------");
+//                        mView.dismissProgressDialog();
+//                        mView.showErrorToast(getErrorTip(error));
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(HttpResponse<HashMap<String,ArrayList<UMenu>>> response) {
+//                        Log.i("============>", "getMenu onSuccess: token+++++++++++" + response.body().toString() );
+//                        ArrayList<UMenu> rows = response.body().get("rows");
+//                        AppData.menus = rows;
+//
+////                        for (UMenu u : rows){
+////                            System.out.println(u.getMurl()+"///"+u.getMname());
+////                        }
+//                    }
+//                }
+//        );
+////        Observable<Response<HashMap<String, ArrayList<UMenu>>>> observable = getUserService(basicToken.getToken()).
+////                getMenu(true,1);
+////        generalRxHttpExecute(observable, subscriber);
+////        mView.showProgressDialog(getLoadTip());
+//
+//    }
 
     private void saveAuthUser(BasicToken basicToken, User userInfo) {
         String updateSql = "UPDATE " + daoSession.getAuthUserDao().getTablename() + " SET " + AuthUserDao.Properties.Selected.columnName + " = 0";

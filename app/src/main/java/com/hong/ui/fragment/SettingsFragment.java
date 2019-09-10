@@ -64,8 +64,8 @@ public class SettingsFragment extends PreferenceFragmentCompat
         findPreference(PrefUtils.THEME).setOnPreferenceClickListener(this);
         findPreference(PrefUtils.LANGUAGE).setOnPreferenceClickListener(this);
 //        findPreference(PrefUtils.LOGOUT).setOnPreferenceClickListener(this);
-        findPreference(PrefUtils.START_PAGE).setOnPreferenceClickListener(this);
-        findPreference(PrefUtils.START_PAGE).setSummary(nameList.get(getStartPageIndex()));
+//        findPreference(PrefUtils.START_PAGE).setOnPreferenceClickListener(this);
+//        findPreference(PrefUtils.START_PAGE).setSummary(nameList.get(getStartPageIndex()));
         ((ColorChooserPreference) findPreference(PrefUtils.ACCENT_COLOR))
                 .setColorChooserCallback(this);
     }

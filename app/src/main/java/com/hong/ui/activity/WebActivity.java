@@ -1,5 +1,6 @@
 package com.hong.ui.activity;
 
+import android.app.ActivityManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -91,7 +92,11 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
     /* access modifiers changed from: protected */
     public void setupActivityComponent(AppComponent appComponent) {
         Log.i("=============>", "8 - web setupActivityComponent");
-        DaggerActivityComponent.builder().appComponent(appComponent).activityModule(new ActivityModule(getActivity())).build().inject(this);
+        DaggerActivityComponent.builder()
+                .appComponent(appComponent)
+                .activityModule(new ActivityModule(getActivity()))
+                .build()
+                .inject(this);
     }
 
     /* access modifiers changed from: protected */
@@ -112,11 +117,10 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
     /* access modifiers changed from: protected */
     public void initView(Bundle savedInstanceState) {
         String str = "=============>";
-        Log.i(str, "11 - web initView");
+        Log.i(str, "11 - web initView"+AppData.INSTANCE.getAccessToken());
         super.initView(savedInstanceState);
-        setToolbarScrollAble(true);
-
         mPresenter.getMenu(AppData.INSTANCE.getAccessToken());
+        setToolbarScrollAble(true);
 
         //左侧滑动菜单通过这个方法渲染,activity_web_drawer存储的菜单的列表名称
         updateStartDrawerContent(R.layout.activity_web_drawer);
@@ -436,13 +440,16 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
 
     public void restartApp() {
         getActivity().finishAffinity();
+        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        am.killBackgroundProcesses("com.hong");
+        android.os.Process.killProcess(android.os.Process.myPid());
         startActivity(new Intent(getActivity(), SplashActivity.class));
     }
 
     @Override
     public void renderMenu(ArrayList<UMenu> menus) {
         System.out.println("renderMenu_________-"+menus.size());
-        updateStartDrawerContent(R.layout.activity_web_drawer);
+        updateStartDrawerContent(R.layout.activity_web_drawer,menus);
 
     }
 
