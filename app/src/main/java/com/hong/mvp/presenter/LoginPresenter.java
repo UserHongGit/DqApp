@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 
 import com.hong.AppApplication;
@@ -95,10 +96,9 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
         AuthRequestModel authRequestModel = AuthRequestModel.generate();
         String token = Credentials.basic(userName, password);
         Log.i("==========", "basicLogin: __"+token);
-        Observable<Response<HashMap<String, String>>> observable = getLoginService(token).authorizations2(token);
-
-        HttpSubscriber<HashMap<String, String>> subscriber = new HttpSubscriber<>(
-                new HttpObserver<HashMap<String, String>>() {
+        Observable<Response<BasicToken>> observable = getLoginService(token).authorizations(authRequestModel);
+        HttpSubscriber<BasicToken> subscriber = new HttpSubscriber<>(
+                new HttpObserver<BasicToken>() {
                     @Override
                     public void onError(@NonNull Throwable error) {
                         Log.i("============>", "onError: token______"+error);
@@ -107,17 +107,18 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
                     }
 
                     @Override
-                    public void onSuccess(@NonNull HttpResponse<HashMap<String, String>> response) {
+                    public void onSuccess(@NonNull HttpResponse<BasicToken> response) {
                         Log.i("====", "onSuccess: 44444___"+response+"////"+response.toString()+"///"+response.body());
-                        String rows = response.body().get("token");
-                        Log.i("====", "onSuccess: ___"+rows);
-//                        if (token != null) {
-//                            Log.i("============>", "onSuccess: token+++++++++++" + token.getToken());
-//                            mView.onGetTokenSuccess(token);
-//                        } else {
-//                            Log.i("============>", "onSuccess: token null");
-//                            mView.onGetTokenError(response.getOriResponse().message());
-//                        }
+                        BasicToken token = response.body();
+//                        String rows = response.body().get("token");
+//                        Log.i("====", "onSuccess: ___"+rows);
+                        if (token != null) {
+                            Log.i("============>", "onSuccess: token+++++++++++" + token.getToken());
+                            mView.onGetTokenSuccess(token);
+                        } else {
+                            Log.i("============>", "onSuccess: token null");
+                            mView.onGetTokenError(response.getOriResponse().message());
+                        }
 
                     }
                 }
@@ -143,7 +144,7 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
                     @Override
                     public void onError(Throwable error) {
                         Log.i("============>", "getUserInfo onError: token-----------");
-                        mView.dismissProgressDialog();
+//                        mView.dismissProgressDialog();
                         mView.showErrorToast(getErrorTip(error));
                     }
 
