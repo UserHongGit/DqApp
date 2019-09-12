@@ -31,6 +31,12 @@ android {
         buildConfigField "String", "BUGLY_ID", (buildProperties.getLocal['bugly_appid'] | buildProperties.getPublic['bugly_appid']).string
         buildConfigField "String", "DEBUG_BUGLY_ID", (buildProperties.getLocal['debug_bugly_appid'] | buildProperties.getPublic['debug_bugly_appid']).string
 
+
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
+
     }
 
     packagingOptions{
@@ -39,14 +45,27 @@ android {
 
     buildTypes {
         release {
+            signingConfig signingConfigs.debug //签名
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug{
+            signingConfig signingConfigs.debug //签名
+
             aaptOptions.cruncherEnabled = false
             aaptOptions.useNewCruncher = false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file('hong.jks')
+            storePassword "HongKey"
+            keyAlias "DqAlias"
+            keyPassword "HongKey"
         }
     }
 
@@ -55,6 +74,8 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
+
+
 
 repositories {
     maven { url "https://jitpack.io" }
@@ -162,4 +183,11 @@ dependencies {
     implementation 'me.relex:circleindicator:1.2.2@aar'// 沉浸式状态栏
 //    implementation 'com.github.Beseting:PhotoBrowse:v{ LAST-VERSION }'
 
+
+
+    implementation 'com.tencent.bugly:crashreport_upgrade:latest.release'
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.0.0
+    implementation 'com.tencent.bugly:nativecrashreport:latest.release'
+
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
 }

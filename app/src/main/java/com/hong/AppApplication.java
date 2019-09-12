@@ -18,6 +18,7 @@ import com.hong.inject.module.AppModule;
 import com.hong.service.NetBroadcastReceiver;
 import com.hong.util.AppUtils;
 import com.hong.util.NetHelper;
+import com.tencent.bugly.Bugly;
 
 /**
  * AppApplication
@@ -93,6 +94,7 @@ public class AppApplication extends Application {
 //        strategy.setAppReportDelay(10 * 1000);
 //        Bugly.init(getApplicationContext(), AppConfig.BUGLY_APPID, BuildConfig.DEBUG, strategy);
 //        CrashReport.setIsDevelopmentDevice(getApplicationContext(), BuildConfig.DEBUG);
+        Bugly.init(getApplicationContext(), "3f8ce1165b", true);
 
     }
 

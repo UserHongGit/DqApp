@@ -24,6 +24,7 @@ import butterknife.BindView;
 import com.hong.AppConfig;
 import com.hong.http.model.UMenu;
 import com.hong.ui.fragment.ViewerFragment;
+import com.tencent.bugly.beta.Beta;
 import com.thirtydegreesray.dataautoaccess.annotation.AutoAccess;
 import com.hong.AppData;
 import com.hong.R;
@@ -103,6 +104,8 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
     public void initActivity() {
         Log.i("=============>", "9 - web initActivity");
         super.initActivity();
+
+        Beta.checkUpgrade();
         AppData.INSTANCE.getLoggedUser();
         setStartDrawerEnable(true);
         setEndDrawerEnable(true);
