@@ -248,11 +248,11 @@ public abstract class BasePresenter<V extends IBaseContract.View> implements IBa
         if (subscriber != null) {
             subscribers.add(subscriber);
             observable.subscribeOn(Schedulers.io())
-                   // .observeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
                     .subscribe(subscriber);
         } else {
             observable.subscribeOn(Schedulers.io())
-                   // .observeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
                     .subscribe(new HttpSubscriber<T>());
         }
     }

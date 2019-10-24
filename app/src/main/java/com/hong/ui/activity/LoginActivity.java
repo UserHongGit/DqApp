@@ -5,6 +5,7 @@ package com.hong.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
@@ -70,18 +71,23 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
 
     @Override
     public void onGetTokenError(String errorMsg) {
-        Log.i(TAG, "onGetTokenError: ___________");
-        loginBn.doResult(false);
-        new Handler().postDelayed(new Runnable() {
+        Log.i(TAG, "onGetTokenError: ____1111111_______"+loginBn);
+
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.i(TAG, "run: 重置____________");
-                loginBn.reset();
-                loginBn.setEnabled(true);
+                loginBn.doResult(false);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loginBn.reset();
+                        loginBn.setEnabled(true);
+                    }
+                }, 1000);
             }
-        }, 1000);
-
-        Toasty.error(getApplicationContext(), errorMsg).show();
+        });
+        Log.i(TAG, "onGetTokenError-: ______2222222_____"+loginBn);
+//        Toasty.error(getApplicationContext(), errorMsg).show();
     }
 
     /**
@@ -90,6 +96,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
     @Override
     public void onLoginComplete() {
         delayFinish();
+        Log.i(TAG, "onLoginComplete: _____用户的id____"+userNameEt.getText().toString());
+//        mPresenter.getMenu(userNameEt.getText().toString());
 //        startActivity(new Intent(getActivity(), MainActivity.class));
         startActivity(new Intent(getActivity(), WebActivity.class));
     }

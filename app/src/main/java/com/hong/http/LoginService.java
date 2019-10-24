@@ -53,4 +53,10 @@ public interface LoginService {
             @Query("state") String state
     );
 
+    @POST("sggl/LoginActionTemp!getMenu")
+    @NonNull
+    Observable<Response<HashMap<String,ArrayList<UMenu>>>>  getMenu(
+            @Query("username") String username
+    );
+
 }

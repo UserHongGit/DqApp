@@ -2,10 +2,13 @@
 
 package com.hong.mvp.presenter;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 
+import com.google.gson.Gson;
 import com.hong.AppData;
 import com.hong.dao.AuthUser;
 import com.hong.dao.AuthUserDao;
@@ -78,7 +81,6 @@ public class WebPresenter extends BasePresenter<IWebContract.View>
                     @Override
                     public void onError(Throwable error) {
                         Log.i("============>", "getMenu onError: token-----------");
-//                        mView.dismissProgressDialog();
                         mView.showErrorToast(getErrorTip(error));
                     }
 
@@ -86,7 +88,9 @@ public class WebPresenter extends BasePresenter<IWebContract.View>
                     public void onSuccess(HttpResponse<HashMap<String,ArrayList<UMenu>>> response) {
                         Log.i("============>", "getMenu onSuccess: token+++++++++++" + response.body().toString() );
                         ArrayList<UMenu> rows = response.body().get("rows");
+
                         AppData.menus = rows;
+                        AppData.isLogin = false;
                         mView.renderMenu(rows);
                     }
                 }
@@ -94,7 +98,6 @@ public class WebPresenter extends BasePresenter<IWebContract.View>
         Observable<Response<HashMap<String, ArrayList<UMenu>>>> observable = getUserService(token).
                 getMenu(token);
         generalRxHttpExecute(observable, subscriber);
-//        mView.showProgressDialog(getLoadTip());
 
     }
 

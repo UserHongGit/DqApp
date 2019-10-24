@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <script type="text/javascript" charset="UTF-8" src="aes/zepto.min.js"></script>
+
+    <link rel="stylesheet" href="aes/weui.min.css">
+    <link rel="stylesheet"
+          href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.css">
+    <link rel="stylesheet"
+          href="http://g.alicdn.com/msui/sm/0.6.2/css/sm-extend.css">
+    <link rel="stylesheet" href="aes/sm-extend-local.css">
+    <link rel="stylesheet" href="aes/style.css?v=26">
+    <script type='text/javascript'
+            src='http://g.alicdn.com/sj/lib/zepto/zepto.js' charset='utf-8'></script>
+    <link rel="stylesheet" href="aes/zepto.js">
+    <link rel="stylesheet" href="aes/frozen.css">
+    <link rel="stylesheet" href="aes/myfrozen.css">
+
+
+
+</head>
+<body><div class="ui-selector-content" style="display:">
+    <ul id="menuUl">
+        <li class="ui-selector-item active">
+            <h3 class="ui-border-b">
+                <p>暂无数据,请稍候...</p>
+            </h3>
+        </li>
+    </ul>
+</div>
+        <script type="text/javascript">
+
+var html = '';
+var x = window.adjs.getBaseUrl();
+var urll = x+'sggl/LoginActionTemp!getMenu'
+ // $('#menuUl').append(urll+"///"+window.adjs.getParam());
+
+
+$.post(urll,{"username":window.adjs.getParam()}, function(data) {
+$('#menuUl').html('');
+ $.each(data.rows, function(i, value) {
+		    	 html+='<li class="ui-selector-item " url="'+value.murl+'"> <h3 class="ui-border-b"> <p class="ss">'+value.mname+'</p><span class="ui-txt-info">...</span> </h3> </li>';
+		     });
+
+
+		     $('#menuUl').append(html+'');
+		     var on;
+		     $('.ui-selector-item').click(function(){
+		       var _this=$(this);
+		       (on=_this.hasClass('active')?true:false)?_this.removeClass('active'): _this.addClass('active')
+		       on=!on;
+		       $(".ui-selector-item").not(_this).each(function(){
+		         $(this).removeClass('active');
+		       });
+		     })
+		     $('.ui-selector-item,.ui-tiled li').click(function(e){
+		       //触发android webview跳转url
+		       window.adjs.action($(this).attr('url'),$(this).find('.ss').text());
+		       //   window.adjs.action(0);
+		       //阻断事件
+		       e.stopPropagation();
+		     });
+		     $('.ui-header .ui-btn').click(function(){
+		       location.href= 'index.html';
+		     });
+},'json');
+
+  function test() {
+    alert(11)
+  }
+</script>
+
+<script type='text/javascript'
+        src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.js' charset='utf-8'></script>
+<script type='text/javascript'
+        src='http://g.alicdn.com/msui/sm/0.6.2/js/sm-extend.js'
+        charset='utf-8'></script>
+
+
+</body>
+</html>

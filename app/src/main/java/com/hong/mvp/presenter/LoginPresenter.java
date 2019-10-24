@@ -2,13 +2,16 @@
 
 package com.hong.mvp.presenter;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
 
+import com.google.gson.Gson;
 import com.hong.AppApplication;
 import com.hong.AppConfig;
 import com.hong.AppData;
@@ -96,35 +99,36 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
         AuthRequestModel authRequestModel = AuthRequestModel.generate();
         String token = Credentials.basic(userName, password);
         Log.i("==========", "basicLogin: __"+token);
-        Observable<Response<BasicToken>> observable = getLoginService(token).authorizations(authRequestModel);
+
+        Observable<Response<BasicToken>> observable =
+                getLoginService(token).authorizations(authRequestModel);
         HttpSubscriber<BasicToken> subscriber = new HttpSubscriber<>(
                 new HttpObserver<BasicToken>() {
                     @Override
                     public void onError(@NonNull Throwable error) {
+                        //在这里调用就不能重置
                         Log.i("============>", "onError: token______"+error);
-//                                mView.dismissProgressDialog();
                         mView.onGetTokenError(getErrorTip(error));
                     }
 
                     @Override
                     public void onSuccess(@NonNull HttpResponse<BasicToken> response) {
+                        mView.onGetTokenError("密码错误");
                         Log.i("====", "onSuccess: 44444___"+response+"////"+response.toString()+"///"+response.body());
                         BasicToken token = response.body();
-//                        String rows = response.body().get("token");
-//                        Log.i("====", "onSuccess: ___"+rows);
                         if (token != null) {
                             Log.i("============>", "onSuccess: token+++++++++++" + token.getToken());
                             mView.onGetTokenSuccess(token);
                         } else {
+                            //在这里调用就不能重置
                             Log.i("============>", "onSuccess: token null");
-                            mView.onGetTokenError(response.getOriResponse().message());
+                            mView.onGetTokenError("密码错误");
                         }
 
                     }
                 }
         );
         generalRxHttpExecute(observable, subscriber);
-//        mView.showProgressDialog(getLoadTip());
     }
 
     @Override
@@ -139,6 +143,7 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
 
     @Override
     public void getUserInfo(final BasicToken basicToken) {
+        Log.i("____", "getUserInfo: 查询用户_____");
         HttpSubscriber<User> subscriber = new HttpSubscriber<>(
                 new HttpObserver<User>() {
                     @Override
@@ -163,6 +168,38 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
         generalRxHttpExecute(observable, subscriber);
 //        mView.showProgressDialog(getLoadTip());
 
+    }
+
+    @Override
+    public void getMenu(String username) {
+        Log.i("----", "getMenu: 根据username请求______________");
+        HttpSubscriber<HashMap<String,ArrayList<UMenu>>> subscriber = new HttpSubscriber<>(
+                new HttpObserver<HashMap<String,ArrayList<UMenu>>>() {
+                    @Override
+                    public void onError(Throwable error) {
+                        Log.i("============>", "getMenu 根据username请求onError: _)___----------");
+                        mView.dismissProgressDialog();
+                        mView.showErrorToast(getErrorTip(error));
+                    }
+
+                    @Override
+                    public void onSuccess(HttpResponse<HashMap<String,ArrayList<UMenu>>> response) {
+                        Log.i("============>", "getMenu 根据username请求onSuccess: +++++++++" + response.body().toString() );
+                        ArrayList<UMenu> rows = response.body().get("rows");
+                        AppData.menus = rows;
+//                        if(rows.size() > 0){
+//                            SharedPreferences sp = getContext().getSharedPreferences("menu", Context.MODE_PRIVATE);
+//                            SharedPreferences.Editor edit = sp.edit();
+//                            Gson menuGson = new Gson();
+//                            edit.putString("MENU_KEY",menuGson.toJson(rows));
+//                            edit.commit();
+//                        }
+                    }
+                }
+        );
+        Observable<Response<HashMap<String, ArrayList<UMenu>>>> observable = getLoginService().getMenu(username);
+        generalRxHttpExecute(observable, subscriber);
+        mView.showProgressDialog(getLoadTip());
     }
 
 //    public void getMenu(BasicToken basicToken) {

@@ -38,7 +38,7 @@ public interface ILoginContract {
 
         void getUserInfo(BasicToken basicToken);
 
-//        void getMenu(BasicToken basicToken);
+        void getMenu(String username);
     }
 
 }

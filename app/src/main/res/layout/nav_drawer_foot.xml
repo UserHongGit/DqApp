@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="@color/bt_bg_no"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/menu_item_setting"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dip"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp" >
+
+        <ImageView
+            style="@style/MenuItemImageViewStyle"
+            android:background="@drawable/drawer_menu_icon_setting" />
+
+        <TextView
+            style="@style/MenuItemTextViewStyle"
+            android:textSize="@dimen/text_size_14"
+            android:text="@string/settings" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/menu_item_exit"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dip"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp" >
+
+        <ImageView
+            style="@style/MenuItemImageViewStyle"
+            android:background="@drawable/drawer_menu_icon_exit" />
+
+        <TextView
+            style="@style/MenuItemTextViewStyle"
+            android:textSize="@dimen/text_size_14"
+            android:text="@string/logout" />
+    </LinearLayout>
+
+</LinearLayout>

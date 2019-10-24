@@ -36,10 +36,30 @@ public interface ViewerService {
             @Query("prefix") String prefix
 
     );
+    @Multipart
+    @POST("sggl/ImgUpload!cbs_upload")
+    @Headers({"Accept: application/json"})
+    Observable<Response<HashMap<String,String>>>  cbs_upload(
+            @Part("description") RequestBody description,
+            @Part MultipartBody.Part file,
+            @Query("fileName") String fileName,
+            @Query("username") String userName,
+            @Query("jdcid") String jdid,
+            @Query("jcxm1") String jcxm1,
+            @Query("jcxm2") String jcxm2,
+            @Query("jcxm3") String jcxm3,
+            @Query("tab") String tab,
+            @Query("prefix") String prefix
+
+    );
 
     @GET("sggl/ImgUpload!selectImgByJdid")
     @NonNull
     Observable<Response<HashMap<String,ArrayList<ZyjdPicEntity>>>>  searcImages(
             @Query("jdid") String jdid
     );
+
+
+
+
 }

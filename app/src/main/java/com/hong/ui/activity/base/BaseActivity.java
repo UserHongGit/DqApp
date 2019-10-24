@@ -32,6 +32,7 @@ import com.bumptech.glide.Glide;
 import com.hong.AppApplication;
 import com.hong.AppData;
 import com.hong.R;
+import com.hong.dao.DaoSession;
 import com.hong.inject.component.AppComponent;
 import com.hong.mvp.contract.base.IBaseContract;
 import com.hong.ui.activity.LoginActivity;
@@ -204,14 +205,14 @@ public abstract class BaseActivity<P extends IBaseContract.Presenter> extends Ap
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
         Log.i(TAG, "onTrimMemory: ");
-//        Glide.with(this).onTrimMemory(level);
+        Glide.with(this).onTrimMemory(level);
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
         Log.i(TAG, "onLowMemory: ");
-//        Glide.with(this).onLowMemory();
+        Glide.with(this).onLowMemory();
     }
 
     protected void setToolbarBackEnable() {
@@ -412,10 +413,10 @@ public abstract class BaseActivity<P extends IBaseContract.Presenter> extends Ap
         return getAppApplication().getAppComponent();
     }
 
-//    protected DaoSession getDaoSession() {
-//        Log.i("=============>","43");
-//        return getAppComponent().getDaoSession();
-//    }
+    protected DaoSession getDaoSession() {
+        Log.i("=============>","43");
+        return getAppComponent().getDaoSession();
+    }
 
     public void onRefreshWebPage() {
         Log.i(TAG, "onRefreshWebPage: ");

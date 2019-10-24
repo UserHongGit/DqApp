@@ -9,6 +9,16 @@ public class UMenu {
 	private String ourl;
 	private String micon;
 	private String whc;
+
+	public int getAppid() {
+		return appid;
+	}
+
+	public void setAppid(int appid) {
+		this.appid = appid;
+	}
+
+	private int appid;
 	public String getMid() {
 		return mid;
 	}

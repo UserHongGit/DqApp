@@ -24,7 +24,12 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
         app:itemTextColor="@color/main_drawer_content_color"
-        app:itemIconTint="@color/main_drawer_content_color"/>
+        app:itemIconTint="@color/main_drawer_content_color">
+
+      />
+
+        <include layout="@layout/nav_drawer"/>
+    </android.support.design.widget.NavigationView>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view_end"
@@ -34,5 +39,7 @@
         android:fitsSystemWindows="true"
         app:itemTextColor="@color/right_drawer_content_color"
         app:itemIconTint="@color/right_drawer_content_color"/>
+
+
 
 </android.support.v4.widget.DrawerLayout>

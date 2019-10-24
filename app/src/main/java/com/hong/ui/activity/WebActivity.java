@@ -16,14 +16,17 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.JavascriptInterface;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 
 import com.hong.AppConfig;
 import com.hong.http.model.UMenu;
 import com.hong.ui.fragment.ViewerFragment;
+import com.hong.ui.widget.webview.ProgressWebView;
 import com.tencent.bugly.beta.Beta;
 import com.thirtydegreesray.dataautoaccess.annotation.AutoAccess;
 import com.hong.AppData;
@@ -43,6 +46,9 @@ import com.hong.ui.fragment.RepositoriesFragment;
 import com.hong.ui.fragment.RepositoriesFragment.RepositoriesType;
 import com.hong.util.PrefUtils;
 import com.hong.util.StringUtils;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,6 +76,11 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
     private AppCompatImageView toggleAccountBn;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.menu_item_setting)
+    LinearLayout setting;
+    @BindView(R.id.menu_item_exit)
+    LinearLayout exit;
+    private ProgressWebView mWebView;
 
     public enum ViewerType {
         RepoFile,
@@ -105,7 +116,8 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
         Log.i("=============>", "9 - web initActivity");
         super.initActivity();
 
-        Beta.checkUpgrade();
+//        检测更新
+//        Beta.checkUpgrade();
         AppData.INSTANCE.getLoggedUser();
         setStartDrawerEnable(true);
         setEndDrawerEnable(true);
@@ -119,49 +131,115 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
 
     /* access modifiers changed from: protected */
     public void initView(Bundle savedInstanceState) {
-        String str = "=============>";
-        Log.i(str, "11 - web initView"+AppData.INSTANCE.getAccessToken());
+        Log.i(TAG, "11 - web initView"+AppData.INSTANCE.getAccessToken());
         super.initView(savedInstanceState);
-        mPresenter.getMenu(AppData.INSTANCE.getAccessToken());
-        setToolbarScrollAble(true);
+//        动态查询菜单
+//        mPresenter.getMenu(AppData.INSTANCE.getAccessToken());
 
+        //初始化setting按钮
+        setting.setOnClickListener(new android.view.View.OnClickListener() {
+            @Override
+            public void onClick(android.view.View v) {
+                closeDrawer();
+                Log.i(TAG, "onClick: 给按钮Setting设置监听____");
+                SettingsActivity.show(getActivity(),SETTINGS_REQUEST_CODE);
+            }
+        });
+        exit.setOnClickListener(new android.view.View.OnClickListener() {
+            @Override
+            public void onClick(android.view.View v) {
+                closeDrawer();
+                Log.i(TAG, "onClick: 给按钮Exit设置监听");
+                logout();
+            }
+        });
+
+
+        setToolbarScrollAble(true);//打开toolbar 向上滑动隐藏
         //左侧滑动菜单通过这个方法渲染,activity_web_drawer存储的菜单的列表名称
-        updateStartDrawerContent(R.layout.activity_web_drawer);
-
-        removeEndDrawer();
-        if (((WebPresenter) this.mPresenter).isFirstUseAndNoNewsUser()) {
-            Log.i(TAG, "initView: 干哈呢?");
-            this.selectedPage = R.id.nav_public_news;
+//        updateStartDrawerContent(R.layout.activity_web_drawer);
+//        removeEndDrawer();
+        if (mPresenter.isFirstUseAndNoNewsUser()) {//第一次打开时
+//            this.selectedPage = R.id.nav_public_news;
+            selectedPage = 10000;
             updateFragmentByNavId(this.selectedPage,null);
         } else {
-            Log.i(TAG, "initView: 搁这呢!");
             int i = this.selectedPage;
             if (i != 0) {
                 updateFragmentByNavId(i,null);
+            }else if(selectedPage != 0 ){
+                Log.i(TAG, "initView:  web FRAGMENT_NAV_ID_LIST selectedPage != 0");
+                updateFragmentByNavId(selectedPage,null);
             } else {
                 int startPageIndex = Arrays.asList(getResources().getStringArray(R.array.start_pages_id)).indexOf(PrefUtils.getStartPage());
                 TypedArray typedArray = getResources().obtainTypedArray(R.array.start_pages_nav_id);
                 int startPageNavId = typedArray.getResourceId(startPageIndex, 0);
                 typedArray.recycle();
-                if (this.FRAGMENT_NAV_ID_LIST.contains(Integer.valueOf(startPageNavId))) {
-                    Log.i(str, "11 - web FRAGMENT_NAV_ID_LIST.contains(startPageNavId)");
-                    this.selectedPage = startPageNavId;
-                    updateFragmentByNavId(this.selectedPage,null);
-                } else {
-                    Log.i(str, "11 - web !FRAGMENT_NAV_ID_LIST.contains(startPageNavId)");
-//                    this.selectedPage = R.id.nav_news;
-                    updateFragmentByNavId(this.selectedPage,null);
-                    updateFragmentByNavId(startPageNavId,null);
-                }
+//                if (this.FRAGMENT_NAV_ID_LIST.contains(Integer.valueOf(startPageNavId))) {
+//                    Log.i(TAG, "11 - web FRAGMENT_NAV_ID_LIST.contains(startPageNavId)");
+//                    this.selectedPage = startPageNavId;
+//                    updateFragmentByNavId(this.selectedPage,null);
+//                } else {
+                    Log.i(TAG, "11 - web !FRAGMENT_NAV_ID_LIST.contains(startPageNavId)");
+                    this.selectedPage = 1;
+                    updateFragmentByNavId(this.selectedPage,"main");
+//                    updateFragmentByNavId(startPageNavId,null);
+//                }
             }
         }
         ImageView avatar = (ImageView) this.navViewStart.getHeaderView(0).findViewById(R.id.avatar);
         TextView name = (TextView) this.navViewStart.getHeaderView(0).findViewById(R.id.name);
         TextView mail = (TextView) this.navViewStart.getHeaderView(0).findViewById(R.id.mail);
+
+        mWebView = navViewStart.findViewById(R.id.webview_menu);
+
+        try {
+            if (Build.VERSION.SDK_INT >= 16) {
+                Class<?> clazz = mWebView.getSettings().getClass();
+                Method method = clazz.getMethod(
+                        "setAllowUniversalAccessFromFileURLs", boolean.class);//利用反射机制去修改设置对象
+                if (method != null) {
+                    method.invoke(mWebView.getSettings(), true);//修改设置
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mWebView.loadUrl("file:///android_asset/web/left.html");
+//        mWebView.loadUrl("javascript:test()");
+        mWebView.addJavascriptInterface(new Object() {
+            @JavascriptInterface
+            public String getParam() {
+                return AppData.INSTANCE.getLoggedUser().getLogin();
+            }
+
+            @JavascriptInterface
+            public void action(final String u,final String title) {
+                Log.i("=============>", "9 - web JavascriptInterface" + u);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setToolbarTitle(title);
+                        updateFragmentByNavId(0,u);
+                        drawerLayout.closeDrawers();
+//                        mWebView.loadUrl("javascript:test()");//调用页面js的方法
+                    }
+                });
+
+            }
+            @JavascriptInterface
+            public String getBaseUrl() {
+                return AppConfig.UPC_API_BASE_URL;
+            }
+        }, "adjs");
+
+
         this.toggleAccountBn = (AppCompatImageView) this.navViewStart.getHeaderView(0).findViewById(R.id.toggle_account_bn);
         toggleAccountBn.setOnClickListener(v -> {
             toggleAccountLay();
         });
+        toggleAccountBn.setVisibility(android.view.View.GONE);
+
         User loginUser = AppData.INSTANCE.getLoggedUser();
 //        GlideApp.with(getActivity())
 //                .load(loginUser.getAvatarUrl())
@@ -225,46 +303,66 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
     }
 
     private void updateFragmentByNavId(int id,String url) {
-        Log.i(this.TAG, "updateFragmentByNavId: "+id);
-        if (this.FRAGMENT_NAV_ID_LIST.contains(Integer.valueOf(id))) {
-            Log.i(this.TAG, "updateFragmentByNavId: 三连杀"+id);
-            updateTitle(id);
-            loadFragment(id,null);
-            updateFilter(id);
+        Log.i(this.TAG, "updateFragmentByNavId: "+id+"_____"+AppData.isLogin);
+        if(null!=url)
+            if(!AppData.isLogin){
+//                System.out.println("初始化webView____"+AppData.INSTANCE.getLoggedUser().getLogin()+"___"+AppData.INSTANCE.getAuthUser().getLoginId());
+            url = AppConfig.UPC_API_BASE_URL+"sggl/LoginActionTemp!initLogin?username="+ AppData.INSTANCE.getLoggedUser().getLogin();
+            AppData.isLogin = true;
+            }else{
+                if(!url.contains("/")){
+                    url="file:///android_asset/web/"+url+".html";
+                }else{
+                    url=AppConfig.UPC_API_BASE_URL+"m/"+url+".jsp";
+                }
+            }
+//            u=AppConfig.UPC_API_BASE_URL+u;
+        Log.i("=============>", "001 - web updateFragmentByNavId" + id);
+        if(url==null){
+            url="about:blank";
             return;
         }
-        switch (id) {
-            case R.id.nav_add_account /*2131296471*/:
-                showLoginPage();
-                break;
-//            case R.id.nav_issues /*2131296478*/:
-//                Log.i(this.TAG, "updateFragmentByNavId: 我尼玛,这个才是问题____第四个___");
-//                IssuesActivity.showForUser(getActivity());
-//                break;
-            case R.id.nav_logout /*2131296480*/:
-                logout();
-                break;
-//            case R.id.nav_notifications /*2131296484*/:
-//                Log.i(this.TAG, "updateFragmentByNavId: case R.id.nav_notifications:");
-//                NotificationsActivity.show(getActivity());
-//                break;
-//            case R.id.nav_profile /*2131296487*/:
-//                StringBuilder stringBuilder = new StringBuilder();
-//                stringBuilder.append("updateFragmentByNavId: 呵呵呵呵_____");
-//                stringBuilder.append(AppData.INSTANCE.getLoggedUser().getAvatarUrl());
-//                stringBuilder.append("/////");
-//                stringBuilder.append(AppData.INSTANCE.getLoggedUser().getLogin());
-//                Log.i("================", stringBuilder.toString());
-//                break;
-            case R.id.nav_settings /*2131296492*/:
-                SettingsActivity.show(getActivity(), 100);
-                break;
 
-            default:
-                Log.i(this.TAG, "updateFragmentByNavId: default");
-                loadFragment(R.id.nav_search,url);
-                break;
-        }
+        loadFragment(id,url);
+//        TEMP
+//        if (this.FRAGMENT_NAV_ID_LIST.contains(Integer.valueOf(id))) {
+//            Log.i(this.TAG, "updateFragmentByNavId: 三连杀"+id);
+//            updateTitle(id);
+//            loadFragment(id,null);
+//            updateFilter(id);
+//            return;
+//        }
+//        switch (id) {
+//            case R.id.nav_add_account /*2131296471*/:
+//                showLoginPage();
+//                break;
+////            case R.id.nav_issues /*2131296478*/:
+////                Log.i(this.TAG, "updateFragmentByNavId: 我尼玛,这个才是问题____第四个___");
+////                IssuesActivity.showForUser(getActivity());
+////                break;
+//            case R.id.nav_logout /*2131296480*/:
+//                logout();
+//                break;
+////            case R.id.nav_notifications /*2131296484*/:
+////                Log.i(this.TAG, "updateFragmentByNavId: case R.id.nav_notifications:");
+////                NotificationsActivity.show(getActivity());
+////                break;
+////            case R.id.nav_profile /*2131296487*/:
+////                StringBuilder stringBuilder = new StringBuilder();
+////                stringBuilder.append("updateFragmentByNavId: 呵呵呵呵_____");
+////                stringBuilder.append(AppData.INSTANCE.getLoggedUser().getAvatarUrl());
+////                stringBuilder.append("/////");
+////                stringBuilder.append(AppData.INSTANCE.getLoggedUser().getLogin());
+////                Log.i("================", stringBuilder.toString());
+////                break;
+//            case R.id.nav_settings /*2131296492*/:
+//                SettingsActivity.show(getActivity(), 100);
+//                break;
+//            default:
+//                Log.i(this.TAG, "updateFragmentByNavId: default");
+//                loadFragment(R.id.nav_search,url);
+//                break;
+//        }
     }
 
     private void updateFilter(int itemId) {
@@ -294,16 +392,18 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
     private void loadFragment(int itemId,String url) {
         Log.i(this.TAG,  "loadFragment: "+itemId);
         this.selectedPage = itemId;
-        String fragmentTag = (String) this.TAG_MAP.get(Integer.valueOf(itemId));
+//        String fragmentTag = (String) this.TAG_MAP.get(Integer.valueOf(itemId));
+        String fragmentTag = TAG_MAP.get(itemId);
+        if(url!=null){
+            fragmentTag=url;
+        }
+        //这里固定一个tag,让每个连接打开时重新加载web页面。
         Fragment showFragment = getSupportFragmentManager().findFragmentByTag("tbswebview");
         boolean isExist = true;
         if (showFragment == null) {
             isExist = false;
             showFragment = getFragment(itemId,url);
         }
-
-
-
         if (showFragment.isVisible()) {
             return;
         }
@@ -326,27 +426,8 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
 
     @NonNull
     private Fragment getFragment(int itemId,String url) {
-        Log.i("=============>", "005 - web getFragment"+itemId);
-        //这里写switch区分跳转
-        if(itemId!=0){
-            switch(itemId){
-                case R.id.nav_search:
-                    return ViewerFragment.toUrl(AppConfig.UPC_API_BASE_URL+url,AppData.INSTANCE.getLoggedUser().getLogin());
-                case 2131230100:
-                    return ViewerFragment.toUrl(AppConfig.UPC_API_BASE_URL+"m/sggl/zyfp1.jsp",AppData.INSTANCE.getLoggedUser().getLogin());
-                case 2131230101:
-                    return ViewerFragment.toUrl(AppConfig.UPC_API_BASE_URL+"m/sggl/zyfp2.jsp",AppData.INSTANCE.getLoggedUser().getLogin());
-                case 2131230102:
-                    return ViewerFragment.toUrl(AppConfig.UPC_API_BASE_URL+"m/sggl/zyfp2.jsp",AppData.INSTANCE.getLoggedUser().getLogin());
-                case 2131230103:
-                    return ViewerFragment.toUrl(AppConfig.UPC_API_BASE_URL+"m/sggl/zyfp2.jsp",AppData.INSTANCE.getLoggedUser().getLogin());
-                case 2131230104:
-                    return ViewerFragment.toUrl(AppConfig.UPC_API_BASE_URL+"m/sggl/zyfp2.jsp",AppData.INSTANCE.getLoggedUser().getLogin());
-               default:
-                    return ViewerFragment.toUrl(AppConfig.UPC_API_BASE_URL+url,AppData.INSTANCE.getLoggedUser().getLogin());
-
-
-            }
+        if(url!=null){
+            return ViewerFragment.toUrl(url,AppData.INSTANCE.getLoggedUser().getLogin());
         }
         return null;
 //        if (itemId != R.id.nav_news) {
@@ -410,10 +491,11 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
     private void toggleAccountLay() {
         isManageAccount = !isManageAccount;
         this.toggleAccountBn.setImageResource(this.isManageAccount ? R.drawable.ic_arrow_drop_up : R.drawable.ic_arrow_drop_down);
-        invalidateMainMenu();
+//        invalidateMainMenu();
     }
 
     private void invalidateMainMenu() {
+        Log.i(TAG, "invalidateMainMenu: _________");
         if(navViewStart == null){
             return ;
         }
@@ -432,6 +514,77 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
 //            }
         }
 
+        Log.i(TAG, "invalidateMainMenu: __重要!!!!"+AppData.menus.size());
+//        menu.findItem(R.id.zyfp1).setTitle("作业分配11111").setVisible(false);
+//        menu.removeItem(R.id.zyfp1);
+
+        List<Integer> idlist = new ArrayList<Integer>();
+        for (UMenu u : AppData.menus){
+            idlist.add(u.getAppid());
+        }
+        List<Integer> ids = new ArrayList<Integer>();
+        ids.add(1);
+        ids.add(2);
+        ids.add(3);
+        ids.add(4);
+        ids.add(5);
+        ids.add(6);
+        ids.add(7);
+        ids.add(8);
+        ids.add(9);
+        ids.add(10);
+        ids.add(11);
+        ids.add(12);
+        ids.add(13);
+        for(int i = 0; i < ids.size(); i++){
+            for(int j : idlist){
+                System.out.println("此时i="+i+"___"+"j="+j+"ids.get(i)____"+ids.get(i)+"////"+"___是否包含___"+idlist.contains(ids.get(i)));
+                if(idlist.contains(ids.get(i))){
+
+                }else{
+//                    switch (ids.get(i)){
+//                        case 1:
+//                            menu.removeItem(R.id.zyfp1);
+//                            break;
+//                        case 2:
+//                            menu.removeItem(R.id.zyfp2);
+//                            break;
+//                        case 3:
+//                            menu.removeItem(R.id.rblr);
+//                            break;
+//                        case 4:
+//                            menu.removeItem(R.id.jdrz);
+//                            break;
+//                        case 5:
+//                            menu.removeItem(R.id.cljs);
+//                            break;
+//                        case 6:
+//                            menu.removeItem(R.id.jsqr);
+//                            break;
+//                        case 7:
+//                            menu.removeItem(R.id.jdlr);
+//                            break;
+//                        case 8:
+//                            menu.removeItem(R.id.rbcx);
+//                            break;
+//                        case 9:
+//                            menu.removeItem(R.id.zyjd);
+//                            break;
+//                        case 11:
+//                            menu.removeItem(R.id.clsh);
+//                            break;
+//                        case 12:
+//                            menu.removeItem(R.id.zglr);
+//                            break;
+//                        case 13:
+//                            menu.removeItem(R.id.fclr);
+//                            break;
+//
+//                    }
+                }
+            }
+
+        }
         menu.setGroupVisible(R.id.my_account, isManageAccount);
         menu.setGroupVisible(R.id.manage_accounts, isManageAccount);
 

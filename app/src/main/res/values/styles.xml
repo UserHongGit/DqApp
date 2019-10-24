@@ -47,8 +47,20 @@
         <item name="android:textSize">@dimen/text_normal</item>
         <item name="android:gravity">center</item>
     </style>
-
-
+    <!-- 菜单TextView的样式 -->
+    <style name="MenuItemTextViewStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/drawer_menu_text</item>
+        <item name="android:drawablePadding">@dimen/space_10</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+    </style>
+    <!-- 菜单ImageView的样式 -->
+    <style name="MenuItemImageViewStyle">
+        <item name="android:layout_width">24dip</item>
+        <item name="android:layout_height">24dip</item>
+        <item name="android:layout_marginRight">15dip</item>
+    </style>
     <!--白色主题样式，，注意每一项都不能少-->
     <style name="picture.white.style" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->

@@ -121,6 +121,46 @@ FileModel fileModel;
     }
 
     @Override
+    public void cbs_upload(File file, String fileName, String userName, String jcid, String jcxm1, String jcxm2, String jcxm3, String tab, String prefix) {
+        mView.showLoading();
+        Log.i(TAG, "承包商监督录入上传照片开始______");
+        HttpObserver<HashMap<String,String>> httpObserver =
+                new HttpObserver<HashMap<String,String>>() {
+                    @Override
+                    public void onError(@NonNull Throwable error) {
+                        error.printStackTrace();
+                        mView.hideLoading();
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull HttpResponse<HashMap<String,String>> response) {
+                        mView.hideLoading();
+                    }
+                };
+        generalRxHttpExecute(new IObservableCreator<HashMap<String,String>>() {
+            @Nullable
+            @Override
+            public Observable<Response<HashMap<String,String>>> createObservable(boolean forceNetWork) {
+                RequestBody requestFile =
+                        RequestBody.create(MediaType.parse("application/otcet-stream"), file);
+                MultipartBody.Part body =
+                        MultipartBody.Part.createFormData("file2", file.getName(), requestFile);
+                String descriptionString = fileName;
+                RequestBody description =
+                        RequestBody.create(
+                                MediaType.parse("multipart/form-data"), descriptionString);
+
+                return getViewerService("").cbs_upload(description,body,fileName,userName,jcid,jcxm1,jcxm2,jcxm3,tab,prefix);
+            }
+        }, httpObserver);
+
+
+
+
+
+    }
+
+    @Override
     public void searcImages(String jdid) {
         HttpSubscriber<HashMap<String,ArrayList<ZyjdPicEntity>>> subscriber = new HttpSubscriber<>(
                 new HttpObserver<HashMap<String,ArrayList<ZyjdPicEntity>>>() {
@@ -135,7 +175,7 @@ FileModel fileModel;
                     public void onSuccess(HttpResponse<HashMap<String,ArrayList<ZyjdPicEntity>>> response) {
                         ArrayList<ZyjdPicEntity> rows = response.body().get("rows");
                         Log.i(TAG, "onSuccess: 根据监督id查询图片成功____"+rows.size());
-
+                        mView.showPic(rows);
                     }
                 }
         );

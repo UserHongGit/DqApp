@@ -48,20 +48,60 @@
 
     </group>-->
 
+
     <group
         android:id="@+id/repositories"
         android:checkableBehavior="single"
-        android:visible="false"
          >
-        <!--<item
-            android:id="@+id/nav_starred"
+       <!-- <item
+            android:id="@+id/zyfp1"
             android:icon="@drawable/ic_menu_star"
-            android:title="@string/starred_repos" />
+            android:visible="false"
+            android:title="作业分配1" />
         <item
-            android:id="@+id/nav_bookmarks"
-            android:icon="@drawable/ic_bookmark"
-            android:title="@string/bookmarks" />-->
-
+            android:id="@+id/zyfp2"
+            android:icon="@drawable/ic_menu_star"
+            android:title="作业分配2" />
+        <item
+            android:id="@+id/rblr"
+            android:icon="@drawable/ic_menu_star"
+            android:title="日报录入" />
+        <item
+            android:id="@+id/jdrz"
+            android:icon="@drawable/ic_menu_star"
+            android:title="监督日志" />
+        <item
+            android:id="@+id/cljs"
+            android:icon="@drawable/ic_menu_star"
+            android:title="材料接收" />
+        <item
+            android:id="@+id/jsqr"
+            android:icon="@drawable/ic_menu_star"
+            android:title="接收确认" />
+        <item
+            android:id="@+id/jdlr"
+            android:icon="@drawable/ic_menu_star"
+            android:title="监督录入" />
+        <item
+            android:id="@+id/rbcx"
+            android:icon="@drawable/ic_menu_star"
+            android:title="日报查询" />
+        <item
+            android:id="@+id/zyjd"
+            android:icon="@drawable/ic_menu_star"
+            android:title="作业监督" />
+        <item
+            android:id="@+id/clsh"
+            android:icon="@drawable/ic_menu_star"
+            android:title="材料审核" />
+        <item
+            android:id="@+id/zglr"
+            android:icon="@drawable/ic_menu_star"
+            android:title="整改录入" />
+        <item
+            android:id="@+id/fclr"
+            android:icon="@drawable/ic_menu_star"
+            android:title="复查录入" />-->
     </group>
 
     <group

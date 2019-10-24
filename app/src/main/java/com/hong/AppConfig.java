@@ -17,15 +17,11 @@ import java.util.List;
 public class AppConfig {
 
     public final static String GITHUB_BASE_URL = "https://github.com/";
-//    public final static String UPC_API_BASE_URL = "http://192.168.3.16:8090/jdapp/";
-//    public final static String UPC_API_BASE_URL = "https://api.github.com/";
-//    public final static String UPC_API_BASE_URL = "http://192.168.3.16:8080/cuop/";
 
 
 
 //        public final static String UPC_API_BASE_URL = "http://210.12.194.127:8889/jxzyappsev/";
-    public final static String UPC_API_BASE_URL = "http://192.168.43.190:8080/cuop/";
-//    public final static String UPC_API_BASE_URL = "http://172.20.10.2:7001/cbs/";
+        public final static String UPC_API_BASE_URL = "http://192.168.0.48:8090/cuop/";
     public final static String GITHUB_CONTENT_BASE_URL = "https://raw.githubusercontent.com/";
 
     /**
@@ -42,6 +38,7 @@ public class AppConfig {
     public final static int IMAGE_MAX_CACHE_SIZE = 32 * 1024 * 1024;
 
     public final static int CACHE_MAX_AGE = 4 * 7 * 24 * 60 * 60;
+
 
     public final static String DB_NAME = "OpenHub.db";
 
