@@ -49,14 +49,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
-
+import rx.android.schedulers.AndroidSchedulers;
 /**
  * BasePresenter
  * Created by ThirtyDegreesRay on 2016/7/13 18:01
@@ -248,11 +247,11 @@ public abstract class BasePresenter<V extends IBaseContract.View> implements IBa
         if (subscriber != null) {
             subscribers.add(subscriber);
             observable.subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(subscriber);
         } else {
             observable.subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new HttpSubscriber<T>());
         }
     }

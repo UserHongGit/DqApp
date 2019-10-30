@@ -98,6 +98,9 @@ FileModel fileModel;
 
                     @Override
                     public void onSuccess(@NonNull HttpResponse<HashMap<String,String>> response) {
+                        Log.i(TAG, "onSuccess: ____"+response.body()+"//"+ response.body().get("msg"));
+                        mView.showInfoToast(response.body().get("msg"));
+                        Toast.makeText(getContext(), response.body().get("msg"), Toast.LENGTH_SHORT).show();
                         mView.hideLoading();
                     }
                 };
@@ -134,7 +137,9 @@ FileModel fileModel;
 
                     @Override
                     public void onSuccess(@NonNull HttpResponse<HashMap<String,String>> response) {
+                        mView.showInfoToast(response.body().get("msg"));
                         mView.hideLoading();
+//                        Toast.makeText(getContext(), response.body().get("msg"), Toast.LENGTH_SHORT).show();
                     }
                 };
         generalRxHttpExecute(new IObservableCreator<HashMap<String,String>>() {
@@ -150,7 +155,7 @@ FileModel fileModel;
                         RequestBody.create(
                                 MediaType.parse("multipart/form-data"), descriptionString);
 
-                return getViewerService("").cbs_upload(description,body,fileName,userName,jcid,jcxm1,jcxm2,jcxm3,tab,prefix);
+                return getViewerService("").cbs_upload(description,body,fileName,AppData.INSTANCE.getLoggedUser().getLogin(),jcid,jcxm1,jcxm2,jcxm3,tab,prefix,AppData.INSTANCE.getLoggedUser().getOilfield());
             }
         }, httpObserver);
 

@@ -44,12 +44,13 @@ public interface ViewerService {
             @Part MultipartBody.Part file,
             @Query("fileName") String fileName,
             @Query("username") String userName,
-            @Query("jdcid") String jdid,
+            @Query("jcid") String jdid,
             @Query("jcxm1") String jcxm1,
             @Query("jcxm2") String jcxm2,
             @Query("jcxm3") String jcxm3,
             @Query("tab") String tab,
-            @Query("prefix") String prefix
+            @Query("prefix") String prefix,
+            @Query("oilfield") String oilfield
 
     );
 

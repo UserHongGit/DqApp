@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,6 +22,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hong.AppConfig;
 import com.hong.AppData;
 import com.hong.R;
@@ -30,6 +33,7 @@ import com.hong.inject.component.DaggerFragmentComponent;
 import com.hong.inject.module.FragmentModule;
 import com.hong.mvp.contract.IViewerContract;
 import com.hong.mvp.model.imgUpload.ImgConvertName;
+import com.hong.mvp.model.imgUpload.SgjdjcUploadEntity;
 import com.hong.mvp.presenter.ViewerPresenter;
 import com.hong.ui.activity.PicSelectActivity;
 import com.hong.ui.fragment.base.BaseFragment;
@@ -51,6 +55,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
+import es.dmoral.toasty.Toasty;
 
 /**
  * Created by upc_jxzy on 2017/8/19 15:59:55
@@ -145,7 +150,7 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
 
         @JavascriptInterface
         public void openImg(String jcid, String jcxm1, String jcxm2, String jcxm3, String tab, String prefix) {
-            Log.i("---------", "selectImage: ____" + jdid + "///////" + userName + "///////" + prefix);
+            Log.i("---------", "selectImage: 承包商上传个照片啊____" + jcid + "///////" + jcxm1 + "///////" + prefix);
             imgConvert = new ImgConvertName(jcid, jcxm1, jcxm2, jcxm3, tab, prefix);
             startActivityForResult(new Intent(getContext(), PicSelectActivity.class), CBS_UPLOAD_CODE);
         }
@@ -160,8 +165,26 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
 //            imageList.add("http://i0.hdslb.com/bfs/archive/dfd38947e9b971e06d113425a863e4e7b5715335.jpg");
 //            imageList.add("http://npic7.edushi.com/cn/zixun/zh-chs/2017-07/24/4050488-2017072415380279.jpg");
 //            ImageBrowseIntent.showUrlImageBrowse(mContext,imageList,0);
+        }
+        @JavascriptInterface
+        public void showPic(String str) {
+            Log.i("---------", "searchImg: ____" + str);
+            Gson gson = new Gson();
+            ArrayList<SgjdjcUploadEntity> li = gson.fromJson(str,new TypeToken<ArrayList<SgjdjcUploadEntity>>(){}.getType());
+            ArrayList<String> imageList = new ArrayList<>();
 
-
+            for (SgjdjcUploadEntity u : li){
+                String string = u.getFileuri();
+                String substring = string.substring((string.lastIndexOf("\\")+1),string.length());
+                imageList.add(AppConfig.UPC_API_BASE_URL+"appImages/"+substring);
+            }
+            ImageBrowseIntent.showUrlImageBrowse(mContext,imageList,0);
+            //这个地方会查询出网络的图片   到时候可能是一个String的list
+//            ArrayList<String> imageList = new ArrayList<>();
+//            imageList.add("http://img3.duitang.com/uploads/item/201607/15/20160715171249_fmztu.gif");
+//            imageList.add("http://i0.hdslb.com/bfs/archive/dfd38947e9b971e06d113425a863e4e7b5715335.jpg");
+//            imageList.add("http://npic7.edushi.com/cn/zixun/zh-chs/2017-07/24/4050488-2017072415380279.jpg");
+//            ImageBrowseIntent.showUrlImageBrowse(mContext,imageList,0);
         }
     }
 
@@ -343,6 +366,20 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
         webView.setContentChangedListener(this);
     }
 
+    @Override
+    public void showInfoToast2(String message) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toasty.info(getActivity(),message).show();
+                    }
+                }, 1000);
+            }
+        });
+    }
 //      原项目加载
 //    @Override
 //    public void loadLuUrl(@NonNull String url) {

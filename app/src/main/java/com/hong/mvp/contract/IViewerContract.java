@@ -20,6 +20,7 @@ public interface IViewerContract {
     interface View extends IBaseContract.View{
         void loadLuUrl(@NonNull String url);
 
+        void showInfoToast2(String message);
         void showPic(ArrayList<ZyjdPicEntity> rows);
 //        void loadImageUrl(@NonNull String url);
 //        void loadMdText(@NonNull String text, @Nullable String baseUrl);
