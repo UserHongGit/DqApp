@@ -3,10 +3,6 @@ package com.hong.inject.component;
 import com.hong.MainActivity;
 import com.hong.inject.ActivityScope;
 import com.hong.inject.module.ActivityModule;
-import com.hong.ui.activity.AddSgcsActivity;
-import com.hong.ui.activity.AddTxtActivity;
-import com.hong.ui.activity.BuildBanbaoSearch;
-import com.hong.ui.activity.GxlrActivity;
 import com.hong.ui.activity.IssuesActivity;
 import com.hong.ui.activity.LoginActivity;
 import com.hong.ui.activity.RepositoryActivity;
@@ -21,13 +17,6 @@ import dagger.Component;
 public interface ActivityComponent {
     void inject(MainActivity mainActivity);
 
-    void inject(BuildBanbaoSearch buildBanbaoSearch);
-
-    void inject(GxlrActivity gxlrActivity);
-
-    void inject(AddTxtActivity addTxtActivity);
-
-    void inject(AddSgcsActivity sgcsActivity);
 
     void inject(IssuesActivity issuesActivity);
 

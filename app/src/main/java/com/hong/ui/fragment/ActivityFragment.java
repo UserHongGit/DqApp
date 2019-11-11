@@ -11,7 +11,7 @@ import com.hong.R;
 import com.hong.inject.component.AppComponent;
 import com.hong.inject.component.DaggerFragmentComponent;
 import com.hong.inject.module.FragmentModule;
-import com.hong.mvp.contract.IActivityContract.View;
+import com.hong.mvp.contract.IActivityContract;
 import com.hong.mvp.model.Event;
 import com.hong.mvp.presenter.ActivityPresenter;
 import com.hong.ui.adapter.ActivitiesAdapter;
@@ -22,7 +22,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ActivityFragment extends ListFragment<ActivityPresenter, ActivitiesAdapter> implements View {
+public class ActivityFragment extends ListFragment<ActivityPresenter, ActivitiesAdapter> implements IActivityContract.View {
     private static String TAG;
 
     public enum ActivityType {

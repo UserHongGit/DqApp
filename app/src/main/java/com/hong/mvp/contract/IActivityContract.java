@@ -21,7 +21,7 @@ public interface IActivityContract {
         void showEvents2(ArrayList<String> events);
     }
 
-    interface Presenter extends IBasePagerContract.Presenter<IActivityContract.View>{
+    interface Presenter extends IBasePagerContract.Presenter<View>{
         void loadEvents(boolean isReload, int page);
 //        ArrayList<ActivityRedirectionModel> getRedirectionList(@NonNull Event event);
     }

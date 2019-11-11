@@ -85,10 +85,6 @@
         <activity android:name="com.hong.ui.activity.SettingsActivity" android:label="@string/settings"/>
         <activity android:name="com.hong.ui.activity.RepositoryActivity" android:label="@string/repository"/>
         <activity android:name="com.hong.ui.activity.IssuesActivity" android:label="@string/repository"/>
-        <activity android:name="com.hong.ui.activity.BuildBanbaoSearch" android:label="创建班报主页"/>
-        <activity android:name="com.hong.ui.activity.GxlrActivity" android:label="工序显示主页"/>
-        <activity android:name="com.hong.ui.activity.AddTxtActivity" android:label="添加施工参数表"/>
-        <activity android:name="com.hong.ui.activity.AddSgcsActivity" android:label="施工参数详细字段查询表"/>
         <activity android:name=".ui.activity.PicSelectActivity" android:label="打开相机"/>
         <activity android:name=".util.photoBrowser.activity.ImageBrowseActivity" android:label="打开相机"/>
 

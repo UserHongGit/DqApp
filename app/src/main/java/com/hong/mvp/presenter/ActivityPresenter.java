@@ -3,27 +3,27 @@ package com.hong.mvp.presenter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+
+import com.hong.mvp.contract.IActivityContract;
 import com.thirtydegreesray.dataautoaccess.annotation.AutoAccess;
 import com.hong.dao.DaoSession;
 import com.hong.http.core.HttpObserver;
 import com.hong.http.core.HttpResponse;
-import com.hong.http.error.HttpPageNoFoundError;
-import com.hong.mvp.contract.IActivityContract.Presenter;
-import com.hong.mvp.contract.IActivityContract.View;
 import com.hong.mvp.model.Event;
 import com.hong.mvp.model.Repository;
 import com.hong.mvp.presenter.base.BasePagerPresenter;
 import com.hong.ui.fragment.ActivityFragment;
 import com.hong.ui.fragment.ActivityFragment.ActivityType;
-import com.hong.util.StringUtils;
+
 import java.util.ArrayList;
+import com.hong.mvp.contract.IActivityContract.View;
 import java.util.HashMap;
 
 import javax.inject.Inject;
 import retrofit2.Response;
 import rx.Observable;
 
-public class ActivityPresenter extends BasePagerPresenter<View> implements Presenter {
+public class ActivityPresenter extends BasePagerPresenter<IActivityContract.View> implements IActivityContract.Presenter {
     private static String TAG;
     ArrayList<Event> events;
     @AutoAccess

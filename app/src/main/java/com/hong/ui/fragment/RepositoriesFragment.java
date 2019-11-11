@@ -17,7 +17,6 @@ import com.hong.mvp.contract.IRepositoriesContract.View;
 import com.hong.mvp.model.Repository;
 import com.hong.mvp.model.TrendingLanguage;
 import com.hong.mvp.presenter.RepositoriesPresenter;
-import com.hong.ui.activity.BuildBanbaoSearch;
 import com.hong.ui.activity.RepositoryActivity;
 import com.hong.ui.activity.TrendingActivity.LanguageUpdateListener;
 import com.hong.ui.adapter.RepositoriesAdapter;
@@ -153,8 +152,8 @@ public class RepositoriesFragment extends ListFragment<RepositoriesPresenter, Re
 
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.i(TAG, "onOptionsItemSelected: ______");
-        Intent intent = new Intent(getContext(), BuildBanbaoSearch.class);
-        this.startActivity(intent);
+//        Intent intent = new Intent(getContext(), BuildBanbaoSearch.class);
+//        this.startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 

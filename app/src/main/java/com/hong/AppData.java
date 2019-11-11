@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import com.hong.http.model.UMenu;
 import com.thirtydegreesray.dataautoaccess.annotation.AutoAccess;
 import com.hong.dao.AuthUser;
-import com.hong.mvp.model.GxrbModel;
 import com.hong.mvp.model.User;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -15,7 +14,6 @@ public enum AppData {
 
     public static boolean isLogin;
     public static int isUpload;
-    public static ArrayList<GxrbModel> searchWells;
     @AutoAccess(dataName = "appData_authUser")
     AuthUser authUser;
     @AutoAccess(dataName = "appData_loggedUser")
@@ -25,9 +23,6 @@ public enum AppData {
 
     public static ArrayList<UMenu> menus = new ArrayList<>();
 
-    static {
-        searchWells = new ArrayList();
-    }
 
     public User getLoggedUser() {
         return this.loggedUser;

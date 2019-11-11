@@ -17,8 +17,6 @@ import com.hong.http.model.ZyjdPicEntity;
 import com.hong.mvp.contract.IViewerContract;
 import com.hong.mvp.model.FileModel;
 import com.hong.mvp.model.User;
-import com.hong.mvp.model.sgcs.GxEntity;
-import com.hong.mvp.model.sgcs.SgcsReturn;
 import com.hong.mvp.presenter.base.BasePresenter;
 import com.thirtydegreesray.dataautoaccess.annotation.AutoAccess;
 
@@ -177,7 +175,7 @@ FileModel fileModel;
 
                     @Override
                     public void onSuccess(HttpResponse<HashMap<String,ArrayList<ZyjdPicEntity>>> response) {
-                        Log.i(TAG, "onSuccess: 根据监督id查询图片成功____"+response.body().get("rows").size());
+                        Log.i(TAG, "onSuccess: 根据监督id查询图片成功____");
                         ArrayList<ZyjdPicEntity> rows = response.body().get("rows");
                         mView.showPic(rows);
                     }

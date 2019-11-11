@@ -15,9 +15,6 @@ import com.hong.AppData;
 import com.hong.R;
 import com.hong.common.AppEventBus;
 import com.hong.dao.DaoSession;
-import com.hong.http.AddSgcsService;
-import com.hong.http.AddTxtService;
-import com.hong.http.GxlrService;
 import com.hong.http.IssueService;
 import com.hong.http.LoginService;
 import com.hong.http.NotificationsService;
@@ -52,7 +49,6 @@ import java.util.Map;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observable;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
 import rx.android.schedulers.AndroidSchedulers;
@@ -135,17 +131,6 @@ public abstract class BasePresenter<V extends IBaseContract.View> implements IBa
      * @return Retrofit
      */
 
-    protected GxlrService getGxlrService() {
-        return (GxlrService) AppRetrofit.INSTANCE.getRetrofit(AppConfig.UPC_API_BASE_URL, "22", true).create(GxlrService.class);
-    }
-
-    protected AddSgcsService getAddSgcsService() {
-        return (AddSgcsService) AppRetrofit.INSTANCE.getRetrofit(AppConfig.UPC_API_BASE_URL, null, true).create(AddSgcsService.class);
-    }
-
-    protected AddTxtService getAddTxtService() {
-        return (AddTxtService) AppRetrofit.INSTANCE.getRetrofit(AppConfig.UPC_API_BASE_URL, null, true).create(AddTxtService.class);
-    }
 
     protected LoginService getLoginService() {
         return AppRetrofit.INSTANCE
