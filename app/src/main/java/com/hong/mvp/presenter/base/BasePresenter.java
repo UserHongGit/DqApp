@@ -359,7 +359,7 @@ public abstract class BasePresenter<V extends IBaseContract.View> implements IBa
         } else if (error instanceof HttpError) {
             errorTip = error.getMessage();
         } else {
-            errorTip = "登录失败";
+            errorTip = StringUtils.isBlank(error.getMessage()) ? error.toString() : error.getMessage();
         }
         return errorTip;
     }

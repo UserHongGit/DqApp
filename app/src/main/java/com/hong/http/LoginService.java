@@ -28,7 +28,18 @@ import rx.Observable;
 
 public interface LoginService {
 
+    /*原始大庆登录*/
+    /*
     @POST("sggl/LoginActionTemp!loginNew")
+//    @POST("authorizations")
+    @Headers("Accept: application/json")
+    Observable<Response<BasicToken>> authorizations(
+            @NonNull @Body AuthRequestModel authRequestModel
+    );
+    */
+
+    /*通用登录*/
+    @POST("common/login")
 //    @POST("authorizations")
     @Headers("Accept: application/json")
     Observable<Response<BasicToken>> authorizations(

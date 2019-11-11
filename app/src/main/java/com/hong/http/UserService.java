@@ -47,7 +47,14 @@ public interface UserService {
     @NonNull
     Observable<Response<ArrayList<User>>> getOrgMembers(@Header("forceNetWork") boolean z, @Path("org") String str, @Query("page") int i);
 
+    /*大庆原始登录*/
+    /*
     @GET("sggl/LoginActionTemp!user")
+    @NonNull
+    Observable<Response<User>> getPersonInfo(@Header("forceNetWork") boolean z);
+    */
+
+    @GET("common/user")
     @NonNull
     Observable<Response<User>> getPersonInfo(@Header("forceNetWork") boolean z);
 

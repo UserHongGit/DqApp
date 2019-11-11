@@ -113,8 +113,7 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
 
                     @Override
                     public void onSuccess(@NonNull HttpResponse<BasicToken> response) {
-                        mView.onGetTokenError("密码错误");
-                        Log.i("====", "onSuccess: 44444___"+response+"////"+response.toString()+"///"+response.body());
+                        Log.i("====", "onSuccess: 登录成功___"+response+"___"+response.toString()+"_____"+response.body());
                         BasicToken token = response.body();
                         if (token != null) {
                             Log.i("============>", "onSuccess: token+++++++++++" + token.getToken());

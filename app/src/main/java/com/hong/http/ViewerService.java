@@ -25,7 +25,7 @@ public interface ViewerService {
      * uploadImg(File file,String fileName,String userName,String jdid,String prefix) {
      */
     @Multipart
-    @POST("sggl/ImgUpload!uploadImg2")
+    @POST("ImgUpload/uploadImg2")
     @Headers({"Accept: application/json"})
     Observable<Response<HashMap<String,String>>>  uploadImg(
             @Part("description") RequestBody description,
@@ -37,7 +37,7 @@ public interface ViewerService {
 
     );
     @Multipart
-    @POST("sggl/ImgUpload!cbs_upload")
+    @POST("ImgUpload/cbs_upload")
     @Headers({"Accept: application/json"})
     Observable<Response<HashMap<String,String>>>  cbs_upload(
             @Part("description") RequestBody description,
@@ -54,7 +54,7 @@ public interface ViewerService {
 
     );
 
-    @GET("sggl/ImgUpload!selectImgByJdid")
+    @GET("ImgUpload/selectImgByJdid")
     @NonNull
     Observable<Response<HashMap<String,ArrayList<ZyjdPicEntity>>>>  searcImages(
             @Query("jdid") String jdid

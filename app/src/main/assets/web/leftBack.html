@@ -30,17 +30,17 @@
     </ul>
 </div>
         <script type="text/javascript">
-
+//原始大庆查询菜单界面
 var html = '';
 var x = window.adjs.getBaseUrl();
-var urll = x+'common/getMenu'
+var urll = x+'sggl/LoginActionTemp!getMenu'
  // $('#menuUl').append(urll+"///"+window.adjs.getParam());
 
 
 $.post(urll,{"username":window.adjs.getParam()}, function(data) {
 $('#menuUl').html('');
  $.each(data.rows, function(i, value) {
-		    	 html+='<li class="ui-selector-item " url="'+value.menuAddress+'"> <h3 class="ui-border-b"> <p class="ss">'+value.menuName+'</p><span class="ui-txt-info">...</span> </h3> </li>';
+		    	 html+='<li class="ui-selector-item " url="'+value.murl+'"> <h3 class="ui-border-b"> <p class="ss">'+value.mname+'</p><span class="ui-txt-info">...</span> </h3> </li>';
 		     });
 
 

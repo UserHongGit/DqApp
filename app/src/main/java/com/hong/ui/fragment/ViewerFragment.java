@@ -408,6 +408,10 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
 
     @Override
     public void showPic(ArrayList<ZyjdPicEntity> rows) {
+        if(rows.size()<=0){
+            Toasty.normal(getContext(),"暂无图片记录!").show();
+            return;
+        }
         ArrayList<String> imageList = new ArrayList<>();
         for (ZyjdPicEntity r : rows) {
             imageList.add(AppConfig.UPC_API_BASE_URL + "appImages/" + r.getPresentpicname());

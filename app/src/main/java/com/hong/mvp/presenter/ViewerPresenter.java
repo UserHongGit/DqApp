@@ -87,18 +87,18 @@ FileModel fileModel;
     @Override
     public void uploadImg(File file,String fileName,String userName,String jdid,String prefix) {
         mView.showLoading();
-        Log.i("--------", "uploadImg: shangcuhan____________--");
+        Log.i("--------", "uploadImg:上传图片 shangcuhan____________--");
         HttpObserver<HashMap<String,String>> httpObserver =
                 new HttpObserver<HashMap<String,String>>() {
                     @Override
                     public void onError(@NonNull Throwable error) {
-                        error.printStackTrace();
+                        Log.i(TAG, "onError: uploadImg上传图片失败___"+error);
                         mView.hideLoading();
                     }
 
                     @Override
                     public void onSuccess(@NonNull HttpResponse<HashMap<String,String>> response) {
-                        Log.i(TAG, "onSuccess: ____"+response.body()+"//"+ response.body().get("msg"));
+                        Log.i(TAG, "onSuccess:uploadImg上传图片成功 ____"+response.body()+"//"+ response.body().get("msg"));
                         mView.showInfoToast(response.body().get("msg"));
                         Toast.makeText(getContext(), response.body().get("msg"), Toast.LENGTH_SHORT).show();
                         mView.hideLoading();
@@ -111,7 +111,7 @@ FileModel fileModel;
                 RequestBody requestFile =
                         RequestBody.create(MediaType.parse("application/otcet-stream"), file);
                 MultipartBody.Part body =
-                        MultipartBody.Part.createFormData("file2", file.getName(), requestFile);
+                        MultipartBody.Part.createFormData("file", file.getName(), requestFile);
                 String descriptionString = fileName;
                 RequestBody description =
                         RequestBody.create(
@@ -149,12 +149,12 @@ FileModel fileModel;
                 RequestBody requestFile =
                         RequestBody.create(MediaType.parse("application/otcet-stream"), file);
                 MultipartBody.Part body =
-                        MultipartBody.Part.createFormData("file2", file.getName(), requestFile);
+                        MultipartBody.Part.createFormData("file", file.getName(), requestFile);
                 String descriptionString = fileName;
                 RequestBody description =
                         RequestBody.create(
                                 MediaType.parse("multipart/form-data"), descriptionString);
-
+                Log.i(TAG, "createObservable: 有天使___"+AppData.INSTANCE.getLoggedUser().getOilfield());
                 return getViewerService("").cbs_upload(description,body,fileName,AppData.INSTANCE.getLoggedUser().getLogin(),jcid,jcxm1,jcxm2,jcxm3,tab,prefix,AppData.INSTANCE.getLoggedUser().getOilfield());
             }
         }, httpObserver);
@@ -171,15 +171,14 @@ FileModel fileModel;
                 new HttpObserver<HashMap<String,ArrayList<ZyjdPicEntity>>>() {
                     @Override
                     public void onError(Throwable error) {
-                        Log.i(TAG, "根据监督id查询图片失败____");
-                        mView.dismissProgressDialog();
+                        Log.i(TAG, "根据监督id查询图片失败____"+error);
                         mView.showErrorToast(getErrorTip(error));
                     }
 
                     @Override
                     public void onSuccess(HttpResponse<HashMap<String,ArrayList<ZyjdPicEntity>>> response) {
+                        Log.i(TAG, "onSuccess: 根据监督id查询图片成功____"+response.body().get("rows").size());
                         ArrayList<ZyjdPicEntity> rows = response.body().get("rows");
-                        Log.i(TAG, "onSuccess: 根据监督id查询图片成功____"+rows.size());
                         mView.showPic(rows);
                     }
                 }

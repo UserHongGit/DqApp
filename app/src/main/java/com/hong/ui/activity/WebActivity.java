@@ -23,10 +23,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 
+import com.bumptech.glide.Glide;
 import com.hong.AppConfig;
 import com.hong.http.model.UMenu;
 import com.hong.ui.fragment.ViewerFragment;
 import com.hong.ui.widget.webview.ProgressWebView;
+import com.hong.util.photoBrowser.GlideHelper;
 import com.tencent.bugly.beta.Beta;
 import com.thirtydegreesray.dataautoaccess.annotation.AutoAccess;
 import com.hong.AppData;
@@ -187,10 +189,10 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
 //                }
             }
         }
-        ImageView avatar = (ImageView) this.navViewStart.getHeaderView(0).findViewById(R.id.avatar);
-        TextView name = (TextView) this.navViewStart.getHeaderView(0).findViewById(R.id.name);
-        TextView mail = (TextView) this.navViewStart.getHeaderView(0).findViewById(R.id.mail);
 
+        TextView mail = (TextView)navViewStart.findViewById(R.id.mail);
+        TextView name = (TextView)navViewStart.findViewById(R.id.name);
+        ImageView avatar = (ImageView)navViewStart.findViewById(R.id.avatar);
         mWebView = navViewStart.findViewById(R.id.webview_menu);
 
         try {
@@ -241,17 +243,15 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
         toggleAccountBn.setVisibility(android.view.View.GONE);
 
         User loginUser = AppData.INSTANCE.getLoggedUser();
-//        GlideApp.with(getActivity())
-//                .load(loginUser.getAvatarUrl())
-//                .onlyRetrieveFromCache(!PrefUtils.isLoadImageEnable())
-//                .into(avatar);
+
+        Glide.with(getActivity()).asBitmap().load(AppConfig.UPC_API_BASE_URL+"appImages/userAv_noAv.jpg").into(avatar);
         name.setText(StringUtils.isBlank(loginUser.getName()) ? loginUser.getLogin() : loginUser.getName());
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat f = new SimpleDateFormat("yy.MM.dd");
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(new Date());
         stringBuilder.append(f.format(c.getTime()));
-        mail.setText(StringUtils.isBlank(loginUser.getBio()) ? "登录时间".concat(stringBuilder.toString()) : loginUser.getBio());
+        stringBuilder.append("  "+c.get(Calendar.HOUR_OF_DAY)+":"+ c.get(Calendar.MINUTE));
+        mail.setText(StringUtils.isBlank(loginUser.getBio()) ? "登录时间: ".concat(stringBuilder.toString()) : loginUser.getBio());
         this.tabLayout.setVisibility(android.view.View.GONE);
     }
 
@@ -306,17 +306,18 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
         Log.i(this.TAG, "updateFragmentByNavId: "+id+"_____"+AppData.isLogin);
         if(null!=url)
             if(!AppData.isLogin){
-//                System.out.println("初始化webView____"+AppData.INSTANCE.getLoggedUser().getLogin()+"___"+AppData.INSTANCE.getAuthUser().getLoginId());
-            url = AppConfig.UPC_API_BASE_URL+"sggl/LoginActionTemp!initLogin?username="+ AppData.INSTANCE.getLoggedUser().getLogin();
+//                原始大庆登录
+//            url = AppConfig.UPC_API_BASE_URL+"sggl/LoginActionTemp!initLogin?username="+ AppData.INSTANCE.getLoggedUser().getLogin();
+            url = AppConfig.UPC_API_BASE_URL+"common/initLogin?username="+ AppData.INSTANCE.getLoggedUser().getLogin();
             AppData.isLogin = true;
             }else{
                 if(!url.contains("/")){
                     url="file:///android_asset/web/"+url+".html";
                 }else{
-                    url=AppConfig.UPC_API_BASE_URL+"m/"+url+".jsp";
+                    url=url.replaceAll("/", ".");
+                    url=AppConfig.UPC_API_BASE_URL+"JumpController/dq.m."+url+"";
                 }
             }
-//            u=AppConfig.UPC_API_BASE_URL+u;
         Log.i("=============>", "001 - web updateFragmentByNavId" + id);
         if(url==null){
             url="about:blank";
