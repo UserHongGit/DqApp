@@ -118,8 +118,7 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
         Log.i("=============>", "9 - web initActivity");
         super.initActivity();
 
-//        检测更新
-//        Beta.checkUpgrade();
+
         AppData.INSTANCE.getLoggedUser();
         setStartDrawerEnable(true);
         setEndDrawerEnable(true);
@@ -208,6 +207,8 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
             e.printStackTrace();
         }
         mWebView.loadUrl("file:///android_asset/web/left.html");
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setDomStorageEnabled(true);
 //        mWebView.loadUrl("javascript:test()");
         mWebView.addJavascriptInterface(new Object() {
             @JavascriptInterface
@@ -253,6 +254,9 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
         stringBuilder.append("  "+c.get(Calendar.HOUR_OF_DAY)+":"+ c.get(Calendar.MINUTE));
         mail.setText(StringUtils.isBlank(loginUser.getBio()) ? "登录时间: ".concat(stringBuilder.toString()) : loginUser.getBio());
         this.tabLayout.setVisibility(android.view.View.GONE);
+
+        //        检测更新
+        Beta.checkUpgrade();
     }
 
     public /* synthetic */ void lambda$initView$0$WebActivity(android.view.View v) {
@@ -311,11 +315,10 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
             url = AppConfig.UPC_API_BASE_URL+"common/initLogin?username="+ AppData.INSTANCE.getLoggedUser().getLogin();
             AppData.isLogin = true;
             }else{
-                if(!url.contains("/")){
+                if(!url.contains("m.")){
                     url="file:///android_asset/web/"+url+".html";
                 }else{
-                    url=url.replaceAll("/", ".");
-                    url=AppConfig.UPC_API_BASE_URL+"JumpController/dq.m."+url+"";
+                    url=AppConfig.UPC_API_BASE_URL+"JumpController/"+url+"";
                 }
             }
         Log.i("=============>", "001 - web updateFragmentByNavId" + id);

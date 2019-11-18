@@ -59,7 +59,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="textPersonName"
                         android:maxLines="1"
-                        android:text="gqren" />
+                        android:text="" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -78,7 +78,7 @@
                         android:imeOptions="actionSend"
                         android:inputType="textPassword"
                         android:maxLines="1"
-                        android:text="123456" />
+                        android:text="" />
                 </android.support.design.widget.TextInputLayout>
 
                 <com.unstoppable.submitbuttonview.SubmitButton
@@ -99,6 +99,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:text="@string/oauth_tip"/>
 
                 <Button
@@ -109,6 +110,7 @@
                     android:paddingRight="@dimen/spacing_small"
                     android:layout_margin="@dimen/spacing_normal"
                     android:background="?android:attr/selectableItemBackground"
+                    android:visibility="gone"
                     android:text="@string/login_in_browser"
                     android:textColor="?colorAccent"/>
 

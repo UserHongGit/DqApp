@@ -4,12 +4,17 @@ package com.hong;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.support.multidex.MultiDex;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.hong.inject.component.AppComponent;
@@ -17,8 +22,12 @@ import com.hong.inject.component.DaggerAppComponent;
 import com.hong.inject.module.AppModule;
 import com.hong.service.NetBroadcastReceiver;
 import com.hong.util.AppUtils;
+import com.hong.util.MyUtils;
 import com.hong.util.NetHelper;
+import com.hong.util.PrefUtils;
 import com.tencent.bugly.Bugly;
+
+import java.util.Locale;
 
 /**
  * AppApplication
@@ -37,6 +46,7 @@ public class AppApplication extends Application {
         MultiDex.install(this);
     }
 
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -46,8 +56,9 @@ public class AppApplication extends Application {
         long startTime = System.currentTimeMillis();
         AppData.INSTANCE.getSystemDefaultLocal();
         //apply language for application context, bugly used it
-        AppUtils.updateAppLanguage(getApplicationContext());
-        initLogger();
+        //把这句话注释掉就默认成中文了,如果打开就成英文了,但是我不知道为什么能改
+//        AppUtils.updateAppLanguage(getApplicationContext());
+
         mAppComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .build();

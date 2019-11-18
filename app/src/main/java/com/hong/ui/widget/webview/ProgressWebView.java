@@ -114,7 +114,7 @@ public class ProgressWebView extends WebView {
         webSettings.setUseWideViewPort(true);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setSupportZoom(true);
-
+        webSettings.setDomStorageEnabled(true);
         webSettings.setJavaScriptEnabled(true);
     }
 

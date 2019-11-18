@@ -1,26 +1,26 @@
 <resources>
-    <string name="app_github_name" translatable="false">OpenHub</string>
-    <string name="navigation_drawer_open" translatable="false">navigation_drawer_open</string>
-    <string name="navigation_drawer_close" translatable="false">navigation_drawer_close</string>
+    <string name="app_github_name" translatable="false">大庆井下作业</string>
+    <string name="navigation_drawer_open" translatable="false">导航开启</string>
+    <string name="navigation_drawer_close" translatable="false">导航关闭</string>
 
     <!-- colors -->
-    <string name="light_blue" translatable="false">Light Blue</string>
-    <string name="blue" translatable="false">Blue</string>
-    <string name="indigo" translatable="false">Indigo</string>
-    <string name="orange" translatable="false">Orange</string>
-    <string name="yellow" translatable="false">Yellow</string>
-    <string name="amber" translatable="false">Amber</string>
-    <string name="grey" translatable="false">Grey</string>
-    <string name="brown" translatable="false">Brown</string>
+    <string name="light_blue" translatable="false">高亮蓝</string>
+    <string name="blue" translatable="false">蓝色</string>
+    <string name="indigo" translatable="false">靛蓝</string>
+    <string name="orange" translatable="false">橘色</string>
+    <string name="yellow" translatable="false">黄色</string>
+    <string name="amber" translatable="false">琥珀色</string>
+    <string name="grey" translatable="false">灰色</string>
+    <string name="brown" translatable="false">棕色</string>
 
-    <string name="cyan" translatable="false">Cyan</string>
-    <string name="teal" translatable="false">Teal</string>
-    <string name="lime" translatable="false">Lime</string>
-    <string name="green" translatable="false">Green</string>
-    <string name="pink" translatable="false">Pink</string>
-    <string name="red" translatable="false">Red</string>
-    <string name="purple" translatable="false">Purple</string>
-    <string name="deep_purple" translatable="false">Deep Purple</string>
+    <string name="cyan" translatable="false">青色</string>
+    <string name="teal" translatable="false">湖水绿</string>
+    <string name="lime" translatable="false">石灰色</string>
+    <string name="green" translatable="false">绿色</string>
+    <string name="pink" translatable="false">粉色</string>
+    <string name="red" translatable="false">红色</string>
+    <string name="purple" translatable="false">紫色</string>
+    <string name="deep_purple" translatable="false">深紫色</string>
 
     <!-- onLoginClick -->
     <string name="user_name">用户名</string>
@@ -32,25 +32,25 @@
     <string name="password_warning">密码错误!</string>
 
     <!-- menu -->
-    <string name="profile">Profile</string>
-    <string name="notifications">Notifications</string>
+    <string name="profile">简况</string>
+    <string name="notifications">通知</string>
     <string name="news">井下作业管理</string>
-    <string name="issues">Issues</string>
-    <string name="web_view1">web_view1</string>
-    <string name="web_view2">web_view2</string>
+    <string name="issues">问题</string>
+    <string name="web_view1">浏览器1</string>
+    <string name="web_view2">浏览器2</string>
 
-    <string name="repositories">Repositories</string>
-    <string name="owned">Owned</string>
-    <string name="starred">Starred</string>
-    <string name="trending">Trending</string>
-    <string name="explore">Explore</string>
+    <string name="repositories">仓库</string>
+    <string name="owned">我的</string>
+    <string name="starred">星标</string>
+    <string name="trending">趋势</string>
+    <string name="explore">寻找</string>
 
-    <string name="info_and_repositories">Info &#038; Preferences</string>
+    <string name="info_and_repositories">信息 &#038; 偏好</string>
     <string name="settings">设置</string>
     <string name="about">关于</string>
 
-    <string name="public_repositories">Public repositories</string>
-    <string name="starred_repositories">Starred repositories</string>
+    <string name="public_repositories">公用仓库</string>
+    <string name="starred_repositories">星标仓库</string>
 
     <string name="no_cache_and_network">Network and cache is unavailable.</string>
     <string name="page_no_found">Page not found.</string>
@@ -409,62 +409,62 @@
     <string name="no_repo_collections">No repo collections</string>
     <string name="collections_tip">Curated lists and insight into burgeoning industries, topics, and communities.</string>
     <string name="github_page_parse_error">
-        %s page parse error, this page may be changed by github,
-        please update your application to latest version, if error continue, please concat me to solve the problem!
+        %s 页面分析错误，此页面可能被更改，
+        请将您的应用程序更新到最新版本，如果错误继续，请联系我解决问题！
     </string>
 
-    <string name="bookmarks_tip">You can swipe left or right to remove bookmark.</string>
-    <string name="mark_all_as_read">Mark all as read</string>
-    <string name="mark_as_read">Mark as read</string>
+    <string name="bookmarks_tip">您可以向左或向右滑动以删除书签.</string>
+    <string name="mark_all_as_read">全部已读</string>
+    <string name="mark_as_read">标识已读</string>
 
-    <string name="topic">Topic</string>
-    <string name="topics">Featured topics</string>
-    <string name="topics_tip">Browse the top used topics on GitHub.</string>
-    <string name="no_topics">No topics</string>
+    <string name="topic">文章</string>
+    <string name="topics">热门内容</string>
+    <string name="topics_tip">浏览其他内容.</string>
+    <string name="no_topics">没有内容</string>
 
-    <string name="star_num_today">%s star today</string>
-    <string name="star_num_this_week">%s star this week</string>
-    <string name="star_num_this_month">%s star this month</string>
-    <string name="no_trending_repos">It looks like we don’t have any trending repositories for %s.</string>
+    <string name="star_num_today">%s 今天标记</string>
+    <string name="star_num_this_week">%s 此周标记</string>
+    <string name="star_num_this_month">%s 此月标记</string>
+    <string name="no_trending_repos">看来我们没有 %s.</string>
 
-    <string name="all_languages">All languages</string>
-    <string name="unknown_languages">Unknown languages</string>
+    <string name="all_languages">所有语言</string>
+    <string name="unknown_languages">未知语言</string>
 
-    <string name="labels">Labels</string>
-    <string name="label">Label</string>
-    <string name="edit_label">Edit label</string>
-    <string name="create_label">Create label</string>
-    <string name="save">Save</string>
-    <string name="name">Name</string>
-    <string name="color">Color</string>
-    <string name="more">More</string>
-    <string name="custom">Custom</string>
-    <string name="done">Done</string>
-    <string name="presets">Presets</string>
-    <string name="choose_color">Choose color</string>
-    <string name="invalid_color">Invalid color</string>
-    <string name="invalid_name">Invalid name</string>
-    <string name="choose_labels">Choose labels</string>
-    <string name="manage_labels">Manage labels</string>
+    <string name="labels">更多标签</string>
+    <string name="label">标签</string>
+    <string name="edit_label">编辑标签</string>
+    <string name="create_label">创建标签</string>
+    <string name="save">保存</string>
+    <string name="name">名称</string>
+    <string name="color">颜色</string>
+    <string name="more">更多</string>
+    <string name="custom">自定义</string>
+    <string name="done">完成</string>
+    <string name="presets">预设</string>
+    <string name="choose_color">选择颜色</string>
+    <string name="invalid_color">无效颜色</string>
+    <string name="invalid_name">无效名称</string>
+    <string name="choose_labels">选择标签</string>
+    <string name="manage_labels">管理标签</string>
 
-    <string name="issue_add_label">add the label %s</string>
-    <string name="issue_remove_label">remove the label %s</string>
-    <string name="issue_close">close this</string>
-    <string name="issue_reopened">reopened this</string>
-    <string name="issue_modified">modified this issue</string>
-    <string name="issue_added_to_milestone">added this to the %s milestone</string>
-    <string name="issue_removed_from_milestone">removed this from the %s milestone</string>
-    <string name="issue_locked_conversation">locked and limited conversation to collaborators</string>
-    <string name="issue_unlocked_conversation">unlocked this conversation</string>
-    <string name="issue_delete_comment">delete a comment</string>
-    <string name="issue_referenced">referenced this issue in %s</string>
-    <string name="issue_assigned">assigned this to %s</string>
-    <string name="issue_unassigned">removed their assignment</string>
+    <string name="issue_add_label">添加标签 %s</string>
+    <string name="issue_remove_label">删除标签 %s</string>
+    <string name="issue_close">关闭</string>
+    <string name="issue_reopened">重新打开</string>
+    <string name="issue_modified">修改此问题</string>
+    <string name="issue_added_to_milestone">添加到 %s 里程碑</string>
+    <string name="issue_removed_from_milestone">从里程碑中 %s 删除</string>
+    <string name="issue_locked_conversation">锁定和限制对合作者的对话</string>
+    <string name="issue_unlocked_conversation">解锁此对话</string>
+    <string name="issue_delete_comment">删除注释</string>
+    <string name="issue_referenced">在中引用了此问题%s</string>
+    <string name="issue_assigned">将此分配给 %s</string>
+    <string name="issue_unassigned">删除它们的分配</string>
 
     <string name="disable_loading_image">禁用网络图片加载</string>
     <string name="disable_loading_image_desc">在移动网络下禁用网络图片加载</string>
 
-    <string name="toggle_issue_warning">Confirm to %s this issue?</string>
+    <string name="toggle_issue_warning">确认删除 %s 这个问题?</string>
 
     <string name="new_year_wishes" formatted="false" translatable="false">
         Hi %s！今天是您在OpenHub的第%d天，我会成为更适合您的GitHub app。
@@ -476,7 +476,7 @@
         \n\n最后还有一点小期望，如果可以星标来支持我，那就更棒了！
     </string>
 
-    <string name="add_account">Add account</string>
-    <string name="delete_label_warning">Confirm to delete this label?</string>
+    <string name="add_account">添加账号</string>
+    <string name="delete_label_warning">确认删除此标签?</string>
 
 </resources>

@@ -54,6 +54,26 @@ public interface ViewerService {
 
     );
 
+    @Multipart
+    @POST("SecurityImg/danger_upload")
+    @Headers({"Accept: application/json"})
+    Observable<Response<HashMap<String,String>>>  danger_upload(
+            @Part("description") RequestBody description,
+            @Part MultipartBody.Part file,
+            @Query("picId") String picId,
+            @Query("username") String userName
+    );
+
+    @Multipart
+    @POST("SecurityImg/jxkc_upload")
+    @Headers({"Accept: application/json"})
+    Observable<Response<HashMap<String,String>>>  jxkc_upload(
+            @Part("description") RequestBody description,
+            @Part MultipartBody.Part file,
+            @Query("picId") String picId,
+            @Query("kcid") String kcid
+    );
+
     @GET("ImgUpload/selectImgByJdid")
     @NonNull
     Observable<Response<HashMap<String,ArrayList<ZyjdPicEntity>>>>  searcImages(

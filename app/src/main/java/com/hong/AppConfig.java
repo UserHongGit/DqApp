@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created on 2019/05/23.
  *
- * @author upc_jxzy
+ * @author upc_jxzyik
  */
 
 public class AppConfig {
@@ -20,8 +20,9 @@ public class AppConfig {
 
 
 
-//        public final static String UPC_API_BASE_URL = "http://210.12.194.127:8889/jxzyappsev/";
-        public final static String UPC_API_BASE_URL = "http://192.168.0.48:8095/jdapp/";
+        public final static String UPC_API_BASE_URL = "http://210.12.194.127:8889/jxzyappsev/";
+//        public final static String UPC_API_BASE_URL = "http://192.168.43.190:8889/jxzyappsev/";
+//        public final static String UPC_API_BASE_URL = "http://192.168.43.190:8090/cuop/";
     public final static String GITHUB_CONTENT_BASE_URL = "https://raw.githubusercontent.com/";
 
     /**

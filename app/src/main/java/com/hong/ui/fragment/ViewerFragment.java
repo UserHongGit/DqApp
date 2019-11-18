@@ -65,6 +65,8 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
 
 
     private static final int CBS_UPLOAD_CODE = 0x99;
+    private static final int DANGER_UPLOAD_CODE = 0x88;
+    private static final int JXKC_UPLOAD_CODE = 0x77;
     private static String TAG = ViewerFragment.class.getSimpleName() + "_________-";
     private boolean isError = false;
 
@@ -99,6 +101,10 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
     private String jdid, userName, prefix;
     //照片名字转换
     private ImgConvertName imgConvert;
+    //HSE隐患上传图片 于金涛
+    private String picId,username;
+    //勘察上传图片  王志伟
+    private String kcid;
     //自定义结束
 
 
@@ -156,6 +162,23 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
         }
 
         @JavascriptInterface
+        public void danger_upload(String picId,String username) {
+            Log.i("---------", "danger_upload: 胖子danger___上传个照片啊____" + picId + "___" + username );
+            ViewerFragment.this.picId = picId;
+            ViewerFragment.this.username = username;
+            startActivityForResult(new Intent(getContext(), PicSelectActivity.class), DANGER_UPLOAD_CODE);
+        }
+
+        @JavascriptInterface
+        public void jxkc_upload(String picId,String kcid) {
+            Log.i("---------", "danger_upload: 王志伟jxkc___上传个照片啊____" + picId + "___" + username );
+            ViewerFragment.this.picId = picId;
+            ViewerFragment.this.kcid = kcid;
+            startActivityForResult(new Intent(getContext(), PicSelectActivity.class), JXKC_UPLOAD_CODE);
+        }
+
+
+        @JavascriptInterface
         public void searchImg(String jdid) {
             Log.i("---------", "searchImg: ____" + jdid);
             mPresenter.searcImages(jdid);
@@ -195,6 +218,7 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
         if (resultCode != -1) {
             return;
         }
+        Iterator<String> itear = null ;
         switch (requestCode) {
             case 1:
                 pathArr = intent.getStringArrayListExtra("key");
@@ -245,7 +269,56 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
                 while (iterator2.hasNext()) {
                     Log.i(TAG, "图片路径: ____" + iterator2.next());
                 }
+                break;
+            case DANGER_UPLOAD_CODE:
+                pathArr = intent.getStringArrayListExtra("key");
+                if (pathArr.size() <= 0) {
+                    Toast.makeText(getContext(), "请选择图片后上传!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
+                itear = pathArr.iterator();
+                while (itear.hasNext()) {
+                    File file = new File(itear.next());
+                    try {
+                        Log.i(TAG, "onActivityResult: 文件是否存在_________" + file.exists());
+                        if (file.exists() && file.length() > 0) {
+                            mPresenter.danger_upload(file, file.getName(),picId,username);
+                        }
+
+                    } catch (Exception e) {
+                        System.err.println("上传图片出错!");
+                        e.printStackTrace();
+                    }
+                }
+                while (itear.hasNext()) {
+                    Log.i(TAG, "图片路径: ____" + itear.next());
+                }
+                break;
+            case JXKC_UPLOAD_CODE:
+                pathArr = intent.getStringArrayListExtra("key");
+                if (pathArr.size() <= 0) {
+                    Toast.makeText(getContext(), "请选择图片后上传!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                itear = pathArr.iterator();
+                while (itear.hasNext()) {
+                    File file = new File(itear.next());
+                    try {
+                        Log.i(TAG, "onActivityResult: 文件是否存在_________" + file.exists());
+                        if (file.exists() && file.length() > 0) {
+                            mPresenter.jxkc_upload(file, file.getName(),picId,kcid);
+                        }
+
+                    } catch (Exception e) {
+                        System.err.println("上传图片出错!");
+                        e.printStackTrace();
+                    }
+                }
+                while (itear.hasNext()) {
+                    Log.i(TAG, "图片路径: ____" + itear.next());
+                }
                 break;
 
         }
@@ -339,6 +412,7 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
         Log.i(TAG, "loadLuUrl: 加载的url是_____" + url);
         loader.setVisibility(View.VISIBLE);
         loader.setIndeterminate(false);
+
         RelativeLayout online_error = (RelativeLayout) control_error.findViewById(R.id.online_error_btn_retry);
         online_error.setOnClickListener(new View.OnClickListener() {
             @Override

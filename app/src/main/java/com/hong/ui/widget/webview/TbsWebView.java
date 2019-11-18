@@ -251,6 +251,7 @@ public class TbsWebView extends WebView implements NestedScrollingChild {
         this.getView().setClickable(true);
         WebSettings webSetting = this.getSettings();
         webSetting.setJavaScriptEnabled(true);
+        webSetting.setDomStorageEnabled(true);
         webSetting.setJavaScriptCanOpenWindowsAutomatically(true);
         webSetting.setAllowFileAccess(true);
         webSetting.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);

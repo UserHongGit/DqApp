@@ -33,6 +33,8 @@ public interface IViewerContract {
         void load(boolean isReload);
         void uploadImg(File file, String fileName, String userName, String jdid, String prefix);
         void cbs_upload(File file, String fileName, String userName, String jcid, String jcxm1,String jcxm2,String jcxm3,String tab, String prefix);
+        void danger_upload(File file, String fileName, String picId, String username);
+        void jxkc_upload(File file, String fileName, String picId,String kcid);
         void searcImages(String jdid);
     }
 

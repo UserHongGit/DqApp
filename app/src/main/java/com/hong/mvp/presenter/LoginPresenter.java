@@ -108,7 +108,7 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
                     public void onError(@NonNull Throwable error) {
                         //在这里调用就不能重置
                         Log.i("============>", "onError: token______"+error);
-                        mView.onGetTokenError(getErrorTip(error));
+                        mView.onGetTokenError("服务器连接失败,请稍后重试!");
                     }
 
                     @Override

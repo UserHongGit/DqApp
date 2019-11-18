@@ -2,6 +2,8 @@ package com.hong.ui.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.IdRes;
@@ -21,6 +23,8 @@ import android.widget.Toast;
 import com.hong.R;
 import com.hong.ui.adapter.pic.GridImageAdapter;
 import com.hong.ui.widget.pic.FullyGridLayoutManager;
+import com.hong.util.MyUtils;
+import com.hong.util.PrefUtils;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -31,6 +35,7 @@ import com.luck.picture.lib.tools.PictureFileUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class PicSelectActivity extends AppCompatActivity implements View.OnClickListener,
@@ -62,6 +67,15 @@ public class PicSelectActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_picselect);
         themeId = R.style.picture_default_style;
+
+        //强转成中文环境
+        Locale locale =  new Locale("zh");
+        Locale.setDefault(locale);
+        Resources resources = getBaseContext().getResources();
+        Configuration configuration = resources.getConfiguration();
+        configuration.locale = locale;
+        configuration.setLocale(locale);
+        resources.updateConfiguration(configuration,null);
 
 
         shangchuan = (Button)findViewById(R.id.shangchuan);

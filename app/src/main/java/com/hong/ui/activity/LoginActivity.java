@@ -87,7 +87,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
             }
         });
         Log.i(TAG, "onGetTokenError-: ______2222222_____"+loginBn);
-//        Toasty.error(getApplicationContext(), errorMsg).show();
+        Toasty.error(getApplicationContext(), errorMsg).show();
     }
 
     /**

@@ -156,12 +156,80 @@ FileModel fileModel;
                 return getViewerService("").cbs_upload(description,body,fileName,AppData.INSTANCE.getLoggedUser().getLogin(),jcid,jcxm1,jcxm2,jcxm3,tab,prefix,AppData.INSTANCE.getLoggedUser().getOilfield());
             }
         }, httpObserver);
-
-
-
-
-
     }
+
+    @Override
+    public void danger_upload(File file, String fileName, String picId, String username) {
+        mView.showLoading();
+        Log.i(TAG, "HSE隐患处理录入上传照片开始______");
+        HttpObserver<HashMap<String,String>> httpObserver =
+                new HttpObserver<HashMap<String,String>>() {
+                    @Override
+                    public void onError(@NonNull Throwable error) {
+                        error.printStackTrace();
+                        mView.hideLoading();
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull HttpResponse<HashMap<String,String>> response) {
+                        mView.showInfoToast(response.body().get("msg"));
+                        mView.hideLoading();
+                    }
+                };
+        generalRxHttpExecute(new IObservableCreator<HashMap<String,String>>() {
+            @Nullable
+            @Override
+            public Observable<Response<HashMap<String,String>>> createObservable(boolean forceNetWork) {
+                RequestBody requestFile =
+                        RequestBody.create(MediaType.parse("application/otcet-stream"), file);
+                MultipartBody.Part body =
+                        MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+                String descriptionString = fileName;
+                RequestBody description =
+                        RequestBody.create(
+                                MediaType.parse("multipart/form-data"), descriptionString);
+                Log.i(TAG, "createObservable: HSE隐患处理___"+AppData.INSTANCE.getLoggedUser().getOilfield());
+                return getViewerService("").danger_upload(description,body,picId,username);
+        }
+        }, httpObserver);
+    }
+
+    @Override
+    public void jxkc_upload(File file, String fileName, String picId,String kcid) {
+        mView.showLoading();
+        Log.i(TAG, "JXKC处理录入上传照片开始______");
+        HttpObserver<HashMap<String,String>> httpObserver =
+                new HttpObserver<HashMap<String,String>>() {
+                    @Override
+                    public void onError(@NonNull Throwable error) {
+                        error.printStackTrace();
+                        mView.hideLoading();
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull HttpResponse<HashMap<String,String>> response) {
+                        mView.showInfoToast(response.body().get("msg"));
+                        mView.hideLoading();
+                    }
+                };
+        generalRxHttpExecute(new IObservableCreator<HashMap<String,String>>() {
+            @Nullable
+            @Override
+            public Observable<Response<HashMap<String,String>>> createObservable(boolean forceNetWork) {
+                RequestBody requestFile =
+                        RequestBody.create(MediaType.parse("application/otcet-stream"), file);
+                MultipartBody.Part body =
+                        MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+                String descriptionString = fileName;
+                RequestBody description =
+                        RequestBody.create(
+                                MediaType.parse("multipart/form-data"), descriptionString);
+                Log.i(TAG, "createObservable: JXKC隐患处理___"+AppData.INSTANCE.getLoggedUser().getOilfield());
+                return getViewerService("").jxkc_upload(description,body,picId,kcid);
+            }
+        }, httpObserver);
+    }
+
 
     @Override
     public void searcImages(String jdid) {
