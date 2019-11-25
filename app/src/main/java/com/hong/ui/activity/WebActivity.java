@@ -162,25 +162,33 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
 //        removeEndDrawer();
         if (mPresenter.isFirstUseAndNoNewsUser()) {//第一次打开时
 //            this.selectedPage = R.id.nav_public_news;
+            Log.i(TAG, "initView: 第一次打开___-");
             selectedPage = 10000;
             updateFragmentByNavId(this.selectedPage,null);
         } else {
             int i = this.selectedPage;
             if (i != 0) {
+                Log.i(TAG, "initView: _____不等于00");
                 updateFragmentByNavId(i,null);
             }else if(selectedPage != 0 ){
                 Log.i(TAG, "initView:  web FRAGMENT_NAV_ID_LIST selectedPage != 0");
                 updateFragmentByNavId(selectedPage,null);
             } else {
-                int startPageIndex = Arrays.asList(getResources().getStringArray(R.array.start_pages_id)).indexOf(PrefUtils.getStartPage());
-                TypedArray typedArray = getResources().obtainTypedArray(R.array.start_pages_nav_id);
-                int startPageNavId = typedArray.getResourceId(startPageIndex, 0);
-                typedArray.recycle();
+//                int startPageIndex = Arrays.asList(getResources().getStringArray(R.array.start_pages_id)).indexOf(PrefUtils.getStartPage());
+//                TypedArray typedArray = getResources().obtainTypedArray(R.array.start_pages_nav_id);
+//                int startPageNavId = typedArray.getResourceId(startPageIndex, 0);
+//                typedArray.recycle();
 //                if (this.FRAGMENT_NAV_ID_LIST.contains(Integer.valueOf(startPageNavId))) {
 //                    Log.i(TAG, "11 - web FRAGMENT_NAV_ID_LIST.contains(startPageNavId)");
 //                    this.selectedPage = startPageNavId;
 //                    updateFragmentByNavId(this.selectedPage,null);
 //                } else {
+                String startPageId = PrefUtils.getStartPage();
+                int startPageIndex = Arrays.asList(getResources().getStringArray(R.array.start_pages_id))
+                        .indexOf(startPageId);
+                TypedArray typedArray = getResources().obtainTypedArray(R.array.start_pages_nav_id);
+                int startPageNavId = typedArray.getResourceId(startPageIndex, 0);
+                typedArray.recycle();
                     Log.i(TAG, "11 - web !FRAGMENT_NAV_ID_LIST.contains(startPageNavId)");
                     this.selectedPage = 1;
                     updateFragmentByNavId(this.selectedPage,"main");
@@ -207,6 +215,7 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
             e.printStackTrace();
         }
         mWebView.loadUrl("file:///android_asset/web/left.html");
+//        mWebView.loadUrl(AppConfig.UPC_API_BASE_URL+"JumpController/left?user="+AppData.INSTANCE.getAuthUser().getLoginId());
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDomStorageEnabled(true);
 //        mWebView.loadUrl("javascript:test()");
@@ -307,17 +316,21 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
     }
 
     private void updateFragmentByNavId(int id,String url) {
-        Log.i(this.TAG, "updateFragmentByNavId: "+id+"_____"+AppData.isLogin);
+        Log.i(this.TAG, "updateFragmentByNavId: "+url+"____"+id+"_____"+AppData.isLogin);
         if(null!=url)
             if(!AppData.isLogin){
 //                原始大庆登录
 //            url = AppConfig.UPC_API_BASE_URL+"sggl/LoginActionTemp!initLogin?username="+ AppData.INSTANCE.getLoggedUser().getLogin();
-            url = AppConfig.UPC_API_BASE_URL+"common/initLogin?username="+ AppData.INSTANCE.getLoggedUser().getLogin();
-            AppData.isLogin = true;
+
+                url = AppConfig.UPC_API_BASE_URL+"common/initLogin?username="+ AppData.INSTANCE.getLoggedUser().getLogin();
+                AppData.isLogin = true;
             }else{
+                Log.i(TAG, "updateFragmentByNavId: 加载的url__"+url);
                 if(!url.contains("m.")){
+                    Log.i(TAG, "updateFragmentByNavId: 加载本地资源");
                     url="file:///android_asset/web/"+url+".html";
                 }else{
+                    Log.i(TAG, "updateFragmentByNavId: 网络请求");
                     url=AppConfig.UPC_API_BASE_URL+"JumpController/"+url+"";
                 }
             }
@@ -394,7 +407,7 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
     }
 
     private void loadFragment(int itemId,String url) {
-        Log.i(this.TAG,  "loadFragment: "+itemId);
+        Log.i(this.TAG,  "loadFragment: "+itemId+"????"+url);
         this.selectedPage = itemId;
 //        String fragmentTag = (String) this.TAG_MAP.get(Integer.valueOf(itemId));
         String fragmentTag = TAG_MAP.get(itemId);

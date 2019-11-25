@@ -82,7 +82,7 @@
             android:launchMode="singleTask"/>
         <activity
             android:name="com.hong.ui.activity.WebActivity"
-            android:label="大庆大庆井下作业管理"
+            android:label="大庆井下作业管理"
             android:launchMode="singleTask"/>
         <activity android:name="com.hong.ui.activity.SettingsActivity" android:label="@string/settings"/>
         <activity android:name="com.hong.ui.activity.RepositoryActivity" android:label="@string/repository"/>
