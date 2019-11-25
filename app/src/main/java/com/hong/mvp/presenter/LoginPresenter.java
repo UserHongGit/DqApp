@@ -185,14 +185,6 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
                     public void onSuccess(HttpResponse<HashMap<String,ArrayList<UMenu>>> response) {
                         Log.i("============>", "getMenu 根据username请求onSuccess: +++++++++" + response.body().toString() );
                         ArrayList<UMenu> rows = response.body().get("rows");
-                        AppData.menus = rows;
-//                        if(rows.size() > 0){
-//                            SharedPreferences sp = getContext().getSharedPreferences("menu", Context.MODE_PRIVATE);
-//                            SharedPreferences.Editor edit = sp.edit();
-//                            Gson menuGson = new Gson();
-//                            edit.putString("MENU_KEY",menuGson.toJson(rows));
-//                            edit.commit();
-//                        }
                     }
                 }
         );

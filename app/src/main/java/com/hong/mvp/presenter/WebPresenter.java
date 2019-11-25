@@ -89,7 +89,6 @@ public class WebPresenter extends BasePresenter<IWebContract.View>
                         Log.i("============>", "getMenu onSuccess: token+++++++++++" + response.body().toString() );
                         ArrayList<UMenu> rows = response.body().get("rows");
 
-                        AppData.menus = rows;
                         AppData.isLogin = false;
                         mView.renderMenu(rows);
                     }

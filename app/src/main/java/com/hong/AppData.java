@@ -21,7 +21,6 @@ public enum AppData {
     @AutoAccess(dataName = "appData_systemDefaultLocal")
     Locale systemDefaultLocal;
 
-    public static ArrayList<UMenu> menus = new ArrayList<>();
 
 
     public User getLoggedUser() {
