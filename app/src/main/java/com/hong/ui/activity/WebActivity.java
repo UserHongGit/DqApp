@@ -1,9 +1,13 @@
 package com.hong.ui.activity;
 
 import android.app.ActivityManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +21,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,7 +36,9 @@ import com.hong.AppConfig;
 import com.hong.http.model.UMenu;
 import com.hong.ui.fragment.ViewerFragment;
 import com.hong.ui.widget.webview.ProgressWebView;
+import com.hong.ui.widget.webview.TbsWebView;
 import com.hong.util.photoBrowser.GlideHelper;
+import com.nispok.snackbar.Snackbar;
 import com.tencent.bugly.beta.Beta;
 import com.thirtydegreesray.dataautoaccess.annotation.AutoAccess;
 import com.hong.AppData;
@@ -219,6 +229,15 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDomStorageEnabled(true);
 //        mWebView.loadUrl("javascript:test()");
+        mWebView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                AppData.isLogin = false;
+                Log.i(TAG, "onReceivedError: webview出现错误"+AppData.isLogin);
+                mWebView.loadUrl("file:///android_asset/web/error.html");
+                super.onReceivedError(view, request, error);
+            }
+        });
         mWebView.addJavascriptInterface(new Object() {
             @JavascriptInterface
             public String getParam() {
@@ -315,8 +334,27 @@ public class WebActivity extends BaseDrawerActivity<WebPresenter> implements Vie
         }
     }
 
+    public boolean isNetworkConnected(Context context) {
+        if (context != null) {
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) context
+            .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+            if (mNetworkInfo != null) {
+                return mNetworkInfo.isAvailable();
+                }
+            }
+        return false;
+    }
     private void updateFragmentByNavId(int id,String url) {
-        Log.i(this.TAG, "updateFragmentByNavId: "+url+"____"+id+"_____"+AppData.isLogin);
+        Log.i(this.TAG, "updateFragmentByNavId: "+url+"____"+id+"_____"+AppData.isLogin+"网络是否可用?_"+isNetworkConnected(getBaseContext()));
+        if(!(isNetworkConnected(getBaseContext()))){
+            Snackbar.with(getBaseContext())
+                    .text("当前网络不可用,请连接网络后重试!")
+                    .color(Color.RED) // change the background color
+                    .duration(Snackbar.SnackbarDuration.LENGTH_SHORT) // make it shorter
+                    .show(this);
+            return;
+        }
         if(null!=url)
             if(!AppData.isLogin){
 //                原始大庆登录

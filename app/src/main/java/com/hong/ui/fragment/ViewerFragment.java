@@ -5,9 +5,11 @@ package com.hong.ui.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +19,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -51,8 +57,11 @@ import java.io.File;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import es.dmoral.toasty.Toasty;
@@ -69,6 +78,7 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
     private static final int JXKC_UPLOAD_CODE = 0x77;
     private static String TAG = ViewerFragment.class.getSimpleName() + "_________-";
     private boolean isError = false;
+    private boolean isSuccess = false;
 
 
     public static ViewerFragment toUrl(String url, String user) {
@@ -328,26 +338,48 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
 
     private void initMyWebView() {
         webView.addJavascriptInterface(new JsInterface_2(getContext()), "AndroidWebView");
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                AppData.isLogin = false;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    webView.loadUrl("file:///android_asset/web/error.html");
+                    Log.i(TAG, "onReceivedError: webview出现错误"+error.getErrorCode()+"__"+error.getDescription()+"__"+request.getRequestHeaders()+"__"+request.getUrl()+"__"+view.getOriginalUrl()+"___"+view.getUrl());
+                }
 
+                super.onReceivedError(view, request, error);
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+
+            }
+        });
     }
 
     @Override
     public void loading() {
         Log.i("=============->", "show:增加网络状态检测回调===================-loadLuUrl111" + isError);
-//        if (!isError) {
-//            isSuccess = true;
-//            // 回调成功后的相关操作
-//            loading_over.setVisibility(View.GONE);
-//            control_error.setVisibility(View.GONE);
-//            webView.setVisibility(View.VISIBLE);
-//        } else {
-//            isError = false;
-//            loading_over.setVisibility(View.GONE);
+        if (!isError) {
+            isSuccess = true;
+            // 回调成功后的相关操作
+            loading_over.setVisibility(View.GONE);
+            control_error.setVisibility(View.GONE);
+            webView.setVisibility(View.VISIBLE);
+        } else {
+            isError = false;
+            loading_over.setVisibility(View.GONE);
         control_error.setVisibility(View.VISIBLE);
         loading_over.setVisibility(View.GONE);
         webView.setVisibility(View.GONE);
-//        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("网络连接错误");
-//        }
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("网络连接错误");
+        }
     }
 
     @Override
@@ -409,6 +441,7 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
 
     @Override
     public void loadLuUrl(@NonNull String url) {
+
         Log.i(TAG, "loadLuUrl: 加载的url是_____" + url);
         loader.setVisibility(View.VISIBLE);
         loader.setIndeterminate(false);
@@ -436,8 +469,10 @@ public class ViewerFragment extends BaseFragment<ViewerPresenter> implements IVi
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         webView.loadUrl(url);
         webView.setContentChangedListener(this);
+        webView.loadUrl("javascript:hasSession()");
     }
 
     @Override

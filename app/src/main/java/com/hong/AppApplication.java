@@ -39,6 +39,7 @@ public class AppApplication extends Application {
 
     private static AppApplication application;
     private AppComponent mAppComponent;
+    public static boolean isLogin;
 
     @Override
     protected void attachBaseContext(Context base) {

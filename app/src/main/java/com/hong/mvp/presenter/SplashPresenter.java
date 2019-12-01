@@ -91,6 +91,7 @@ public class SplashPresenter extends BasePresenter<ISplashContract.View> impleme
         HttpObserver<User> httpObserver = new HttpObserver<User>() {
             @Override
             public void onError(@NonNull Throwable error) {
+                Log.i(TAG, "闪屏页获取用户信息失败!!!"+error);
                 daoSession.getAuthUserDao().delete(AppData.INSTANCE.getAuthUser());
                 AppData.INSTANCE.setAuthUser(null);
                 mView.showErrorToast(getErrorTip(error));
@@ -99,7 +100,7 @@ public class SplashPresenter extends BasePresenter<ISplashContract.View> impleme
 
             @Override
             public void onSuccess(@NonNull HttpResponse<User> response) {
-                Log.i(TAG, "这里给APP.Instance赋值"+response.body().getId());
+                Log.i(TAG, "闪屏页获取用户信息成功!!!"+response.body().getId());
                 AppData.INSTANCE.setLoggedUser(response.body());
                 if (authUser != null) {
                     authUser.setLoginId(response.body().getLogin());
